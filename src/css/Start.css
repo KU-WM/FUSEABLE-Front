@@ -1,0 +1,18 @@
+div #startHeader {
+  background-color: orange;
+  display: flex;
+  font-size: 16px;
+  border: 1px solid red;
+}
+
+div .Logo {
+  background-color: white;
+  margin: 3px;
+  box-sizing: border-box;
+}
+
+div .UserId {
+  background-color: white;
+  margin: 3px;
+  box-sizing: border-box;
+}

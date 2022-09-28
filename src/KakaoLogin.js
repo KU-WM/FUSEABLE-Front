@@ -68,7 +68,7 @@ const KakaoLogin = () => {
             console.log("DATA", data);
             // 만약, 유저정보를 잘 불러왔다면 navigate를 사용해 프론트엔드에서 설정한 마이페이지 경로를 설정해서 이동시킨다.
             if (data) {
-              navigate("/");
+              navigate("/start");
             }
           });
       } catch (e) {
