@@ -1,18 +1,62 @@
-div #startHeader {
+/* HEADER */
+header {
+  width: 100%;
+  height: 3000px;
+  background-color: #f6f6f6;
+}
+
+
+/* TOP SIDE */
+.startheader {
+  top: 0;
+  width: 100%;
+  height: 100px;
+  position: fixed;
   background-color: orange;
   display: flex;
   font-size: 16px;
   border: 1px solid red;
+  z-index: 1;
 }
 
-div .Logo {
+.startheader .logo {
+  position: absolute;
+  top: 3px;
+  left: 10px;
   background-color: white;
   margin: 3px;
   box-sizing: border-box;
 }
 
-div .UserId {
+.startheader .userid {
+  position: absolute;
+  top: 3px;
+  right: 10px;
   background-color: white;
   margin: 3px;
   box-sizing: border-box;
+}
+
+
+/* MAIN SIDE */
+.mainbody {
+  margin-top: 110px;
+  background-color: yellow;
+}
+
+.mainbody .profile {
+  text-align: center;
+  background-color: green;
+  width: 70%;
+  height: 50px;
+  margin-left: 15%;
+  margin-bottom: 10px;
+}
+
+.mainbody .projectlist {
+  text-align: center;
+  background-color: skyblue;
+  width: 70%;
+  height: 50px;
+  margin-left: 15%;
 }

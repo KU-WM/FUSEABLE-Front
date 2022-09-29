@@ -6,19 +6,19 @@ import { Link } from 'react-router-dom';
 function Start () {
   return (
     <header>
-      <div id='startHeader'>
-        <div class='Logo'>
+      <div className='startheader'>
+        <div className='logo'>
           LOGO
         </div>
-        <div class='UserId'>
+        <div className='userid'>
           USER ID
         </div>
       </div>
-      <div class='mainBody'>
-        <div class='profile'>
+      <div className='mainbody'>
+        <div className='profile'>
           User Profile
         </div>
-        <div class='projectList'>
+        <div className='projectlist'>
           <Link to="/main">Main Page</Link>
         </div>
       </div>

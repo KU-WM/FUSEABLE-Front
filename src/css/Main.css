@@ -1,0 +1,86 @@
+/* HEADER */
+
+header {
+  position: absolute;
+  width: 100%;
+  height: 3000px;
+  background-color: white;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  display: flex;
+  background-color: orange;
+  z-index: 1;
+}
+
+.header .logo {
+  position: absolute;
+  font-size: 30px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.header .sidebar {
+  position: absolute;
+  font-size: 30px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.header .sidebar .sidebtn {
+  position: fixed;
+  margin: 0;
+  width: 300px;
+  height: 100%;
+  right: 10px;
+  background-color: cadetblue;
+  display: none;
+  z-index: 2;
+}
+
+.header .sidebar:hover .sidebtn {
+  display: block;
+}
+
+
+/* MAIN */
+
+.mainbody {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-top: 110px;
+  background-color: aqua;
+  display: flex;
+}
+
+.mainbody .interface {
+  position: fixed;
+  width: 30%;
+  height: 100%;
+  left: 0;
+  background-color: greenyellow;
+  z-index: 1;
+}
+
+.mainbody .main {
+  position: absolute;
+  width: 70%;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: aquamarine;
+}
+
+.mainbody .main .projectname {
+
+}
+
+.mainbody .main .progress {
+
+}
