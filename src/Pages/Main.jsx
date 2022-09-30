@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Main.css';
+
 
 
 function Main () {
@@ -18,22 +20,22 @@ function Main () {
       </div>
       <div className='mainbody'>
         <div className='interface'>
-          <div>
-            메뉴 1
+          <div className='create-project'>
+            Create Project
           </div>
-          <div>
-            메뉴 2
+          <div className='notice'>
+            공지사항
           </div>
-          <div>
-            메뉴 3
+          <div className='calendar'>
+            일정
           </div>
-          <div>
-            메뉴 4
+          <div className='mydocument'>
+            내가 작성한 문서
           </div>
-          <div>
-            메뉴 5
+          <div className='myproject'>
+            <Link className='textLink' to="/start">진행중인 프로젝트</Link>
           </div>
-          <div>
+          <div className='notice-banner'>
             공지사항 배너
           </div>
         </div>
@@ -43,15 +45,35 @@ function Main () {
           </div>
           <div className='progress'>
             진행 1
+            <div className='content'>
+              <div className='test1'>
+                content 1
+              </div>
+            </div>
           </div>
           <div className='progress'>
             진행 2
+            <div className='content'>
+              <div className='test1'>
+                content 1
+              </div>
+            </div>
           </div>
           <div className='progress'>
             진행 3
+            <div className='content'>
+              <div className='test1'>
+                content 1
+              </div>
+            </div>
           </div>
           <div className='progress'>
             진행 4
+            <div className='content'>
+              <div className='test1'>
+                content 1
+              </div>
+            </div>
           </div>
         </div>
       </div>

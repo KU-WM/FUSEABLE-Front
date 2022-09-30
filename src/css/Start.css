@@ -40,23 +40,27 @@ header {
 
 /* MAIN SIDE */
 .mainbody {
+  position: relative;
   margin-top: 110px;
-  background-color: yellow;
 }
 
 .mainbody .profile {
+  position: relative;
   text-align: center;
   background-color: green;
-  width: 70%;
+  width: 700px;
   height: 50px;
-  margin-left: 15%;
-  margin-bottom: 10px;
 }
 
 .mainbody .projectlist {
+  position: relative;
   text-align: center;
   background-color: skyblue;
-  width: 70%;
+  width: 700px;
   height: 50px;
-  margin-left: 15%;
+}
+
+.mainbody .projectlist .textLink {
+  color: inherit;
+  text-decoration: inherit;
 }
