@@ -41,5 +41,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
 }
