@@ -3,7 +3,7 @@
 header {
   position: absolute;
   width: 100%;
-  height: 3000px;
+  height: 1000px;
   background-color: white;
 }
 
@@ -35,6 +35,7 @@ header {
 .header .sidebar .sidebtn {
   position: fixed;
   margin: 0;
+  top: 0;
   width: 300px;
   height: 100%;
   right: 10px;
@@ -54,33 +55,153 @@ header {
   position: relative;
   width: 100%;
   height: 100%;
-  margin-top: 110px;
-  background-color: aqua;
+  margin-top: 100px;
   display: flex;
 }
 
 .mainbody .interface {
   position: fixed;
-  width: 30%;
-  height: 100%;
+  width: 200px;
+  height: 80%;
   left: 0;
-  background-color: greenyellow;
   z-index: 1;
 }
 
+.mainbody .interface .create-project {
+  position: absolute;
+  top: 1%;
+  left: 5%;
+  width: 90%;
+  height: 8%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainbody .interface .notice {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 8%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainbody .interface .calendar {
+  position: absolute;
+  top: 19%;
+  left: 5%;
+  width: 90%;
+  height: 8%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainbody .interface .mydocument {
+  position: absolute;
+  top: 28%;
+  left: 5%;
+  width: 90%;
+  height: 8%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainbody .interface .myproject {
+  position: absolute;
+  top: 37%;
+  left: 5%;
+  width: 90%;
+  height: 8%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainbody .interface .myproject .textLink {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.mainbody .interface .notice-banner {
+  position: absolute;
+  bottom: 1%;
+  left: 5%;
+  width: 90%;
+  height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid red;
+  text-align: center;
+}
+
+/* Main Visual */
+
 .mainbody .main {
   position: absolute;
-  width: 70%;
-  top: 0;
-  right: 0;
+  min-width: 500px;
+  top: 50px;
+  left: 200px;
   height: 100%;
   background-color: aquamarine;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .mainbody .main .projectname {
-
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  top: 100px;
+  left: 200px;
+  margin: 0;
+  padding: 0.5%;
+  box-sizing: border-box;
+  background-color: royalblue;
+  z-index: 1;
 }
 
 .mainbody .main .progress {
+  position: relative;
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 300px;
+  height: 400px;
+  background-color: gray;
+}
 
+.mainbody .main .progress .content {
+  overflow: auto;
+  margin: 10px;
+  height: 350px;
+  background-color: red;
+}
+
+.mainbody .main .progress .content::-webkit-scrollbar {
+  display: none;
+}
+
+.mainbody .main .progress .content .test1 {
+  height: 1000px;
+  background-color: green;
 }

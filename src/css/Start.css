@@ -2,7 +2,9 @@
 header {
   width: 100%;
   height: 3000px;
-  background-color: #f6f6f6;
+  /* background-color: #f6f6f6; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
 }
 
 
@@ -12,10 +14,12 @@ header {
   width: 100%;
   height: 100px;
   position: fixed;
-  background-color: orange;
+  /* background-color: orange; */
   display: flex;
   font-size: 16px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
   z-index: 1;
 }
 
@@ -23,7 +27,9 @@ header {
   position: absolute;
   top: 3px;
   left: 10px;
-  background-color: white;
+  /* background-color: white; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
   margin: 3px;
   box-sizing: border-box;
 }
@@ -32,7 +38,9 @@ header {
   position: absolute;
   top: 3px;
   right: 10px;
-  background-color: white;
+  /* background-color: white; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
   margin: 3px;
   box-sizing: border-box;
 }
@@ -40,23 +48,31 @@ header {
 
 /* MAIN SIDE */
 .mainbody {
+  position: relative;
   margin-top: 110px;
-  background-color: yellow;
 }
 
 .mainbody .profile {
+  position: relative;
   text-align: center;
-  background-color: green;
-  width: 70%;
+  /* background-color: green; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
+  width: 700px;
   height: 50px;
-  margin-left: 15%;
-  margin-bottom: 10px;
 }
 
 .mainbody .projectlist {
+  position: relative;
   text-align: center;
-  background-color: skyblue;
-  width: 70%;
+  /* background-color: skyblue; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
+  width: 700px;
   height: 50px;
-  margin-left: 15%;
+}
+
+.mainbody .projectlist .textLink {
+  color: inherit;
+  text-decoration: inherit;
 }

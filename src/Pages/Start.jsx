@@ -19,7 +19,7 @@ function Start () {
           User Profile
         </div>
         <div className='projectlist'>
-          <Link to="/main">Main Page</Link>
+          <Link className='textLink' to="/main">Main Page</Link>
         </div>
       </div>
     </header>
