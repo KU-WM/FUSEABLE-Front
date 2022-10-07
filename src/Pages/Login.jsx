@@ -1,6 +1,7 @@
 import React from 'react';
-import '../css/App.css';
+import '../css/Login.css';
 import {ReactComponent as Logo } from '../images/fuseable.svg';
+import Logo_image from '../images/Logo_image.png';
 
 
 function Login () {
