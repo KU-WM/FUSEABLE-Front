@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
-import APP from '../Animation/index'
-
+import APP from '../Animation/Posttest'
 
 
 function Main () {

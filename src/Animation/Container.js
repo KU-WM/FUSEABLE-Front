@@ -4,7 +4,7 @@ import { Card } from './Card.js'
 
 
 const style = {
-  width: 300,
+  width: 260,
 }
 export const Container = () => {
   {
