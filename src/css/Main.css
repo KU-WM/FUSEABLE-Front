@@ -12,7 +12,8 @@ header {
   height: 100px;
   position: fixed;
   display: flex;
-  background-color: orange;
+  border: 1px solid red;
+  border-radius: 5px;
   z-index: 1;
 }
 
@@ -158,11 +159,11 @@ header {
 
 .mainbody .main {
   position: absolute;
-  min-width: 500px;
   top: 50px;
   left: 200px;
   height: 100%;
-  background-color: aquamarine;
+  border: 1px solid red;
+  border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -176,7 +177,8 @@ header {
   margin: 0;
   padding: 0.5%;
   box-sizing: border-box;
-  background-color: royalblue;
+  border: 1px solid red;
+  border-radius: 5px;
   z-index: 1;
 }
 
@@ -187,14 +189,14 @@ header {
   box-sizing: border-box;
   width: 300px;
   height: 400px;
-  background-color: gray;
+  border: 1px solid red;
+  border-radius: 5px;
 }
 
 .mainbody .main .progress .content {
   overflow: auto;
   margin: 10px;
   height: 350px;
-  background-color: red;
 }
 
 .mainbody .main .progress .content::-webkit-scrollbar {
@@ -203,5 +205,6 @@ header {
 
 .mainbody .main .progress .content .test1 {
   height: 1000px;
-  background-color: green;
+  border: 1px solid red;
+  border-radius: 5px;
 }
