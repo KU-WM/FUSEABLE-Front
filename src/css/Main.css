@@ -182,7 +182,7 @@ header {
   z-index: 1;
 }
 
-.mainbody .main .progress {
+/* .mainbody .main .progress {
   position: relative;
   margin: 10px;
   padding: 10px;
@@ -191,7 +191,7 @@ header {
   height: 400px;
   border: 1px solid red;
   border-radius: 5px;
-}
+} */
 
 .mainbody .main .progress .content {
   overflow: auto;

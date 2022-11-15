@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
 import APP from '../Animation/index'
-
+import Kanban from '../Kanban/Kanban';
 
 function Main () {
+
   return (
     <header>
       <div className='header'>
@@ -43,37 +44,8 @@ function Main () {
           <div className='projectname'>
             프로젝트 이름
           </div>
-          <div className='progress'>
-            진행 1
-            <div className='content'>
-              <div className='test1'>
-                <APP />
-              </div>
-            </div>
-          </div>
-          <div className='progress'>
-            진행 2
-            <div className='content'>
-              <div className='test1'>
-                <APP />
-              </div>
-            </div>
-          </div>
-          <div className='progress'>
-            진행 3
-            <div className='content'>
-              <div className='test1'>
-                <APP />
-              </div>
-            </div>
-          </div>
-          <div className='progress'>
-            진행 4
-            <div className='content'>
-              <div className='test1'>
-                <APP />
-              </div>
-            </div>
+          <div className="progress">
+            <Kanban />
           </div>
         </div>
       </div>

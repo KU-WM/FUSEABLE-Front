@@ -2,8 +2,13 @@ import React from 'react';
 import '../css/Start.css';
 import { Link } from 'react-router-dom';
 
+var count = 1;
 
 function Start () {
+  
+  console.log(count);
+  count++;
+
   return (
     <header>
       <div className='startheader'>

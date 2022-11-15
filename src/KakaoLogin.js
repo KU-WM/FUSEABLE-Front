@@ -8,8 +8,6 @@ const KakaoLogin = () => {
   // 인가코드 받아오기
   const code = new URL(window.location.href).searchParams.get("code");
 
-  console.log("인가 코드",code);
-
   // 로그인 성공시 MyPage로 이동시키기위해 useNavigate 사용
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,7 +32,6 @@ const KakaoLogin = () => {
             window.localStorage.setItem("token", token);
             console.log("Stored token",token);
           });
-          console.log("RES", res);
       } catch (e) {
         // 에러 발생 시, 에러 응답 출력
         console.error(e);
@@ -68,7 +65,7 @@ const KakaoLogin = () => {
             console.log("DATA", data);
             // 만약, 유저정보를 잘 불러왔다면 navigate를 사용해 프론트엔드에서 설정한 마이페이지 경로를 설정해서 이동시킨다.
             if (data) {
-              navigate("/start");
+              navigate("/");
             }
           });
       } catch (e) {
