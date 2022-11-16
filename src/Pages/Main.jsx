@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
-import APP from '../Animation/Posttest'
+import APP from '../Animation/index';
+import Logo from '../images/Logo.png';
 
 
 function Main () {
@@ -9,7 +10,7 @@ function Main () {
     <header>
       <div className='header'>
         <div className='logo'>
-          Logo
+          <img src={Logo} alt="Logo" />
         </div>
         <div className='sidebar'>
           BTN

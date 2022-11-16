@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/Start.css';
 import { Link } from 'react-router-dom';
+import Logo from '../images/Logo.png';
 
 
 function Start () {
@@ -8,7 +9,7 @@ function Start () {
     <header>
       <div className='startheader'>
         <div className='logo'>
-          LOGO
+          <img src={Logo} alt="" />
         </div>
         <div className='userid'>
           USER ID

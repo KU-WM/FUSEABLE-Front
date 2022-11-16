@@ -20,18 +20,22 @@ header {
   /* border: 1px solid red; */
   border: .5px solid royalblue;
   border-radius: 5px;
+  box-sizing: border-box;
   z-index: 1;
 }
 
 .startheader .logo {
   position: absolute;
-  top: 3px;
-  left: 10px;
-  /* background-color: white; */
-  border: .5px solid royalblue;
+  top: 0;
+  left: 0;
   border-radius: 5px;
-  margin: 3px;
   box-sizing: border-box;
+}
+
+.startheader .logo img {
+  width: 220px;
+  height: 70px;
+  margin: 15px 0;
 }
 
 .startheader .userid {
