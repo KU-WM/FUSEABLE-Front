@@ -3,8 +3,13 @@ import '../css/Start.css';
 import { Link } from 'react-router-dom';
 import Logo from '../images/Logo.png';
 
+var count = 1;
 
 function Start () {
+  
+  console.log(count);
+  count++;
+
   return (
     <header>
       <div className='startheader'>

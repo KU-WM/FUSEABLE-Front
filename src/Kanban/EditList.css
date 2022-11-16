@@ -1,0 +1,39 @@
+.KanbanList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.KanbanList .Input_title {
+  overflow: auto;
+  width: 200px;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 1px 5px;
+}
+
+.KanbanList .Input_content {
+  overflow: auto;
+  width: 200px;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 1px 5px;
+}
+
+.KanbanList .Input_deadline {
+  overflow: auto;
+  width: 200px;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 1px 5px;
+}
+
+.KanbanList .Delete_btn {
+  overflow: auto;
+  left: 10px;
+  width: 100px;
+  height: 20px;
+  box-sizing: border-box;
+  margin: 1px 5px;
+}

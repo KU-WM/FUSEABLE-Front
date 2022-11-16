@@ -1,0 +1,22 @@
+{
+  "todoos":[
+    {"id": 100, "content": "Todo First"},
+    {"id": 101, "content": "Todo Second"},
+    {"id": 102, "content": "Todo Third"}
+  ],
+  "inProgress":[
+    {"id": 200, "content": "inProgress First"},
+    {"id": 201, "content": "inProgress Second"},
+    {"id": 202, "content": "inProgress Third"}
+  ],
+  "done":[
+    {"id": 300, "content": "done First"},
+    {"id": 301, "content": "done Second"},
+    {"id": 302, "content": "done Third"}
+  ],
+  "Verify":[
+    {"id": 400, "content": "Verify First"},
+    {"id": 401, "content": "Verify Second"},
+    {"id": 402, "content": "Verify Third"}
+  ]
+}
