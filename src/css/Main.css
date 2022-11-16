@@ -13,15 +13,10 @@ header {
   position: fixed;
   display: flex;
   border: 1px solid red;
-<<<<<<< HEAD
   box-sizing: border-box;
   border-radius: 5px;
   background-color: antiquewhite;
   z-index: 2;
-=======
-  border-radius: 5px;
-  z-index: 1;
->>>>>>> 8b05138621b06b093969737f7cff7fbfda439b0e
 }
 
 .header .logo {
@@ -193,10 +188,7 @@ header {
   padding: 0.5%;
   box-sizing: border-box;
   border: 1px solid red;
-<<<<<<< HEAD
   background-color: cornsilk;
-=======
->>>>>>> 8b05138621b06b093969737f7cff7fbfda439b0e
   border-radius: 5px;
   z-index: 1;
 }
@@ -210,11 +202,7 @@ header {
   height: 400px;
   border: 1px solid red;
   border-radius: 5px;
-<<<<<<< HEAD
-}
-=======
 } */
->>>>>>> 8b05138621b06b093969737f7cff7fbfda439b0e
 
 .mainbody .main .progress .content {
   overflow: auto;

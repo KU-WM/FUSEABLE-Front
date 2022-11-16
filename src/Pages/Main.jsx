@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
-<<<<<<< HEAD
 import APP from '../Animation/index';
 import Logo from '../images/Logo.png';
-
-=======
-import APP from '../Animation/index'
+import App from '../Animation/index'
 import Kanban from '../Kanban/Kanban';
->>>>>>> 8b05138621b06b093969737f7cff7fbfda439b0e
 
 function Main () {
 
