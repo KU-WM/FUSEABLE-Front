@@ -11,23 +11,23 @@ export const Container = () => {
     const [cards, setCards] = useState([
       {
         id: 1,
-        text: 'Write a cool JS library',
+        text: '1번째 내용',
       },
       {
         id: 2,
-        text: 'Make it generic enough',
+        text: '2번째 내용입니다',
       },
       {
         id: 3,
-        text: 'Write README',
+        text: '3번째 Text Message',
       },
       {
         id: 4,
-        text: 'Create some examples',
+        text: '4번째 항목입니다',
       },
       {
         id: 5,
-        text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+        text: '5번째 항목입니다. DnD test용',
       },
       {
         id: 6,

@@ -13,8 +13,10 @@ header {
   position: fixed;
   display: flex;
   border: 1px solid red;
+  box-sizing: border-box;
   border-radius: 5px;
-  z-index: 1;
+  background-color: antiquewhite;
+  z-index: 2;
 }
 
 .header .logo {
@@ -23,6 +25,12 @@ header {
   top: 0;
   bottom: 0;
   left: 0;
+}
+
+.header .logo img {
+  width: 220px;
+  height: 70px;
+  margin: 15px 0;
 }
 
 .header .sidebar {
@@ -39,8 +47,8 @@ header {
   top: 0;
   width: 300px;
   height: 100%;
-  right: 10px;
-  background-color: cadetblue;
+  right: 0;
+  background-color: red;
   display: none;
   z-index: 2;
 }
@@ -63,9 +71,10 @@ header {
 .mainbody .interface {
   position: fixed;
   width: 200px;
-  height: 80%;
+  height: 86%;
   left: 0;
   z-index: 1;
+  background-color: beige;
 }
 
 .mainbody .interface .create-project {
@@ -171,6 +180,7 @@ header {
   border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
+  background-color: blanchedalmond;
 }
 
 .mainbody .main .projectname {
@@ -183,6 +193,7 @@ header {
   padding: 0.5%;
   box-sizing: border-box;
   border: 1px solid red;
+  background-color: cornsilk;
   border-radius: 5px;
   z-index: 1;
 }
