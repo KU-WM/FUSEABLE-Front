@@ -96,6 +96,11 @@ header {
   align-items: center;
 }
 
+.mainbody .interface .notice .textLink {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .mainbody .interface .calendar {
   position: absolute;
   top: 19%;

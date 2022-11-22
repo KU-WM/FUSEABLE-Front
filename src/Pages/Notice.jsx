@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
+import APP from '../Animation/index'
 import Kanban from '../Kanban/Kanban';
 import Logo from '../images/Logo.png';
+import NoticeList from '../Notice/notice';
 
 
-function Main () {
+function Notice () {
 
   return (
     <header>
@@ -18,7 +20,7 @@ function Main () {
         <div className='sidebar'>
           BTN
           <div className='sidebtn'>
-
+    
           </div>
         </div>
       </div>
@@ -48,7 +50,7 @@ function Main () {
             프로젝트 이름
           </div>
           <div className="progress">
-            <Kanban />
+            <NoticeList />
           </div>
         </div>
       </div>
@@ -57,4 +59,4 @@ function Main () {
 }
 
 
-export default Main;
+export default Notice;

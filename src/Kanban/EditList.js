@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "../recoil";
@@ -8,6 +8,89 @@ function EditList({item}) {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const index = kanbanList.findIndex((listItem) => listItem === item);
   const ref = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const Edit = () => {
+    var textTitle = document.getElementById('editTitle').value;
+    var textContent = document.getElementById('editContent').value;
+    var textDeadline = document.getElementById('editDeadline').value;
+
+    editItem(textTitle, textContent, textDeadline);
+
+    closeModal();
+  }
+
+  const Modal = (props) => {
+    const { open, close, header } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              {header}
+              <button className="close" onClick={close}>
+                &times;
+              </button>
+            </div>
+            <main>
+              {props.children}
+              <ul>
+                <li>
+                  <input
+                    id="editTitle"
+                    className="Input_title"
+                    type="text"
+                    defaultValue={item.title || ''}
+                    placeholder='Title'
+                  />
+                </li>
+                <li>
+                  <input
+                    id="editContent"
+                    className="Input_content"
+                    type="text"
+                    defaultValue={item.content || ''}
+                    placeholder='Content'
+                  />
+                </li>
+                <li>
+                  <input 
+                    id="editDeadline"
+                    type="text"
+                    className="Input_deadline"
+                    defaultValue={item.deadline || ''}
+                    placeholder='Deadline'
+                  />
+                </li>
+                <li>
+                  <input type='button'
+                    className="Edit"
+                    defaultValue='수정'
+                    onClick={Edit}
+                  />
+                </li>
+              </ul>
+            </main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    )
+  }
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
 
   const changeProcess = (Selecteditem, changeProgress) => {
     setKanbanList((prev) => {
@@ -39,6 +122,8 @@ function EditList({item}) {
         })
         
         tempArray.splice(dragIndex, 1, prev[0]);
+
+        console.log("Temp", tempArray);
 
         return tempArray;
       }));
@@ -125,28 +210,12 @@ function EditList({item}) {
 
   dragRef(drop(ref));
   
-  const editItemTitle = ({target: {value}}) => {
+  const editItem = (title, content, deadline) => {
     const newList = replaceItemAtIndex(kanbanList, index, {
       ...item,
-      title: value,
-    });
-
-    setKanbanList(newList);
-  };
-
-  const editItemContent = ({target: {value}}) => {
-    const newList = replaceItemAtIndex(kanbanList, index, {
-      ...item,
-      content: value,
-    });
-
-    setKanbanList(newList);
-  };
-
-  const editItemDeadline = ({target: {value}}) => {
-    const newList = replaceItemAtIndex(kanbanList, index, {
-      ...item,
-      deadline: value,
+      title: title,
+      content: content,
+      deadline: deadline,
     });
 
     setKanbanList(newList);
@@ -159,29 +228,23 @@ function EditList({item}) {
   };
 
   return (
-    <div className="KanbanList" ref={ref} style={{opacity: isDragging? '0.3' : '1'}}>
-      <input
-        className="Input_title"
-        type="text"
-        value={item.title || ''}
-        onChange={editItemTitle}
-        placeholder='Title'
-      />
-      <input
-        className="Input_content"
-        type="text"
-        value={item.content || ''}
-        onChange={editItemContent}
-        placeholder='Content'
-      />
-      <input type="text"
-        className="Input_deadline"
-        value={item.deadline || ''}
-        onChange={editItemDeadline}
-        placeholder='Deadline'
-      />
-      <button className="Delete_btn" onClick={deleteItem}>X</button>
-    </div>
+    <React.Fragment>
+      <div className="KanbanList" ref={ref} style={{opacity: isDragging? '0.3' : '1'}}>
+        <div id="kanbanTitle">
+          {item.title}
+        </div>
+        <div id="kanbanContent">
+          {item.content}          
+        </div>
+        <div id="kanbanDeadline">
+          {item.deadline}          
+        </div>
+        <Modal open={modalOpen} close={closeModal} header="Modal heading">
+        </Modal>
+        <button className="Edit_btn" onClick={openModal}>수정</button>
+        <button className="Delete_btn" onClick={deleteItem}>삭제</button>
+      </div>
+    </React.Fragment>
   );
 }
 

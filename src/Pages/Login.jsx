@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/Login.css';
-import {ReactComponent as Logo } from '../images/fuseable.svg';
+import Logo from '../images/Logo.png';
 import Logo_image from '../images/Logo_image.png';
 
 
@@ -9,7 +9,7 @@ function Login () {
     <div className="App">
       <header className="App-header">
         <div>
-          <Logo className='logo'/>
+          <img src={Logo} alt="Logo" className='logo'/>
         </div>
         <div className="test">
           <a href={process.env.REACT_APP_LoginURL}>

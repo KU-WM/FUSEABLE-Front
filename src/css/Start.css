@@ -50,6 +50,7 @@ header {
 .mainbody {
   position: relative;
   margin-top: 110px;
+  flex-direction: column;
 }
 
 .mainbody .profile {

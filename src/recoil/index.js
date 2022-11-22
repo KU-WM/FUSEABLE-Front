@@ -6,4 +6,14 @@ const kanbanListState = atom({
   default: [],
 });
 
-export {kanbanListState};
+const projectListState = atom({
+  key: 'projectListState',
+  default: [],
+})
+
+const noticeListState = atom({
+  key: 'noticeListState',
+  default: [],
+})
+
+export {kanbanListState, projectListState, noticeListState};

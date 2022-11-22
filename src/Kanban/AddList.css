@@ -4,9 +4,18 @@
   height: 100px;
 }
 
-
 .Btn_area .Add_btn {
   background-color: aquamarine;
   position: absolute;
   right: 0;
+}
+
+.openedModal {
+  position: fixed;
+  left: 220px;
+  top: 170px;
+  width: 80%;
+  height: 70%;
+  background-color: aqua;
+  z-index: 10;
 }
