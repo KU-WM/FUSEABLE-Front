@@ -1,16 +1,13 @@
 import React from 'react';
 import '../css/Start.css';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { projectListState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-import Startredirect from './Startredirect';
-=======
 import Logo from '../images/Logo.png';
->>>>>>> d267d66b1e0eaddc9d8afa625f382f76724ca4b5
+import EditProjectList from './EditProjectList';
 
 
 function Start () {
@@ -31,6 +28,8 @@ function Start () {
         title: title,
       },
     ]);
+
+    closeModal();
 
     let data = {
       title: title,
@@ -57,7 +56,6 @@ function Start () {
     catch(e) {
       console.log(e);
     }
-    closeModal();
   };
 
   const Modal = (props) => {
@@ -126,29 +124,6 @@ function Start () {
     })();
   },[])
 
-  const deleteItem = async() => {
-    const newList = removeItemAtIndex(projectList, 1);
-
-    setProjectList(newList);
-
-    try {
-      const res = await axios
-      .post(
-        "http://localhost:8080/api/project",
-        {
-          id: 1
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-    }
-    catch(e) {
-      console.log(e);
-    }
-
-  };
-
   const openModal = () => {
     setModalOpen(true);
   };
@@ -159,7 +134,7 @@ function Start () {
 
   const dataHandler = () => {
     return projectList
-    .map((item) => <Link className='textLink' to="/main" key={item.id} >{item.title}<br /></Link>);
+    .map((item) => <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>);
   }
 
   const clearData = (arr) => {
@@ -170,7 +145,7 @@ function Start () {
     <React.Fragment>
       <div className='startheader'>
         <div className='logo'>
-          <img src={Logo} alt="" />
+          <img src={Logo} alt="logo" />
         </div>
         <div className='userid'>
           USER ID
@@ -180,16 +155,12 @@ function Start () {
         <div className='profile'>
           User Profile
         </div>
-        <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
         <button className="Edit_btn" onClick={openModal}>등록</button>
       </div>
+      <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>  
       {dataHandler()}
     </React.Fragment>
   )
-}
-
-function removeItemAtIndex(arr, index) {
-  return [...arr.slice(0, index), ...arr.slice(index + 1)];
 }
 
 export default Start;
