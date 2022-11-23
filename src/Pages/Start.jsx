@@ -1,16 +1,13 @@
 import React from 'react';
 import '../css/Start.css';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { projectListState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Startredirect from './Startredirect';
-=======
 import Logo from '../images/Logo.png';
->>>>>>> d267d66b1e0eaddc9d8afa625f382f76724ca4b5
 
 
 function Start () {
