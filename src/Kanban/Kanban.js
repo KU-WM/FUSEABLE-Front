@@ -16,6 +16,9 @@ function Kanban() {
     {id: 4, progress: 'Verify'},
   ];
 
+  const projectId = Number(window.localStorage.getItem("selectedProjectId"))
+  console.log("ProjectedId : ", projectId);
+  
   const dataHandler = (progress) => {
     return kanbanList
     .filter((data) => data.progress === progress)

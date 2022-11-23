@@ -15,7 +15,6 @@ function Main () {
           <Link className='textLink' to="/main">
             <img src={Logo} alt="Logo" className='logo'/>
           </Link>
-          <img src={Logo} alt="Logo" />
         </div>
         <div className='sidebar'>
           BTN
