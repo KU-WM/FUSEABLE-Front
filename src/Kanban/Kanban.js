@@ -1,14 +1,56 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { kanbanListState } from "../recoil";
 import AddList from "./AddList";
 import EditList from "./EditList";
 import KanbanList from "./KanbanList";
 import './Kanban.css';
+import { useEffect } from "react";
+import axios from "axios";
+
 
 function Kanban() {
   const kanbanList = useRecoilValue(kanbanListState);
+  const [kanbanListSet, setKanbanListSet] = useRecoilState(kanbanListState);
+
+  useEffect(() => {(async() => {
+    {try {
+      const UserProfile = window.localStorage.getItem("userCode");
+      const res = await axios
+      .get(
+        '/dummy/dummyKanban.json'
+      )
+      .then((response) => 
+      {
+        console.log(response);
+        if (kanbanListSet.length != response.data.length)
+        {
+          setKanbanListSet(clearData(kanbanListSet));
+          (response.data).map((data) => {
+            setKanbanListSet((oldprojectList) => [
+            ...oldprojectList,
+            {
+              id: data.id,
+              title: data.title,
+              content: data.content,
+              deadline: data.deadline,
+              progress: data.progress
+            },
+          ])
+        })}
+      })
+    }
+    catch (e) {
+      console.error(e);
+    }}
+    })();
+  },[])
+
+  const clearData = (arr) => {
+    return [...arr.slice(0,0)]
+  }
+
   const progressName = [
     {id: 1, progress: 'To Do'},
     {id: 2, progress: 'Progress'},
@@ -27,8 +69,6 @@ function Kanban() {
 
   return (
     <>
-      <span className="title">KANBAN BOARD</span>
-
       <section className="kanbanListContainer">
         <DndProvider className="Kanban" backend={HTML5Backend}>
           {progressName.map((data) => (

@@ -3,12 +3,17 @@ import { useDrag, useDrop } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "../recoil";
 import './EditList.css';
+import ReactDatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function EditList({item}) {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const index = kanbanList.findIndex((listItem) => listItem === item);
   const ref = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedDate, seleteDate] = useState(new Date());
 
   const Edit = () => {
     var textTitle = document.getElementById('editTitle').value;
@@ -55,12 +60,12 @@ function EditList({item}) {
                   />
                 </li>
                 <li>
-                  <input 
+                  <ReactDatePicker 
+                    selected={selectedDate}
+                    onChange={date => seleteDate(date)}
                     id="editDeadline"
                     type="text"
                     className="Input_deadline"
-                    defaultValue={item.deadline || ''}
-                    placeholder='Deadline'
                   />
                 </li>
                 <li>

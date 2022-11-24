@@ -8,6 +8,8 @@ import Kanban from '../Kanban/Kanban';
 
 function Main () {
 
+  const selectedProjectTitle = window.localStorage.getItem("selectedProjectTitle");
+
   return (
     <header>
       <div className='header'>
@@ -46,7 +48,7 @@ function Main () {
         </div>
         <div className='main'>
           <div className='projectname'>
-            프로젝트 이름
+            {selectedProjectTitle}
           </div>
           <div className="progress">
             <Kanban />

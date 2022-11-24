@@ -76,6 +76,8 @@ function EditProjectList({item}) {
     closeModal();
   }
 
+  const userCode = window.localStorage.getItem("userCode");
+
   const deleteItem = async() => {
     const newList = removeItemAtIndex(projectList, index);
 
@@ -84,10 +86,11 @@ function EditProjectList({item}) {
     try {
       const res = await axios
       .post(
-        "http://localhost:8080/api/project",
+        "http://localhost:8080/api/project/delete",
         {
-          id: 1
-        }
+          projectId: item.id,
+          userId: userCode,
+        },
       )
       .then((response) => {
         console.log(response);
@@ -103,6 +106,7 @@ function EditProjectList({item}) {
   const projectSelect = async() => {
 
     window.localStorage.setItem("selectedProjectId",item.id);
+    window.localStorage.setItem("selectedProjectTitle",item.title);
     navigate('/main');
 
     try {

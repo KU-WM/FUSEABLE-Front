@@ -189,7 +189,7 @@ header {
   height: 50px;
   top: 100px;
   left: 200px;
-  margin: 0;
+  font-size: 30px;
   padding: 0.5%;
   box-sizing: border-box;
   border: 1px solid red;

@@ -53,7 +53,7 @@ function AddList({title}) {
 
   return (
     <>
-      <button className="Add_btn" onClick={addItem}>Add</button>
+      <button className="Add_btn" onClick={addItem}>+</button>
     </>
   )
 }

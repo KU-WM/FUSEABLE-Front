@@ -79,7 +79,7 @@ function NoticeList () {
                 <li>
                   <input type='button'
                     className="Edit"
-                    defaultValue='수정'
+                    defaultValue='등록'
                     onClick={addItem}
                   />
                 </li>

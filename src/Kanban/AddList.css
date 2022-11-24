@@ -1,13 +1,9 @@
-.Btn_area {
-  position: absolute;
-  width: 200px;
-  height: 100px;
-}
-
-.Btn_area .Add_btn {
+.Add_btn {
+  width: 30px;
+  height: 20px;
   background-color: aquamarine;
   position: absolute;
-  right: 0;
+  right: 50%;
 }
 
 .openedModal {
