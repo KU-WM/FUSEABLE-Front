@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
+import QueryString from 'qs';
 
 
 function Start () {
@@ -15,7 +16,7 @@ function Start () {
   const [modalOpen, setModalOpen] = useState(false);
 
   const getId = () => {
-    let id = projectList.length > 0 ? projectList.length : 0;
+    let id = projectList.length > 0 ? projectList.length + 1 : 1;
     return id;
   }
 
@@ -30,25 +31,22 @@ function Start () {
     ]);
 
     closeModal();
-    const ress = window.localStorage.getItem("userCode")
-    console.log(window.localStorage.getItem("userCode"))
-    console.log(JSON.stringify(ress));
+    const userCode = window.localStorage.getItem("userCode");
+
+    console.log("title", title);
 
     try {
       const res = await axios({
         method: 'post',
-        url: `http://localhost:8080/api/project/create/`,
+        url: `http://localhost:8080/api/project/create/${userCode}`,
         data: 
           {
-            title: title,
-            kakaoId: window.localStorage.getItem("kakaoId")
+            title,
           },
       })
       .then((response) => {
-        if(response.id === (getId() - 1))
-          console.log("True id")
-        if(response.title === title)
-          console.log("True title")  
+        console.log("response", response)
+        console.log("response data title", response.data.title);
       })
     }
     catch(e) {
@@ -103,17 +101,17 @@ function Start () {
       )
       .then((response) => 
       {
-        console.log("Response : ", response);
-        if (projectList.length !== response.data.length)
+        console.log("Response : ", response.data.projects);
+        if (projectList.length !== response.data.projects.length)
         {
           setProjectList(clearData(projectList));
-          if (response.data > 0) 
-          {(response.data).map((data) => {
+          if (response.data.projects) 
+          {(response.data.projects).map((data) => {
           return setProjectList((oldprojectList) => [
             ...oldprojectList,
             {
-              id: data.id,
-              title: data.title,
+              id: data.projectId,
+              title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
             },
           ])
         })}

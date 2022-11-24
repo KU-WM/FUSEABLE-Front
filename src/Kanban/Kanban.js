@@ -13,32 +13,19 @@ import axios from "axios";
 function Kanban() {
   const kanbanList = useRecoilValue(kanbanListState);
   const [kanbanListSet, setKanbanListSet] = useRecoilState(kanbanListState);
+  const userCode = window.localStorage.getItem("userCode");
+  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
   useEffect(() => {(async() => {
     {try {
-      const UserProfile = window.localStorage.getItem("userCode");
       const res = await axios
       .get(
-        '/dummy/dummyKanban.json'
+        `http://localhost:8080/api/project/${userCode}/${selectedProjectId}`
       )
       .then((response) => 
       {
         console.log(response);
-        if (kanbanListSet.length != response.data.length)
-        {
-          setKanbanListSet(clearData(kanbanListSet));
-          (response.data).map((data) => {
-            setKanbanListSet((oldprojectList) => [
-            ...oldprojectList,
-            {
-              id: data.id,
-              title: data.title,
-              content: data.content,
-              deadline: data.deadline,
-              progress: data.progress
-            },
-          ])
-        })}
+        
       })
     }
     catch (e) {
@@ -59,7 +46,7 @@ function Kanban() {
   ];
 
   const projectId = Number(window.localStorage.getItem("selectedProjectId"))
-  console.log("ProjectedId : ", projectId);
+  console.log("ProjectId : ", projectId);
   
   const dataHandler = (progress) => {
     return kanbanList

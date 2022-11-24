@@ -10,6 +10,10 @@ function EditProjectList({item}) {
   const [modalOpen, setModalOpen] = useState(false);
   const index = projectList.findIndex((listItem) => listItem === item);
 
+  const userCode = window.localStorage.getItem("userCode");
+  window.localStorage.setItem("selectedProjectId",item.id);
+  window.localStorage.setItem("selectedProjectTitle",item.title);
+
 
   const navigate = useNavigate();
 
@@ -64,7 +68,7 @@ function EditProjectList({item}) {
     setModalOpen(false);
   };
   
-  const editItem = () => {
+  const editItem = async() => {
     var textTitle = document.getElementById('editProjectTitie').value;
 
     const newList = replaceItemAtIndex(projectList, index, {
@@ -74,9 +78,21 @@ function EditProjectList({item}) {
 
     setProjectList(newList);
     closeModal();
+    console.log("TITLE : ", textTitle);
+
+    try {
+      const res = await axios
+      .post(
+        `http://localhost:8080/api/project/update/${userCode}/${item.id}`,
+        textTitle,
+      )
+      .then((response) => console.log(response))
+    }
+    catch(e) {
+      console.log(e);
+    }
   }
 
-  const userCode = window.localStorage.getItem("userCode");
 
   const deleteItem = async() => {
     const newList = removeItemAtIndex(projectList, index);
@@ -85,12 +101,8 @@ function EditProjectList({item}) {
 
     try {
       const res = await axios
-      .post(
-        "http://localhost:8080/api/project/delete",
-        {
-          projectId: item.id,
-          userId: userCode,
-        },
+      .get(
+        `http://localhost:8080/api/project/delete/${userCode}/${item.id}`,
       )
       .then((response) => {
         console.log(response);
@@ -103,28 +115,9 @@ function EditProjectList({item}) {
     closeModal();
   };
 
-  const projectSelect = async() => {
+  const projectSelect = () => {
 
-    window.localStorage.setItem("selectedProjectId",item.id);
-    window.localStorage.setItem("selectedProjectTitle",item.title);
     navigate('/main');
-
-    try {
-      const res = await axios
-      .post(
-        `http://localhost:8080/api/project/${item.id}`,
-        {
-          id: 1
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-    }
-    catch(e) {
-      console.log(e);
-    }
-
   }
 
 
