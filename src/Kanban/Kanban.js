@@ -11,7 +11,7 @@ import axios from "axios";
 
 
 function Kanban() {
-  const kanbanList = useRecoilValue(kanbanListState);
+  const kanbanList = useRecoilValue(kanbanListState)
   const [kanbanListSet, setKanbanListSet] = useRecoilState(kanbanListState);
   const userCode = window.localStorage.getItem("userCode");
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
@@ -24,8 +24,21 @@ function Kanban() {
       )
       .then((response) => 
       {
-        console.log(response);
-        
+        setKanbanListSet(clearData(kanbanListSet));
+        (response.data.note).map((data) => {
+          return setKanbanListSet((oldKanbanList) => [
+            ...oldKanbanList,
+            {
+              id: data.noteId,
+              title: ' ',
+              content: ' ',
+              deadline: ' ',
+              progress: data.step,
+            },
+          ])
+        })
+        console.log("Response: ", response.data.note);
+        console.log("Data : ", kanbanListSet);
       })
     }
     catch (e) {
@@ -39,10 +52,10 @@ function Kanban() {
   }
 
   const progressName = [
-    {id: 1, progress: 'To Do'},
-    {id: 2, progress: 'Progress'},
-    {id: 3, progress: 'Done'},
-    {id: 4, progress: 'Verify'},
+    {id: 1, progress: 'TODO'},
+    {id: 2, progress: 'PROGRESS'},
+    {id: 3, progress: 'VERIFY'},
+    {id: 4, progress: 'DONE'},
   ];
 
   const projectId = Number(window.localStorage.getItem("selectedProjectId"))

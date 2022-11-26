@@ -69,22 +69,22 @@ function EditProjectList({item}) {
   };
   
   const editItem = async() => {
-    var textTitle = document.getElementById('editProjectTitie').value;
+    var title = document.getElementById('editProjectTitie').value;
 
     const newList = replaceItemAtIndex(projectList, index, {
       ...item,
-      title: textTitle,
+      title: title,
     });
 
     setProjectList(newList);
     closeModal();
-    console.log("TITLE : ", textTitle);
+    console.log("TITLE : ", title);
 
     try {
       const res = await axios
       .post(
         `http://localhost:8080/api/project/update/${userCode}/${item.id}`,
-        textTitle,
+        {title},
       )
       .then((response) => console.log(response))
     }

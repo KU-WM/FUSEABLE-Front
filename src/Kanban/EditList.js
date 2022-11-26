@@ -196,17 +196,17 @@ function EditList({item}) {
         }
         else 
           {switch (dropResult.name) {
-            case 'To Do':
-              changeProcess(item, 'To Do');
+            case 'TODO':
+              changeProcess(item, 'TODO');
               break;
-            case 'Progress':
-              changeProcess(item, 'Progress');
+            case 'PROGRESS':
+              changeProcess(item, 'PROGRESS');
               break;
-            case 'Done':
-              changeProcess(item, 'Done');
+            case 'DONE':
+              changeProcess(item, 'DONE');
               break;
-            case 'Verify':
-              changeProcess(item, 'Verify');
+            case 'VERIFY':
+              changeProcess(item, 'VERIFY');
               break;
           }}
       }

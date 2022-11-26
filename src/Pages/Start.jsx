@@ -7,7 +7,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
-import QueryString from 'qs';
 
 
 function Start () {
@@ -16,12 +15,14 @@ function Start () {
   const [modalOpen, setModalOpen] = useState(false);
 
   const getId = () => {
-    let id = projectList.length > 0 ? projectList.length + 1 : 1;
+    let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;
     return id;
   }
 
   const addItem = async() => {
     var title = document.getElementById('InputProjectName').value;
+
+    if (title)
     setProjectList((oldProjectList) => [
       ...oldProjectList,
       {
@@ -102,22 +103,17 @@ function Start () {
       .then((response) => 
       {
         console.log("Response : ", response.data.projects);
-        if (projectList.length !== response.data.projects.length)
-        {
-          setProjectList(clearData(projectList));
-          if (response.data.projects) 
-          {(response.data.projects).map((data) => {
-          return setProjectList((oldprojectList) => [
-            ...oldprojectList,
-            {
-              id: data.projectId,
-              title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
-            },
-          ])
-        })}
-        else {
-          console.log("Null Array");
-        }
+        setProjectList(clearData(projectList));
+        if (response.data.projects) 
+        {(response.data.projects).map((data) => {
+        return setProjectList((oldprojectList) => [
+          ...oldprojectList,
+          {
+            id: data.projectId,
+            title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
+          },
+        ])
+      })
       }
       })
     }

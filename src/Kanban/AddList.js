@@ -7,12 +7,15 @@ import './AddList.css'
 
 function AddList({title}) {
   const [KanbanList, setKanbanList] = useRecoilState(kanbanListState);
+ 
+  const userCode = window.localStorage.getItem("userCode");
+  const selectedProjectId = window.localStorage.getItem("selectedProjectId")
   
   const projectId = Number(window.localStorage.getItem("selectedProjectId"))
   console.log("ProjectedId : ", projectId);
 
   const getId = () => {
-    let id = KanbanList.length > 0 ? KanbanList.length : 0;
+    let id = KanbanList.length > 0 ? KanbanList[KanbanList.length - 1].id : 0;
     return id;
   }
 
@@ -31,12 +34,9 @@ function AddList({title}) {
     try {
       const res = await axios
       .post(
-        `/${projectId}/main`,
+        `http://localhost:8080/api/project/main/${userCode}/${selectedProjectId}`,
         {
           id: getId() - 1,
-          title: '',
-          content: '',
-          deadline: '',
           progress: title,
         },
       )

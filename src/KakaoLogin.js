@@ -24,13 +24,13 @@ const KakaoLogin = () => {
           )
           // 백엔드 쪽에서 보내준 응답 확인
           .then((response) => {
-            console.log("응답 확인", response);
+            // console.log("응답 확인", response);
             // 이때,
             // 백엔드로부터 받아온 헤더값에 저장되어있는 authorization 을 접근해 token 이라는 변수에 저장
             const token = response.headers.authorization;
             // 이 토큰은 프론트엔드, 즉 현재 내 서버에 저장시킨다.
             window.localStorage.setItem("token", token);
-            console.log("Stored token",token);
+            // console.log("Stored token",token);
           });
       } catch (e) {
         // 에러 발생 시, 에러 응답 출력
@@ -40,7 +40,7 @@ const KakaoLogin = () => {
       // 위에서 setItem 을 사용하여 내부에 저장시킨 토크을 다시 불러온다.
       // 이때, 내부 저장소에서 가져온 토큰을 다시 token 이라는 변수에 담는다.
       const token = window.localStorage.getItem("token");
-      console.log("Storage token",token);
+      // console.log("Storage token",token);
       ////////////////////////////////////////////////////////////
       //               백엔드로 토큰 다시 넘기기
       ////////////////////////////////////////////////////////////
@@ -68,10 +68,10 @@ const KakaoLogin = () => {
             window.localStorage.setItem("userCode", JSON.stringify(data.data.userCode));
             window.localStorage.setItem("userRole", JSON.stringify(data.data.userRole));
 
-            console.log("DATA", data);
-            console.log("userCode", data.data.userCode);
-            console.log("kakaoNickname", data.data.kakaoNickname);
-            console.log("kakaoProfileImg", data.data.kakaoProfileImg);
+            // console.log("DATA", data);
+            // console.log("userCode", data.data.userCode);
+            // console.log("kakaoNickname", data.data.kakaoNickname);
+            // console.log("kakaoProfileImg", data.data.kakaoProfileImg);
 
             
             // 만약, 유저정보를 잘 불러왔다면 navigate를 사용해 프론트엔드에서 설정한 마이페이지 경로를 설정해서 이동시킨다.
