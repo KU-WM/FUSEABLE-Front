@@ -5,6 +5,24 @@
   flex-wrap: wrap;
 }
 
+.KanbanList .Frontspace {
+  top: 0;
+  position: absolute;
+  width: 210px;
+  height: 40px;
+  flex-wrap: wrap;
+  background-color: red;
+}
+
+.KanbanList .Backspace {
+  top: 124px;
+  position: absolute;
+  width: 210px;
+  height: 40px;
+  flex-wrap: wrap;
+  background-color: blueviolet;
+}
+
 .KanbanList .Edit_btn {
   overflow: auto;
   left: 10px;

@@ -11,6 +11,8 @@ import Main from './Pages/Main';
 import Kanban from './Kanban/Kanban';
 import Notice from './Pages/Notice';
 import GetData from './Kanban/getData';
+import MyDocument from './Pages/MyDocument';
+import CalendarDisplay from './Pages/Calendar';
 
 
 const App = () => {
@@ -25,6 +27,8 @@ const App = () => {
         <Route path='/kanban' element={<Kanban />}></Route>
         <Route path='/main/notice' element={<Notice />}></Route>
         <Route path='/getdata' element={<GetData />}></Route>
+        <Route path='/main/mydocument' element={<MyDocument />}></Route>
+        <Route path='/main/calendar' element={<CalendarDisplay />}></Route>
       </Routes>
     </BrowserRouter>
   )

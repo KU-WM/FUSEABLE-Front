@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Notice.css';
 import Logo from '../images/Logo.png';
-import NoticeBanner from '../Notice/NoticeBanner';
-import NoticeList from '../Notice/NoticeList';
+import { useState } from 'react';
+import MyCalendar from './CalendarTest';
 
 
-function Notice () {
+function CalendarDisplay () {
 
   const selectedProjectTitle = window.localStorage.getItem("selectedProjectTitle");
 
@@ -21,7 +20,7 @@ function Notice () {
         <div className='sidebar'>
           BTN
           <div className='sidebtn'>
-    
+
           </div>
         </div>
       </div>
@@ -43,15 +42,15 @@ function Notice () {
             <Link className='textLink' to="/start">진행중인 프로젝트</Link>
           </div>
           <div className='notice-banner'>
-            <NoticeBanner className='NoticeBanner' />
+            공지사항 배너
           </div>
         </div>
         <div className='main'>
           <div className='projectname'>
-            <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
+          <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
           </div>
-          <div className="notice">
-            <NoticeList />
+          <div className="calendar">
+            <MyCalendar></MyCalendar>
           </div>
         </div>
       </div>
@@ -60,4 +59,4 @@ function Notice () {
 }
 
 
-export default Notice;
+export default CalendarDisplay;

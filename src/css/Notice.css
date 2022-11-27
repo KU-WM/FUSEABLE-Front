@@ -160,13 +160,27 @@ header {
 .mainbody .interface .notice-banner {
   position: absolute;
   bottom: 1%;
-  left: 5%;
+  left: 50%;
   width: 90%;
   height: 100px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid red;
   text-align: center;
+}
+
+.mainbody .interface .notice-banner .NoticeBanner {
+  position: absolute;
+  bottom: 10%;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid red;
+  text-align: center;
+  vertical-align: middle;
 }
 
 /* Main Visual */

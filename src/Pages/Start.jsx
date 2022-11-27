@@ -7,13 +7,17 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
+import { useNavigate } from 'react-router-dom';
 
 
 function Start () {
   
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
+
+  // console.log("START PAGE");
   const getId = () => {
     let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;
     return id;
@@ -53,6 +57,9 @@ function Start () {
     catch(e) {
       console.log(e);
     }
+
+    navigate("/start");
+    // console.log("REDIRECT START PAGE");
   };
 
   const Modal = (props) => {
@@ -102,7 +109,7 @@ function Start () {
       )
       .then((response) => 
       {
-        console.log("Response : ", response.data.projects);
+        // console.log("Response : ", response.data.projects);
         setProjectList(clearData(projectList));
         if (response.data.projects) 
         {(response.data.projects).map((data) => {

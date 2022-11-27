@@ -6,7 +6,7 @@ import AddList from "./AddList";
 import EditList from "./EditList";
 import KanbanList from "./KanbanList";
 import './Kanban.css';
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 
@@ -29,16 +29,16 @@ function Kanban() {
           return setKanbanListSet((oldKanbanList) => [
             ...oldKanbanList,
             {
-              id: data.noteId,
-              title: ' ',
-              content: ' ',
-              deadline: ' ',
+              id: data.arrayId,
+              title: data.title,
+              content: data.content,
+              deadline: (data.endAt.slice(5, 7) + "/" + data.endAt.slice(8, 10) + "/" + data.endAt.slice(0, 4)),
               progress: data.step,
             },
           ])
         })
-        console.log("Response: ", response.data.note);
-        console.log("Data : ", kanbanListSet);
+        // console.log("Response: ", response.data.note);
+        // console.log("Data : ", kanbanList);
       })
     }
     catch (e) {
@@ -59,7 +59,7 @@ function Kanban() {
   ];
 
   const projectId = Number(window.localStorage.getItem("selectedProjectId"))
-  console.log("ProjectId : ", projectId);
+  // console.log("ProjectId : ", projectId);
   
   const dataHandler = (progress) => {
     return kanbanList

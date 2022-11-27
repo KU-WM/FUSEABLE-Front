@@ -11,8 +11,6 @@ function EditProjectList({item}) {
   const index = projectList.findIndex((listItem) => listItem === item);
 
   const userCode = window.localStorage.getItem("userCode");
-  window.localStorage.setItem("selectedProjectId",item.id);
-  window.localStorage.setItem("selectedProjectTitle",item.title);
 
 
   const navigate = useNavigate();
@@ -91,6 +89,8 @@ function EditProjectList({item}) {
     catch(e) {
       console.log(e);
     }
+
+    navigate('/start');
   }
 
 
@@ -116,6 +116,9 @@ function EditProjectList({item}) {
   };
 
   const projectSelect = () => {
+    
+    window.localStorage.setItem("selectedProjectId",item.id);
+    window.localStorage.setItem("selectedProjectTitle",item.title);
 
     navigate('/main');
   }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Main.css';
-import APP from '../Animation/index';
 import Logo from '../images/Logo.png';
 import Kanban from '../Kanban/Kanban';
 
@@ -34,10 +33,10 @@ function Main () {
             <Link className='textLink' to="/main/notice">공지사항</Link>
           </div>
           <div className='calendar'>
-            일정
+            <Link className='textLink' to="/main/calendar">일정</Link>
           </div>
           <div className='mydocument'>
-            내가 작성한 문서
+            <Link className='textLink' to="/main/mydocument">내가 작성한 문서</Link>
           </div>
           <div className='myproject'>
             <Link className='textLink' to="/start">진행중인 프로젝트</Link>
@@ -48,7 +47,7 @@ function Main () {
         </div>
         <div className='main'>
           <div className='projectname'>
-            {selectedProjectTitle}
+          <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
           </div>
           <div className="progress">
             <Kanban />

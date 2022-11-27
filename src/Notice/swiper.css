@@ -1,0 +1,26 @@
+/* <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal">
+<span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span>
+<span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span>
+<span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3" aria-current="true"></span>
+<span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span>
+<span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 5"></span>
+</div> */
+
+.swiper {
+  position: absolute;
+  width: 150px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  box-sizing: border-box;
+
+}
+
+.swiper-slide {
+  top: 30%;
+}
+
+.swiper-pagination {
+  top: 70%;
+}
