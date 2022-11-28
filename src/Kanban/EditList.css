@@ -3,24 +3,15 @@
   flex-direction: column;
   position: relative;
   flex-wrap: wrap;
+  border: 1px solid red;
 }
 
-.KanbanList .Frontspace {
-  top: 0;
-  position: absolute;
-  width: 210px;
-  height: 40px;
-  flex-wrap: wrap;
-  background-color: red;
+.KanbanList .kanbanListTitle {
+
 }
 
-.KanbanList .Backspace {
-  top: 124px;
-  position: absolute;
-  width: 210px;
-  height: 40px;
-  flex-wrap: wrap;
-  background-color: blueviolet;
+.KanbanList .kanbanListDeadline {
+
 }
 
 .KanbanList .Edit_btn {
@@ -68,4 +59,19 @@ ul li {
   overflow: hidden;
   padding: 2px;
   box-sizing: border-box;
+}
+
+.openedModal .Input_title{
+  width: 80%;
+}
+
+.openedModal .Input_deadline{
+
+  width: 80%;
+}
+
+.openedModal .Input_content{
+  width: 80%;
+  height: 300px;
+  
 }

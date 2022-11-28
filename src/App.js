@@ -13,6 +13,7 @@ import Notice from './Pages/Notice';
 import GetData from './Kanban/getData';
 import MyDocument from './Pages/MyDocument';
 import CalendarDisplay from './Pages/Calendar';
+import KanbanRedirect from './Kanban/KanbanRedirect';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/getdata' element={<GetData />}></Route>
         <Route path='/main/mydocument' element={<MyDocument />}></Route>
         <Route path='/main/calendar' element={<CalendarDisplay />}></Route>
+        <Route path='/main/kanbanredirect' element={<KanbanRedirect />}></Route>
       </Routes>
     </BrowserRouter>
   )

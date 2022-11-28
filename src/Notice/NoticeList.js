@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ReactDatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { noticeListState } from "../recoil";
@@ -11,6 +12,7 @@ function NoticeList () {
   const noticeListSet = useRecoilValue(noticeListState);
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
   const userCode = window.localStorage.getItem("userCode");
+  const [selectedDate, seleteDate] = useState(new Date());
 
   const navigate = useNavigate()
 
@@ -27,7 +29,6 @@ function NoticeList () {
       )
       .then((response) => 
       {
-        console.log("EFFECT : ", response);
         setNoticeList(clearData(noticeList));
         (response.data).map((data) => {
           return setNoticeList((oldNoticeList) => [
@@ -40,7 +41,6 @@ function NoticeList () {
           ])
         })
         // console.log("Response: ", response.data.note);
-        console.log("Data : ", noticeListSet);
       })
     }
     catch (e) {
@@ -116,6 +116,14 @@ function NoticeList () {
                     className="Input_title"
                     type="text"
                     placeholder='Title'
+                  />
+                </li>
+                <li>
+                  <ReactDatePicker 
+                    selected={selectedDate}
+                    id="editDeadline"
+                    type="text"
+                    className="Input_deadline"
                   />
                 </li>
                 <li>

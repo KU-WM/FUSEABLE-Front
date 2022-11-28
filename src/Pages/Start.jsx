@@ -14,7 +14,6 @@ function Start () {
   
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
 
 
   // console.log("START PAGE");
@@ -58,7 +57,6 @@ function Start () {
       console.log(e);
     }
 
-    navigate("/start");
     // console.log("REDIRECT START PAGE");
   };
 

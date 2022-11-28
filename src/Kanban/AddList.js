@@ -58,20 +58,20 @@ function AddList({title}) {
                   />
                 </li>
                 <li>
-                  <input
-                    id="inputContent"
-                    className="Input_content"
-                    type="text"
-                    placeholder='Content'
-                  />
-                </li>
-                <li>
                   <ReactDatePicker 
                     selected={selectedDate}
                     onChange={date => seleteDate(date)}
                     id="inputDeadline"
                     type="text"
                     className="Input_deadline"
+                  />
+                </li>
+                <li>
+                  <input
+                    id="inputContent"
+                    className="Input_content"
+                    type="text"
+                    placeholder='Content'
                   />
                 </li>
                 <li>

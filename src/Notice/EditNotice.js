@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import ReactDatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { noticeListState } from "../recoil";
@@ -9,6 +10,7 @@ function EditNotice ({item}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
   const index = noticeList.findIndex((listItem) => listItem === item);
+  const [selectedDate, seleteDate] = useState(new Date());
 
   const navigate = useNavigate();
 
@@ -92,6 +94,15 @@ function EditNotice ({item}) {
                     type="text"
                     defaultValue={item.title || ''}
                     placeholder='Title'
+                  />
+                </li>
+                <li>
+                  <ReactDatePicker 
+                    selected={selectedDate}
+                    onClick={false}
+                    id="editDeadline"
+                    type="text"
+                    className="Input_deadline"
                   />
                 </li>
                 <li>

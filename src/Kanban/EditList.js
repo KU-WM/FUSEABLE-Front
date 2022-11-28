@@ -60,15 +60,6 @@ function EditList({item}) {
                   />
                 </li>
                 <li>
-                  <input
-                    id="editContent"
-                    className="Input_content"
-                    type="text"
-                    defaultValue={item.content || ''}
-                    placeholder='Content'
-                  />
-                </li>
-                <li>
                   <ReactDatePicker 
                     selected={selectedDate}
                     onChange={date => seleteDate(date)}
@@ -78,12 +69,22 @@ function EditList({item}) {
                   />
                 </li>
                 <li>
+                  <input
+                    id="editContent"
+                    className="Input_content"
+                    type="text"
+                    defaultValue={item.content || ''}
+                    placeholder='Content'
+                  />
+                </li>
+                <li>
                   <input type='button'
                     className="Edit"
                     defaultValue='수정'
                     onClick={Edit}
                   />
                 </li>
+                <button className="Delete_btn" onClick={deleteItem}>삭제</button>
               </ul>
             </main>
             <footer>
@@ -243,12 +244,12 @@ function EditList({item}) {
       
       try {
           const sendIndex = kanbanList.findIndex((listItem) => listItem === item);
-          // console.log("LISE : ", newIndex, sendIndex);
-          // console.log("SEND : ", {
-          //   newStep: dropResult.name,
-          //   arrayId: Number(item.id),
-          //   newArrayId: Number(newIndex),
-          // });
+          console.log("LISE : ", window.localStorage.getItem("ITEM"), sendIndex);
+          console.log("SEND : ", {
+            newStep: dropResult.name,
+            arrayId: Number(item.id),
+            newArrayId: Number(window.localStorage.getItem("ITEM")),
+          });
 
         const res = await axios
         .post(
@@ -260,7 +261,8 @@ function EditList({item}) {
           }
         )
         .then((response) => {
-          // console.log("D&D response : ", response);
+          console.log("D&D response : ", response);
+          navigate('/main/kanbanredirect');
         })
       }
       catch (e) {
@@ -333,17 +335,13 @@ function EditList({item}) {
   return (
     <React.Fragment>
       <div className="KanbanList" ref={ref} style={{opacity: isDragging? '0.3' : '1'}} >
-          <div id="kanbanTitle">
+          <div className="kanbanListTitle" onClick={openModal}>
             {item.title}
-          </div>
-          <div id="kanbanContent">
-            {item.content}          
-          </div>
-          <div id="kanbanDeadline">
+          </div>    
+          <div className="kanbanListDeadline" onClick={openModal}>
             {item.deadline}          
           </div>
-          <button className="Edit_btn" onClick={openModal}>수정</button>
-          <button className="Delete_btn" onClick={deleteItem}>삭제</button>
+          <br></br>
       </div>
       <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
     </React.Fragment>
