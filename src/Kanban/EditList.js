@@ -10,6 +10,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
+var count = 1;
+
 function EditList({item}) {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const index = kanbanList.findIndex((listItem) => listItem === item);
@@ -17,6 +19,21 @@ function EditList({item}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, seleteDate] = useState(new Date());
 
+  var tempTitle = count == 1 ? item.title : window.localStorage.getItem("tempTitle");
+  var tempContent = count == 1 ? item.content : window.localStorage.getItem("tempContent");
+
+  count = 1;
+
+  const setDate = (date) => {
+    tempTitle = document.getElementById('editTitle').value;
+    tempContent = document.getElementById('editContent').value;
+
+    window.localStorage.setItem("tempTitle", tempTitle)
+    window.localStorage.setItem("tempContent", tempContent)
+
+    count ++
+    seleteDate(date);
+  }
 
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
@@ -40,7 +57,6 @@ function EditList({item}) {
       <div className={open ? 'openedModal' : 'modal'}>
         {open ? (
           <section>
-            {/* {console.log("Modal Open")} */}
             <div>
               {header}
               <button className="close" onClick={close}>
@@ -55,14 +71,14 @@ function EditList({item}) {
                     id="editTitle"
                     className="Input_title"
                     type="text"
-                    defaultValue={item.title || ''}
+                    defaultValue={tempTitle || ''}
                     placeholder='Title'
                   />
                 </li>
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    onChange={date => seleteDate(date)}
+                    onChange={date => setDate(date)}
                     id="editDeadline"
                     type="text"
                     className="Input_deadline"
@@ -73,7 +89,7 @@ function EditList({item}) {
                     id="editContent"
                     className="Input_content"
                     type="text"
-                    defaultValue={item.content || ''}
+                    defaultValue={tempContent || ''}
                     placeholder='Content'
                   />
                 </li>
@@ -107,28 +123,77 @@ function EditList({item}) {
   };
 
 
-  const changeProcess = (Selecteditem, changeProgress) => {
+  const changeProcess = async(Selecteditem, changeProgress) => {
+    const changeIndex = kanbanList.findIndex((data) => data.id == Selecteditem.id);
+
+    console.log("Selected : ", Selecteditem, "\nchangeProcess : ", changeProgress, "\nChangeIndex : ", changeIndex);
+    console.log("Send : ", {
+      newStep: changeProgress,
+      arrayId: Selecteditem.id,
+      newArrayId: Selecteditem.id,
+    }
+  );
+
     setKanbanList((prev) => {
       return prev.map((e) => {
         return {
           ...e,
-          progress: e.id === Selecteditem.id ? changeProgress : e.progress,
+          progress: kanbanList.findIndex((data) => data.id === e.id) === changeIndex ? changeProgress : e.progress,
         };
       });
     });
+
+    try {
+      const res = await axios
+      .post(
+        `http://localhost:8080/api/project/main/move/${selectedProjectId}`,
+        {
+          newStep: changeProgress,
+          arrayId: Selecteditem.id,
+          newArrayId: Selecteditem.id,
+        }
+      )
+      .then((response) => {
+        console.log("D&D response : ", response);
+      })
+    }
+    catch (e) {
+      console.log(e);
+    }
   };
 
-  const moveHandler = (dragIndex, hoverIndex) => {
+  const moveHandler = async(dragIndex, hoverIndex) => {
     const dragItem = kanbanList[dragIndex];
-    window.localStorage.setItem("ITEM", hoverIndex);
+
+    // console.log("MOVE");
 
     if (dragItem) {
       const tempArray = [...kanbanList];
 
+      // console.log("tempArray : ", tempArray);
       tempArray.splice(dragIndex, 1);
       tempArray.splice(hoverIndex, 0, dragItem);
       
       setKanbanList(tempArray);
+
+      // try {
+      //   const res = await axios
+      //   .post(
+      //     `http://localhost:8080/api/project/main/move/${selectedProjectId}`,
+      //     {
+      //       newStep: dragItem.progress,
+      //       arrayId: dragIndex,
+      //       newArrayId: hoverIndex,
+      //     }
+      //   )
+      //   .then((response) => {
+      //     // console.log("D&D response : ", response);
+      //   })
+      // }
+      // catch (e) {
+      //   console.log(e);
+      // }
+
     };
   }
 
@@ -174,10 +239,12 @@ function EditList({item}) {
         if (!ref.current) {
             return;
         }
+
         const hoverIndex = index;
-        const itemIndex = kanbanList.filter((data) => data.progress === item.progress).findIndex((data) => data === item)
+        // console.log("ITEM : ", item);
+        const itemIndex = kanbanList.filter((data) => data.progress === item.progress).findIndex((data) => data.id === item.id)
         const tempF = itemIndex > 0 ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex - 1] : 0;
-        const tempB = itemIndex < kanbanList.filter((data) => data.progress === item.progress).length - 1 ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex + 1] : 0;
+        const tempB = itemIndex < (kanbanList.filter((data) => data.progress === item.progress).length - 1) ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex + 1] : 0;
         const dragForwordIndex = kanbanList.findIndex((listItem) => listItem === tempF)
         const dragBackwordIndex = kanbanList.findIndex((listItem) => listItem === tempB)
 
@@ -185,24 +252,47 @@ function EditList({item}) {
        
         // Determine rectangle on screen
         const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
         // Get vertical middle
         const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
         // Determine mouse position
         const clientOffset = monitor.getClientOffset();
-        // console.log(hoverBoundingRect);
-        // console.log(clientOffset);
+        // console.log("itemIndex : ", itemIndex);
+        // console.log("hoverBoundingRect : ", hoverBoundingRect);
+        // if(kanbanList[hoverIndex].progress !== item.progress) {
+        //   switch (kanbanList[hoverIndex].progress) {
+        //     case 'TODO':
+        //       changeProcess(item, 'TODO');
+        //       break;
+        //     case 'PROGRESS':
+        //       changeProcess(item, 'PROGRESS');
+        //       break;
+        //     case 'DONE':
+        //       changeProcess(item, 'DONE');
+        //       break;
+        //     case 'VERIFY':
+        //       changeProcess(item, 'VERIFY');
+        //       break;
+        //   }
+        // }
+        // console.log("clientOffset-Y : ", clientOffset.y);
         // Get pixels to the top
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        const hoverClientFY = hoverBoundingRect.bottom - hoverMiddleY - 10;
+        const hoverClientBY = hoverBoundingRect.top + hoverMiddleY + 10;
+
+        // console.log("hoverIndex  :", hoverIndex);
+        // console.log("hoverClientFY : ", hoverClientFY);
+        // console.log("hoverClientBY : ", hoverClientBY);
         // Only perform the move when the mouse has crossed half of the items height
         // When dragging downwards, only move when the cursor is below 50%
         // When dragging upwards, only move when the cursor is above 50%
         // Dragging downwards
-        if (hoverClientY < hoverMiddleY && hoverIndex >= kanbanList.length) {
-          moveHandler(hoverIndex, dragForwordIndex);
+        if (hoverClientFY < clientOffset.y && tempF !== 0 && hoverIndex !== itemIndex) {
+          moveHandler(itemIndex, hoverIndex);
         }
         // Dragging upwards
-        if (hoverClientY > hoverMiddleY && hoverIndex !== 0) {
-          moveHandler(hoverIndex, dragBackwordIndex);
+        if (hoverClientBY > clientOffset.y && tempB !== 0 && hoverIndex !== itemIndex) {
+          moveHandler(itemIndex, hoverIndex);
         }
         // Time to actually perform the action
         // console.log("Drag : ", dragIndex);
@@ -221,9 +311,9 @@ function EditList({item}) {
       isDragging: monitor.isDragging(),
     }),
 
-    end: async(item, monitor) => {
+    end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
-      // console.log('Drag ', dropResult);
+      // console.log('item ', item);
       if (dropResult) {
         if(dropResult.name)
           switch (dropResult.name) {
@@ -240,35 +330,7 @@ function EditList({item}) {
               changeProcess(item, 'VERIFY');
               break;
         }
-      }
-      
-      try {
-          const sendIndex = kanbanList.findIndex((listItem) => listItem === item);
-          console.log("LISE : ", window.localStorage.getItem("ITEM"), sendIndex);
-          console.log("SEND : ", {
-            newStep: dropResult.name,
-            arrayId: Number(item.id),
-            newArrayId: Number(window.localStorage.getItem("ITEM")),
-          });
-
-        const res = await axios
-        .post(
-          `http://localhost:8080/api/project/main/move/${selectedProjectId}`,
-          {
-            newStep: dropResult.name,
-            arrayId: Number(item.id),
-            newArrayId: Number(window.localStorage.getItem("ITEM")),
-          }
-        )
-        .then((response) => {
-          console.log("D&D response : ", response);
-          navigate('/main/kanbanredirect');
-        })
-      }
-      catch (e) {
-        console.log(e);
-      }
-      
+      }     
     },
     }),
   )
@@ -308,7 +370,6 @@ function EditList({item}) {
       console.log(e);
     }
 
-    navigate("/main");
   };
 
   const deleteItem = async() =>{

@@ -4,7 +4,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import React from "react";
 import 'swiper/css'
 import { noticeListState } from "../recoil";
-import "./NoticeBanner.css"
 import {Swiper, SwiperSlide} from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
 
@@ -19,13 +18,15 @@ import './swiper.css'
 function NoticeBanner() {
   const noticeListSet = useRecoilValue(noticeListState);
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
+  
+  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
 
   useEffect(() => {(async() => {
     {try {
       const res = await axios
       .get(
-        `http://localhost:8080/api/articles`
+        `http://localhost:8080/api/articles/list/${selectedProjectId}`
       )
       .then((response) => 
       {
@@ -60,12 +61,12 @@ function NoticeBanner() {
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       spaceBetween={50}
       slidesPerView={1}
-      navigation
+      // navigation
       loop={true}
       pagination={{clickable: true}}
-      autoplay={{delay: 1000}}
+      autoplay={{delay: 2000}}
       onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
+      // onSlideChange={() => console.log('slide change')}
     >
       {noticeListSet.map((slide) => (<SwiperSlide key={slide.id}>{slide.title}</SwiperSlide>))}
     </Swiper>

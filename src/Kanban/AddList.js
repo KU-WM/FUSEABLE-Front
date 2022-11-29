@@ -18,20 +18,34 @@ function AddList({title}) {
 
   const navigate = useNavigate();
 
+  var tempTitle = window.localStorage.getItem("tempTitle")
+  var tempContent = window.localStorage.getItem("tempContent")
+
   const getId = () => {
-    let id = KanbanList.length > 0 ? KanbanList[KanbanList.length - 1].id + 1 : 0;
+    let id = KanbanList.length > 0 ? (KanbanList.length - 1) : 0;
     return id;
   }
 
   const Add = () => {
-    var textTitle = document.getElementById('inputTitle').value;
-    var textContent = document.getElementById('inputContent').value;
+    var textTitle = document.getElementById('inputNewTitle').value;
+    var textContent = document.getElementById('inputNewContent').value;
     var textDeadline = document.getElementById('inputDeadline').value;
 
     addItem(textTitle, textContent, textDeadline);
 
     closeModal();
   }
+
+  const setDate = (date) => {
+    tempTitle = document.getElementById('inputNewTitle').value;
+    tempContent = document.getElementById('inputNewContent').value;
+
+    window.localStorage.setItem("tempTitle", tempTitle)
+    window.localStorage.setItem("tempContent", tempContent)
+
+    seleteDate(date);
+  }
+
 
   const Modal = (props) => {
     const { open, close, header } = props;
@@ -51,16 +65,17 @@ function AddList({title}) {
               <ul>
                 <li>
                   <input
-                    id="inputTitle"
+                    id="inputNewTitle"
                     className="Input_title"
                     type="text"
                     placeholder='Title'
+                    defaultValue={tempTitle || ''}
                   />
                 </li>
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    onChange={date => seleteDate(date)}
+                    onChange={date => setDate(date)}
                     id="inputDeadline"
                     type="text"
                     className="Input_deadline"
@@ -68,10 +83,11 @@ function AddList({title}) {
                 </li>
                 <li>
                   <input
-                    id="inputContent"
+                    id="inputNewContent"
                     className="Input_content"
                     type="text"
                     placeholder='Content'
+                    defaultValue={tempContent || ''}
                   />
                 </li>
                 <li>

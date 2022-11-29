@@ -4,6 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { noticeListState } from "../recoil";
+import "./NoticeSet.css";
 
 
 function EditNotice ({item}) {
@@ -149,15 +150,32 @@ function EditNotice ({item}) {
     setModalOpen(false);
   };
 
+  // const dataHandler = (progress) => {
+  //   var sequence = 1;
+  //   return mydocument
+  //   .map((item) => 
+  //   <React.Fragment key={item.id}>
+  //     <Modal open={modalOpen} close={closeModal} header="My Document" item={item}></Modal> 
+  //     <span className='myDocumentList'>{sequence++}. </span>
+  //     <span className='myDocumentList' onClick={openModal} >
+  //       {item.title}
+  //     </span>
+  //   </React.Fragment>);
+  // }
+
   return (
     <React.Fragment>
-      <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
+      <Modal open={modalOpen} close={closeModal} header="Notice"></Modal>
       <div> 
-        {index + 1}
-        {item.title}
       </div>
-      <button className="Edit_btn" onClick={openModal}>수정</button>
-      <button className="Delete_btn" onClick={deleteItem}>삭제</button>
+      <span onClick={openModal}>
+        <div className="noticeContainer">
+          <div className="NoticeIndex">{index + 1}</div>
+          <div className="NoticeTitle">{item.title}</div>
+          <div className="user">{item.user}</div>  
+          <div className="startAt">{item.startAt}</div>  
+        </div>      
+      </span>
       
     </React.Fragment>
   )

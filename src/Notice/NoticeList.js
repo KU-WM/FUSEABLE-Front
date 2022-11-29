@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { noticeListState } from "../recoil";
 import EditNotice from "./EditNotice";
+import "./NoticeSet.css";
 
 
 function NoticeList () {
@@ -14,7 +15,7 @@ function NoticeList () {
   const userCode = window.localStorage.getItem("userCode");
   const [selectedDate, seleteDate] = useState(new Date());
 
-  const navigate = useNavigate()
+  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
   const getId = () => {
     let id = noticeList.length > 0 ? noticeList[noticeList.length - 1].id + 1 : 1;
@@ -25,11 +26,12 @@ function NoticeList () {
     {try {
       const res = await axios
       .get(
-        `http://localhost:8080/api/articles`
+        `http://localhost:8080/api/articles/list/${selectedProjectId}`
       )
       .then((response) => 
       {
         setNoticeList(clearData(noticeList));
+        console.log("Notice List : ", response.data);
         (response.data).map((data) => {
           return setNoticeList((oldNoticeList) => [
             ...oldNoticeList,
@@ -37,6 +39,8 @@ function NoticeList () {
               id: data.id,
               title: data.title,
               content: data.content,
+              startAt: data.startAt,
+              user: data.user.kakaoNickname
             },
           ])
         })
@@ -56,6 +60,9 @@ function NoticeList () {
   const addItem = async() => {
     var title = document.getElementById('InputNoticeTitle').value;
     var content = document.getElementById('InputNoticeContent').value;
+    var deadline = document.getElementById('InputNoticeStartAt').value;
+
+    const startAt = (deadline.slice(6,10) + "-" + deadline.slice(0,2) + "-" + deadline.slice(3,5))
 
     console.log("INPUT : ", title, content);
     setNoticeList((oldNoticeList) => [
@@ -64,22 +71,21 @@ function NoticeList () {
         id: getId(),
         title: title,
         content: content,
-        bookmark: false,
+        startAt: startAt,
       },
     ]);
     closeModal();
 
     console.log("NOTICE : ", noticeListSet);
-    
-    navigate('/main/notice');
 
     try {
       const res = await axios
       .post(
-        `http://localhost:8080/api/articles/${userCode}`,
+        `http://localhost:8080/api/articles/${userCode}/${selectedProjectId}`,
         {
           title: title,
           content: content,
+          startAt: startAt,
         }
       )
       .then((response) => {
@@ -121,7 +127,8 @@ function NoticeList () {
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    id="editDeadline"
+                    disabled="disabled"
+                    id="InputNoticeStartAt"
                     type="text"
                     className="Input_deadline"
                   />
@@ -162,6 +169,7 @@ function NoticeList () {
     setModalOpen(false);
   };
 
+
   const dataHandler = () => {
     return noticeListSet
     .map((item) => <EditNotice key={item.id} item={item}></EditNotice> );
@@ -170,7 +178,16 @@ function NoticeList () {
   return (
     <React.Fragment>
       <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
-      <button className="ADD_btn" onClick={openModal}>등록</button>
+      <div>
+        <button className="NoticeAddBtn" onClick={openModal}>등록</button>
+      </div>
+      <div className="noticeContainer">
+        <div className="NoticeIndex">게시 ID</div>
+        <div className="NoticeTitle">제목</div>
+        <div className="user">작성자</div>
+        <div className="startAt">작성일</div> 
+      </div>
+
       {dataHandler()}
     </React.Fragment>
   )

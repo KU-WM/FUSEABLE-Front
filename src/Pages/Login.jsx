@@ -18,7 +18,6 @@ function Login () {
           alt="카카오 로그인 버튼"
             />
           </a>
-          <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
         </div>
       </header>
     </div>

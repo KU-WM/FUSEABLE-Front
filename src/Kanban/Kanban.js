@@ -32,7 +32,7 @@ function Kanban() {
               id: data.arrayId,
               title: data.title,
               content: data.content,
-              deadline: (data.endAt.slice(5, 7) + "/" + data.endAt.slice(8, 10) + "/" + data.endAt.slice(0, 4)),
+              deadline: data.endAt,
               progress: data.step,
             },
           ])

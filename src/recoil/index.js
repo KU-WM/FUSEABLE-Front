@@ -21,4 +21,9 @@ const myDocumentState = atom({
   default: [],
 })
 
-export {kanbanListState, projectListState, noticeListState, myDocumentState};
+const userInProjectState = atom({
+  key: 'userInProject',
+  default: [],
+})
+
+export {kanbanListState, projectListState, noticeListState, myDocumentState, userInProjectState};

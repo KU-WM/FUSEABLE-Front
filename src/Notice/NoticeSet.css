@@ -1,0 +1,39 @@
+.NoticeAddBtn {
+  position: relative;
+}
+
+.noticeContainer {
+  display: flex;
+}
+
+.NoticeIndex {
+  flex: 1;
+  position: relative;
+  order: 1;
+  text-align: center;
+  flex-grow: 3;
+}
+
+.NoticeTitle {
+  flex: 2;
+  position: relative;
+  order: 2;
+  text-align: center;
+  flex-grow: 20;
+}
+
+.user {
+  flex: 3;
+  position: relative;
+  order: 3;
+  text-align: center;
+  flex-grow: 3;
+}
+
+.startAt {
+  flex: 4;
+  position: relative;
+  order: 4;
+  text-align: center;
+  flex-grow: 10;
+}

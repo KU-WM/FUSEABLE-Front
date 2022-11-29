@@ -68,7 +68,7 @@ const KakaoLogin = () => {
             window.localStorage.setItem("userCode", JSON.stringify(data.data.userCode));
             window.localStorage.setItem("userRole", JSON.stringify(data.data.userRole));
 
-            // console.log("DATA", data);
+            console.log("DATA", data);
             // console.log("userCode", data.data.userCode);
             // console.log("kakaoNickname", data.data.kakaoNickname);
             // console.log("kakaoProfileImg", data.data.kakaoProfileImg);

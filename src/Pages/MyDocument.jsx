@@ -4,68 +4,50 @@ import '../css/MyDocument.css';
 import Logo from '../images/Logo.png';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { myDocumentState } from '../recoil';
+import { myDocumentState, userInProjectState } from '../recoil';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useState } from 'react';
+import NoticeBanner from '../Notice/NoticeBanner';
+import MyDocumentList from './MyDocumentList';
 
 
 function MyDocument () {
   const mydocument = useRecoilValue(myDocumentState)
   const [mydocumentSet, setmydocumentSet] = useRecoilState(myDocumentState);
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, seleteDate] = useState(new Date());
+  const [crewsOpen, setcrewsOpen] = useState(false);
+  const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
   
   const selectedProjectTitle = window.localStorage.getItem("selectedProjectTitle");
   const userCode = window.localStorage.getItem("userCode");
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
-  const Modal = (props) => {
-    const { open, close, header, item } = props;
+
+
+  const [SideBarOpen, setSideBarOpen] = useState(false);
+
+  const Crews = (props) => {
+    const { open, close } = props;
+
+    const userDataHandler = () => {
+      return userInproject
+      .map((user) => <div className='UserInProject' key={user.userId}>{user.userName} <img className='UserInProjectProfileImg' src={user.userPicture} alt="User Image" ></img> </div>)
+    }
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
+      <div className={open ? 'openedCrew' : 'crew'}>
         {open ? (
           <section>
             <div>
-              {header}
-              <button className="close" onClick={close}>
-                &times;
-              </button>
-            </div>
-            <main>
-              {props.children}
-              <ul>
-                <li>
-                  <div
-                    className="Input_title"
-                    placeholder='Title'
-                  >
-                    {item.title}
-                  </div>
-                </li>
-                <li>
-                  <div
-                    className="Input_content"
-                    type="text"
-                    placeholder='Content'
-                  >
-                    {item.content}
-                  </div>
-                </li>
-                <li>
-                  <div 
-                    type="text"
-                    className="Input_deadline"
-                  >
-                    {item.deadline}
-                  </div>
-                </li>
-              </ul>
-            </main>
-            <footer>
               <button className="close" onClick={close}>
                 close
               </button>
+            </div>
+            <main>
+              {userDataHandler()}
+            </main>
+            <footer>
+              
             </footer>
           </section>
         ) : null}
@@ -73,12 +55,58 @@ function MyDocument () {
     )
   }
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openCrews = () => {
+    setcrewsOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeCrews = () => {
+    setcrewsOpen(false);
+  };
+
+  const SideBar = (props) => {
+    const { open, close } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </div>
+            <main>
+              <ul>
+                <li>
+                  인원 초대
+                </li>
+                <li>
+                  기능 추가 대기 2
+                </li>
+                <li>
+                  기능 추가 대기 3
+                </li>
+                <li>
+                  기능 추가 대기 4
+                </li>
+              </ul>
+            </main>
+            <footer>
+              
+            </footer>
+            <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
+          </section>
+        ) : null}
+      </div>
+    )
+  }
+
+  const openSideBar = () => {
+    setSideBarOpen(true);
+  };
+
+  const closeSideBar = () => {
+    setSideBarOpen(false);
   };
 
   useEffect(() => {(async() => {
@@ -117,18 +145,13 @@ function MyDocument () {
   }
 
   const dataHandler = (progress) => {
+    var sequence = 1;
     return mydocument
-    .map((item) => 
-    <React.Fragment key={item.id}>
-      <Modal open={modalOpen} close={closeModal} header="My Document" item={item}></Modal> 
-      <span className='myDocumentList'>{item.id}. </span>
-      <span className='myDocumentList' onClick={openModal} >
-        {item.title}
-      </span>
-    </React.Fragment>);
+    .map((item) => <MyDocumentList key={sequence} order={sequence++} item={item} ></MyDocumentList> )
   }
 
   return (
+    <React.Fragment>
     <header>
       <div className='header'>
         <div className='logo'>
@@ -136,11 +159,15 @@ function MyDocument () {
             <img src={Logo} alt="Logo" className='logo'/>
           </Link>
         </div>
-        <div className='sidebar'>
-          BTN
-          <div className='sidebtn'>
-    
-          </div>
+        <div className='crewmate'>
+          <button className='showCrawmate' onClick={openCrews}>참여 인원</button>
+        </div>
+        <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
+        <div className='sidebarBtn'>
+          <button className='sidebar' onClick={openSideBar}>
+            Side
+          </button>
+          <SideBar open={SideBarOpen} close={closeSideBar} header="Modal heading"></SideBar>
         </div>
       </div>
       <div className='mainbody'>
@@ -161,7 +188,7 @@ function MyDocument () {
             <Link className='textLink' to="/start">진행중인 프로젝트</Link>
           </div>
           <div className='notice-banner'>
-            공지사항 배너
+            <NoticeBanner className='NoticeBanner' />
           </div>
         </div>
         <div className='main'>
@@ -176,6 +203,7 @@ function MyDocument () {
         </div>
       </div>
     </header>
+    </React.Fragment>
   )
 }
 
