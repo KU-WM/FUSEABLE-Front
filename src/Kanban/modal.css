@@ -6,7 +6,7 @@
   bottom: 0;
   left: 0;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: lemonchiffon;
 }
 .modal button {
   outline: none;
@@ -18,7 +18,7 @@
   max-width: 450px;
   margin: 0 auto;
   border-radius: 0.3rem;
-  background-color: #fff;
+  background-color: lemonchiffon;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-show 0.3s;
   overflow: hidden;
@@ -26,7 +26,7 @@
 .modal > section > header {
   position: relative;
   padding: 16px 64px 16px 16px;
-  background-color: #f1f1f1;
+  background-color: lemonchiffon;
   font-weight: 700;
 }
 .modal > section > header button {
@@ -38,7 +38,7 @@
   font-weight: 700;
   text-align: center;
   color: #999;
-  background-color: transparent;
+  background-color: lemonchiffon;
 }
 .modal > section > main {
   padding: 16px;
@@ -52,7 +52,7 @@
 .modal > section > footer button {
   padding: 6px 12px;
   color: #fff;
-  background-color: #6c757d;
+  background-color: lemonchiffon;
   border-radius: 5px;
   font-size: 13px;
 }
