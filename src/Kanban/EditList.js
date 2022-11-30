@@ -85,7 +85,7 @@ function EditList({item}) {
                   />
                 </li>
                 <li>
-                  <input
+                  <textarea
                     id="editContent"
                     className="Input_content"
                     type="text"
@@ -233,76 +233,76 @@ function EditList({item}) {
 
 
 
-  const [, drop] = useDrop({
-    accept: 'kanban',
-    hover(item, monitor) {
-        if (!ref.current) {
-            return;
-        }
+  // const [, drop] = useDrop({
+  //   accept: 'kanban',
+  //   hover(item, monitor) {
+  //       if (!ref.current) {
+  //           return;
+  //       }
 
-        const hoverIndex = index;
-        // console.log("ITEM : ", item);
-        const itemIndex = kanbanList.filter((data) => data.progress === item.progress).findIndex((data) => data.id === item.id)
-        const tempF = itemIndex > 0 ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex - 1] : 0;
-        const tempB = itemIndex < (kanbanList.filter((data) => data.progress === item.progress).length - 1) ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex + 1] : 0;
-        const dragForwordIndex = kanbanList.findIndex((listItem) => listItem === tempF)
-        const dragBackwordIndex = kanbanList.findIndex((listItem) => listItem === tempB)
+  //       const hoverIndex = index;
+  //       // console.log("ITEM : ", item);
+  //       const itemIndex = kanbanList.filter((data) => data.progress === item.progress).findIndex((data) => data.id === item.id)
+  //       const tempF = itemIndex > 0 ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex - 1] : 0;
+  //       const tempB = itemIndex < (kanbanList.filter((data) => data.progress === item.progress).length - 1) ? kanbanList.filter((data) => data.progress === item.progress)[itemIndex + 1] : 0;
+  //       const dragForwordIndex = kanbanList.findIndex((listItem) => listItem === tempF)
+  //       const dragBackwordIndex = kanbanList.findIndex((listItem) => listItem === tempB)
 
-        // Don't replace items with themselves
+  //       // Don't replace items with themselves
        
-        // Determine rectangle on screen
-        const hoverBoundingRect = ref.current?.getBoundingClientRect();
+  //       // Determine rectangle on screen
+  //       const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
-        // Get vertical middle
-        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-        // Determine mouse position
-        const clientOffset = monitor.getClientOffset();
-        // console.log("itemIndex : ", itemIndex);
-        // console.log("hoverBoundingRect : ", hoverBoundingRect);
-        // if(kanbanList[hoverIndex].progress !== item.progress) {
-        //   switch (kanbanList[hoverIndex].progress) {
-        //     case 'TODO':
-        //       changeProcess(item, 'TODO');
-        //       break;
-        //     case 'PROGRESS':
-        //       changeProcess(item, 'PROGRESS');
-        //       break;
-        //     case 'DONE':
-        //       changeProcess(item, 'DONE');
-        //       break;
-        //     case 'VERIFY':
-        //       changeProcess(item, 'VERIFY');
-        //       break;
-        //   }
-        // }
-        // console.log("clientOffset-Y : ", clientOffset.y);
-        // Get pixels to the top
-        const hoverClientFY = hoverBoundingRect.bottom - hoverMiddleY - 10;
-        const hoverClientBY = hoverBoundingRect.top + hoverMiddleY + 10;
+  //       // Get vertical middle
+  //       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  //       // Determine mouse position
+  //       const clientOffset = monitor.getClientOffset();
+  //       // console.log("itemIndex : ", itemIndex);
+  //       // console.log("hoverBoundingRect : ", hoverBoundingRect);
+  //       // if(kanbanList[hoverIndex].progress !== item.progress) {
+  //       //   switch (kanbanList[hoverIndex].progress) {
+  //       //     case 'TODO':
+  //       //       changeProcess(item, 'TODO');
+  //       //       break;
+  //       //     case 'PROGRESS':
+  //       //       changeProcess(item, 'PROGRESS');
+  //       //       break;
+  //       //     case 'DONE':
+  //       //       changeProcess(item, 'DONE');
+  //       //       break;
+  //       //     case 'VERIFY':
+  //       //       changeProcess(item, 'VERIFY');
+  //       //       break;
+  //       //   }
+  //       // }
+  //       // console.log("clientOffset-Y : ", clientOffset.y);
+  //       // Get pixels to the top
+  //       const hoverClientFY = hoverBoundingRect.bottom - hoverMiddleY - 10;
+  //       const hoverClientBY = hoverBoundingRect.top + hoverMiddleY + 10;
 
-        // console.log("hoverIndex  :", hoverIndex);
-        // console.log("hoverClientFY : ", hoverClientFY);
-        // console.log("hoverClientBY : ", hoverClientBY);
-        // Only perform the move when the mouse has crossed half of the items height
-        // When dragging downwards, only move when the cursor is below 50%
-        // When dragging upwards, only move when the cursor is above 50%
-        // Dragging downwards
-        if (hoverClientFY < clientOffset.y && tempF !== 0 && hoverIndex !== itemIndex) {
-          moveHandler(itemIndex, hoverIndex);
-        }
-        // Dragging upwards
-        if (hoverClientBY > clientOffset.y && tempB !== 0 && hoverIndex !== itemIndex) {
-          moveHandler(itemIndex, hoverIndex);
-        }
-        // Time to actually perform the action
-        // console.log("Drag : ", dragIndex);
-        // console.log("Hover : ", hoverIndex);
-        // Note: we're mutating the monitor item here!
-        // Generally it's better to avoid mutations,
-        // but it's good here for the sake of performance
-        // to avoid expensive index searches.
-    },
-  });
+  //       // console.log("hoverIndex  :", hoverIndex);
+  //       // console.log("hoverClientFY : ", hoverClientFY);
+  //       // console.log("hoverClientBY : ", hoverClientBY);
+  //       // Only perform the move when the mouse has crossed half of the items height
+  //       // When dragging downwards, only move when the cursor is below 50%
+  //       // When dragging upwards, only move when the cursor is above 50%
+  //       // Dragging downwards
+  //       if (hoverClientFY < clientOffset.y && tempF !== 0 && hoverIndex !== itemIndex) {
+  //         moveHandler(itemIndex, hoverIndex);
+  //       }
+  //       // Dragging upwards
+  //       if (hoverClientBY > clientOffset.y && tempB !== 0 && hoverIndex !== itemIndex) {
+  //         moveHandler(itemIndex, hoverIndex);
+  //       }
+  //       // Time to actually perform the action
+  //       // console.log("Drag : ", dragIndex);
+  //       // console.log("Hover : ", hoverIndex);
+  //       // Note: we're mutating the monitor item here!
+  //       // Generally it's better to avoid mutations,
+  //       // but it's good here for the sake of performance
+  //       // to avoid expensive index searches.
+  //   },
+  // });
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: 'kanban',
@@ -336,7 +336,7 @@ function EditList({item}) {
   )
 
 
-  dragRef(drop(ref));
+  dragRef(ref);
   // dragRef(dropUp(ref));
   // dragRef(dropDown(ref));
 
@@ -390,7 +390,6 @@ function EditList({item}) {
 
     setKanbanList(newList);
 
-    navigate("/main");
   };
 
   return (

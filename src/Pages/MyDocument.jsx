@@ -172,9 +172,6 @@ function MyDocument () {
       </div>
       <div className='mainbody'>
         <div className='interface'>
-          <div className='create-project'>
-            Create Project
-          </div>
           <div className='notice'>
             <Link className='textLink' to="/main/notice">공지사항</Link>
           </div>

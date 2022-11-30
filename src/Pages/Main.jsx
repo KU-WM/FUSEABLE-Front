@@ -85,7 +85,7 @@ function Main () {
             <footer>
               
             </footer>
-            <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
+              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
           </section>
         ) : null}
       </div>
@@ -159,9 +159,6 @@ function Main () {
       </div>
       <div className='mainbody'>
         <div className='interface'>
-          <div className='create-project'>
-            Create Project
-          </div>
           <div className='notice'>
             <Link className='textLink' to="/main/notice">공지사항</Link>
           </div>

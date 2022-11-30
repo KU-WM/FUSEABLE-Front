@@ -1,12 +1,22 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Login.css';
 
 
 function Logout () {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  useEffect(() => {(() => {
+    {try {
+      {navigate("/")}   
+    }
+    catch (e) {
+      console.error(e);
+    }}
+    })();
+  },[])
 
   return (
     <div>

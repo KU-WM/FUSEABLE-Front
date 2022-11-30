@@ -5,6 +5,8 @@ function KanbanRedirect () {
 
     const navigate = useNavigate();
 
+    console.log("REDIRECT!!!");
+
     useEffect(() => {(() => {
         {
             navigate('/main');

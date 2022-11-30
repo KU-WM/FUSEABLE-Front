@@ -134,7 +134,7 @@ function NoticeList () {
                   />
                 </li>
                 <li>
-                  <input
+                  <textarea
                     id="InputNoticeContent"
                     className="Input_content"
                     type="text"

@@ -6,6 +6,7 @@ import MyCalendar from './CalendarTest';
 import { useRecoilState } from 'recoil';
 import { userInProjectState } from '../recoil';
 import '../css/Calendar.css'
+import NoticeBanner from '../Notice/NoticeBanner';
 
 
 function CalendarDisplay () {
@@ -121,9 +122,6 @@ function CalendarDisplay () {
       </div>
       <div className='mainbody'>
         <div className='interface'>
-          <div className='create-project'>
-            Create Project
-          </div>
           <div className='notice'>
             <Link className='textLink' to="/main/notice">공지사항</Link>
           </div>
@@ -137,7 +135,7 @@ function CalendarDisplay () {
             <Link className='textLink' to="/start">진행중인 프로젝트</Link>
           </div>
           <div className='notice-banner'>
-            공지사항 배너
+            <NoticeBanner className='NoticeBanner' />
           </div>
         </div>
         <div className='main'>

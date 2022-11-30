@@ -100,14 +100,14 @@ function EditNotice ({item}) {
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    onClick={false}
+                    disabled="disabled"
                     id="editDeadline"
                     type="text"
                     className="Input_deadline"
                   />
                 </li>
                 <li>
-                  <input
+                  <textarea
                     id="InputNoticeContent"
                     className="Input_content"
                     type="text"

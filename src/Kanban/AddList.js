@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 
 
+var countNew = 1;
+
 function AddList({title}) {
   const [KanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,8 +20,10 @@ function AddList({title}) {
 
   const navigate = useNavigate();
 
-  var tempTitle = window.localStorage.getItem("tempTitle")
-  var tempContent = window.localStorage.getItem("tempContent")
+  var tempTitle = countNew == 1 ? "" :  window.localStorage.getItem("tempNewTitle")
+  var tempContent = countNew == 1 ? "" :  window.localStorage.getItem("tempNewContent")
+
+  countNew = 1;
 
   const getId = () => {
     let id = KanbanList.length > 0 ? (KanbanList.length - 1) : 0;
@@ -40,9 +44,10 @@ function AddList({title}) {
     tempTitle = document.getElementById('inputNewTitle').value;
     tempContent = document.getElementById('inputNewContent').value;
 
-    window.localStorage.setItem("tempTitle", tempTitle)
-    window.localStorage.setItem("tempContent", tempContent)
+    window.localStorage.setItem("tempNewTitle", tempTitle)
+    window.localStorage.setItem("tempNewContent", tempContent)
 
+    countNew++;
     seleteDate(date);
   }
 
@@ -82,7 +87,7 @@ function AddList({title}) {
                   />
                 </li>
                 <li>
-                  <input
+                  <textarea
                     id="inputNewContent"
                     className="Input_content"
                     type="text"
@@ -157,7 +162,7 @@ function AddList({title}) {
       console.log(e);
     }
 
-    navigate("/main");
+    navigate("/main/kanbanredirect");
 
   };
 
