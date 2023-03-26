@@ -15,6 +15,8 @@ function NoticeList () {
   const userCode = window.localStorage.getItem("userCode");
   const [selectedDate, seleteDate] = useState(new Date());
 
+  const navigate = useNavigate();
+
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
   const getId = () => {
@@ -95,6 +97,8 @@ function NoticeList () {
     catch(e) {
       console.log(e);
     }
+
+    navigate('/main/noticeredirect');
 
   };
 

@@ -5,12 +5,12 @@ import Logo from '../images/Logo.png';
 
 function Login () {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="container">
+      <header className="Login-header">
         <div>
-          <img src={Logo} alt="Logo" className='logo'/>
+          <img src={Logo} alt="Logo" className='Login-logo'/>
         </div>
-        <div className="test">
+        <div className="Login-kakaoLoginBtn">
           <a href={process.env.REACT_APP_LoginURL}>
             <img
           src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"

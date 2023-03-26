@@ -42,9 +42,10 @@ function Start () {
     try {
       const res = await axios({
         method: 'post',
-        url: `http://localhost:8080/api/project/create/${userCode}`,
+        url: `http://localhost:8080/api/${userCode}`,
         data: 
           {
+            title,
             title,
           },
       })
@@ -155,20 +156,25 @@ function Start () {
 
   return (
     <React.Fragment>
-      <div className='startheader'>
-        <div className='logo'>
-          <img src={Logo} alt="logo" />
+      <div className='container'>
+        <div className='Start-header'>
+          <div className='logo'>
+            <img src={Logo} alt="logo" />
+          </div>
+          <img className='kakaoProfileImg' src={kakaoProfileImg.slice(1,kakaoProfileImg.length - 1)} alt="kakaoProfileImg" ></img>
         </div>
-        <img className='kakaoProfileImg' src={kakaoProfileImg.slice(1,kakaoProfileImg.length - 1)} alt="kakaoProfileImg" ></img>
-      </div>
-      <div className='mainbody'>
-        <div className='userid'>
-          {kakaoNickname.slice(1,kakaoNickname.length - 1)}
+        <div className='Start-mainbody'>
+          <div className='userNickname'>
+            <strong>{kakaoNickname.slice(1,kakaoNickname.length - 1)}</strong>
+            <span> 유저님 환영합니다</span>
+          </div>
+          <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
         </div>
-        <button className="Edit_btn" onClick={openModal}>등록</button>
+        <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>  
+        <div className='Start-projectList'>
+          {dataHandler()}
+        </div>
       </div>
-      <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>  
-      {dataHandler()}
     </React.Fragment>
   )
 }

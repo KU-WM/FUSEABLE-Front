@@ -32,7 +32,7 @@ function Kanban() {
               id: data.arrayId,
               title: data.title,
               content: data.content,
-              deadline: data.endAt,
+              deadline:  data.endAt,
               progress: data.step,
             },
           ])

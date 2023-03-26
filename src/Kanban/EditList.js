@@ -17,7 +17,7 @@ function EditList({item}) {
   const index = kanbanList.findIndex((listItem) => listItem === item);
   const ref = useRef();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDate, seleteDate] = useState(new Date());
+  const [selectedDate, seleteDate] = useState(new Date(item.deadline));
 
   var tempTitle = count == 1 ? item.title : window.localStorage.getItem("tempTitle");
   var tempContent = count == 1 ? item.content : window.localStorage.getItem("tempContent");
@@ -160,6 +160,7 @@ function EditList({item}) {
     catch (e) {
       console.log(e);
     }
+    navigate("/main/kanbanredirect");
   };
 
   const moveHandler = async(dragIndex, hoverIndex) => {
@@ -369,6 +370,7 @@ function EditList({item}) {
     catch(e) {
       console.log(e);
     }
+    navigate("/main/kanbanredirect");
 
   };
 

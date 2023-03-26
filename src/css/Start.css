@@ -1,19 +1,7 @@
-/* HEADER */
-header {
-  width: 100%;
-  height: 3000px;
-  /* background-color: #f6f6f6; */
-  border: .5px solid royalblue;
-  border-radius: 5px;
-}
-
-
 /* TOP SIDE */
-.startheader {
-  top: 0;
-  width: 100%;
+.Start-header {
+  position: relative;
   height: 100px;
-  position: fixed;
   background-color: bisque;
   display: flex;
   font-size: 16px;
@@ -24,71 +12,51 @@ header {
   z-index: 1;
 }
 
-.startheader .logo {
-  position: absolute;
+.Start-header .logo {
+  position: relative;
   top: 0;
   left: 0;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
-.startheader .logo img {
+.Start-header .logo img {
   width: 220px;
   height: 70px;
   margin: 15px 0;
 }
 
-.startheader .userid {
-  position: absolute;
-  top: 3px;
-  right: 10px;
-  /* background-color: white; */
-  border: .5px solid royalblue;
-  border-radius: 5px;
-  margin: 3px;
-  box-sizing: border-box;
-}
-
-
-/* MAIN SIDE */
-.mainbody {
-  position: relative;
-  margin-top: 110px;
-  flex-direction: column;
-}
-
-.mainbody .profile {
-  position: relative;
-  text-align: center;
-  /* background-color: green; */
-  border: .5px solid royalblue;
-  border-radius: 5px;
-  width: 700px;
-  height: 50px;
-}
-
-.mainbody .projectlist {
-  position: relative;
-  text-align: center;
-  /* background-color: skyblue; */
-  border: .5px solid royalblue;
-  border-radius: 5px;
-  width: 700px;
-  height: 50px;
-}
-
-.mainbody .projectlist .textLink {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.kakaoProfileImg {
+.Start-header .kakaoProfileImg {
   box-sizing: border-box;
   padding: 2px;
-  position: fixed;
+  position: absolute;
+  right: 0;
   border-radius: 100px;
   border: 0.5px solid red;
   width: 100px;
   height: 100px;
   right: 0;
+}
+
+
+/* MAIN SIDE */
+.Start-mainbody {
+  position: relative;
+}
+
+.Start-mainbody .userNickname {
+  position: relative;
+  /* background-color: white; */
+  border: .5px solid royalblue;
+  border-radius: 5px;
+  margin: 3px 0 3px;
+  box-sizing: border-box;
+}
+
+.Start-mainbody .Start-addBtn {
+  position: relative;
+}
+
+.Start-projectList {
+  position: relative;
 }
