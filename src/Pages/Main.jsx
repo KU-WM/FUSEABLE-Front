@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
+import MyCalendar from './CalendarTest';
 
 
 function Main () {
@@ -20,6 +21,7 @@ function Main () {
   const selectedProjectTitle = window.localStorage.getItem("selectedProjectTitle");
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
+  var switchCode = window.localStorage.getItem("switchCode") ? window.localStorage.getItem("switchCode") : 0;
 
   useEffect(() => {(async() => {
     {try {
@@ -137,6 +139,38 @@ function Main () {
     setcrewsOpen(false);
   };
 
+  const datahandler = () => {
+    if(switchCode == 0) {
+      console.log("Kanban Loading");
+      return (
+        <Kanban />
+      )
+    }
+    else if(switchCode == 1) {
+      console.log("Switchcode1 Loading");
+      return (
+        <MyCalendar className="calendar"></MyCalendar>
+      )
+    }
+    else if(switchCode == 2) {
+
+      console.log("Switchcode2 Loading");
+    }
+    else if(switchCode == 3) {
+
+      console.log("Switchcode3 Loading");
+    }
+    else {
+      console.log("Loading Error from Main Select!\n\n");
+    }
+  }
+
+  const switchToCalendar = () => {
+    console.log("SwitchCode : ", switchCode);
+    window.localStorage.setItem("switchCode", 1);
+    window.location.reload();
+  }
+
   return (
     <React.Fragment>
       <div className='container'>
@@ -163,8 +197,9 @@ function Main () {
               <div className='Main-notice'>
                 <Link className='textLink' to="/main/notice">공지사항</Link>
               </div>
-              <div className='Main-calendar'>
-                <Link className='textLink' to="/main/calendar">일정</Link>
+              <div className='Main-calendar' onClick={switchToCalendar}>
+                일정
+                {/* <Link className='textLink' to="/main/calendar">일정</Link> */}
               </div>
               <div className='Main-mydocument'>
                 <Link className='textLink' to="/main/mydocument">내가 작성한 문서</Link>
@@ -181,7 +216,7 @@ function Main () {
                 <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
               </div>
               <div className="Main-progress">
-                <Kanban />
+                {datahandler()}
               </div>
             </div>
           </div>
