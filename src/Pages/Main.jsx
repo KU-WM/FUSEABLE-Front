@@ -140,47 +140,49 @@ function Main () {
   return (
     <React.Fragment>
       <div className='container'>
-        <div className='Main-header'>
-          <div className='logo'>
-            <Link className='textLink' to="/main">
-              <img src={Logo} alt="Logo" className='logo'/>
-            </Link>
-          </div>
-          <div className='crewmate'>
-            <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
-          </div>
-          <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
-          <div className='sidebarBtn'>
-            <button className='btn btn-primary sidebar' onClick={openModal}>
-              Side
-            </button>
-            <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
-          </div>
-        </div>
-        <div className='Main-mainbody'>
-          <div className='Main-interface'>
-            <div className='Main-notice'>
-              <Link className='textLink' to="/main/notice">공지사항</Link>
+        <div className='Temp'>
+          <div className='Main-header'>
+            <div className='logo'>
+              <Link className='textLink' to="/main">
+                <img src={Logo} alt="Logo" className='logo'/>
+              </Link>
             </div>
-            <div className='Main-calendar'>
-              <Link className='textLink' to="/main/calendar">일정</Link>
+            <div className='crewmate'>
+              <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
             </div>
-            <div className='Main-mydocument'>
-              <Link className='textLink' to="/main/mydocument">내가 작성한 문서</Link>
-            </div>
-            <div className='Main-myproject'>
-              <Link className='textLink' to="/start">진행중인 프로젝트</Link>
-            </div>
-            <div className='Main-notice-banner'>
-              <NoticeBanner className='NoticeBanner' />
+            <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
+            <div className='sidebarBtn'>
+              <button className='btn btn-primary sidebar' onClick={openModal}>
+                Side
+              </button>
+              <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
             </div>
           </div>
-          <div className='Main-main'>
-            <div className='Main-projectname'>
-              <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
+          <div className='Main-mainbody'>
+            <div className='Main-interface'>
+              <div className='Main-notice'>
+                <Link className='textLink' to="/main/notice">공지사항</Link>
+              </div>
+              <div className='Main-calendar'>
+                <Link className='textLink' to="/main/calendar">일정</Link>
+              </div>
+              <div className='Main-mydocument'>
+                <Link className='textLink' to="/main/mydocument">내가 작성한 문서</Link>
+              </div>
+              <div className='Main-myproject'>
+                <Link className='textLink' to="/start">진행중인 프로젝트</Link>
+              </div>
+              <div className='Main-notice-banner'>
+                <NoticeBanner className='NoticeBanner' />
+              </div>
             </div>
-            <div className="Main-progress">
-              <Kanban />
+            <div className='Main-main'>
+              <div className='Main-projectname'>
+                <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
+              </div>
+              <div className="Main-progress">
+                <Kanban />
+              </div>
             </div>
           </div>
         </div>
