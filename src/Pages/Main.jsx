@@ -11,6 +11,8 @@ import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import MyCalendar from './CalendarTest';
+import NoticeList from '../Notice/NoticeList';
+import MyDocument from './MyDocument'
 
 
 function Main () {
@@ -149,27 +151,51 @@ function Main () {
     else if(switchCode == 1) {
       console.log("Switchcode1 Loading");
       return (
-        <MyCalendar className="calendar"></MyCalendar>
+        <NoticeList />
       )
     }
     else if(switchCode == 2) {
-
       console.log("Switchcode2 Loading");
+      return (
+        <MyCalendar className="calendar"></MyCalendar>
+      )
     }
     else if(switchCode == 3) {
-
       console.log("Switchcode3 Loading");
+      return (
+        <MyDocument />
+      )
     }
     else {
       console.log("Loading Error from Main Select!\n\n");
     }
   }
 
-  const switchToCalendar = () => {
+  const switchToKanban = () => {
+    console.log("SwitchCode : ", switchCode);
+    window.localStorage.setItem("switchCode", 0);
+    window.location.reload();
+  }
+
+  const switchToNotice = () => {
     console.log("SwitchCode : ", switchCode);
     window.localStorage.setItem("switchCode", 1);
     window.location.reload();
   }
+
+  const switchToCalendar = () => {
+    console.log("SwitchCode : ", switchCode);
+    window.localStorage.setItem("switchCode", 2);
+    window.location.reload();
+  }
+
+  const switchToMyDocument = () => {
+    console.log("SwitchCode : ", switchCode);
+    window.localStorage.setItem("switchCode", 3);
+    window.location.reload();
+  }
+
+
 
   return (
     <React.Fragment>
@@ -177,9 +203,7 @@ function Main () {
         <div className='Temp'>
           <div className='Main-header'>
             <div className='logo'>
-              <Link className='textLink' to="/main">
-                <img src={Logo} alt="Logo" className='logo'/>
-              </Link>
+              <img src={Logo} alt="Logo" className='logo' onClick={switchToKanban}/>
             </div>
             <div className='crewmate'>
               <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
@@ -194,15 +218,15 @@ function Main () {
           </div>
           <div className='Main-mainbody'>
             <div className='Main-interface'>
-              <div className='Main-notice'>
-                <Link className='textLink' to="/main/notice">공지사항</Link>
+              <div className='Main-notice' onClick={switchToNotice}>
+                공지사항
               </div>
               <div className='Main-calendar' onClick={switchToCalendar}>
                 일정
                 {/* <Link className='textLink' to="/main/calendar">일정</Link> */}
               </div>
-              <div className='Main-mydocument'>
-                <Link className='textLink' to="/main/mydocument">내가 작성한 문서</Link>
+              <div className='Main-mydocument' onClick={switchToMyDocument}>
+                내가 작성한 문서
               </div>
               <div className='Main-myproject'>
                 <Link className='textLink' to="/start">진행중인 프로젝트</Link>
@@ -211,9 +235,9 @@ function Main () {
                 <NoticeBanner className='NoticeBanner' />
               </div>
             </div>
-            <div className='Main-main'>
-              <div className='Main-projectname'>
-                <Link className='textLink' to="/main">{selectedProjectTitle}</Link>
+            <div className={switchCode == 3 ? 'Main-Mydocument' : 'Main-main'}>
+              <div className='Main-projectname' onClick={switchToKanban}>
+                {selectedProjectTitle}
               </div>
               <div className="Main-progress">
                 {datahandler()}
