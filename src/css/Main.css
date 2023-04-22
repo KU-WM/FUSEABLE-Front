@@ -5,7 +5,7 @@
   border: 1px solid red;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: antiquewhite;
+  background-color: #B3E5BE;
   z-index: 2;
 }
 
@@ -15,10 +15,8 @@
   left: 0;
 }
 
-.Main-header .logo img {
-  width: 220px;
-  height: 70px;
-  margin: 15px 0;
+.Main-header .logo:hover {
+  cursor: pointer;
 }
 
 .Main-header .crewmate {
@@ -28,7 +26,6 @@
 
 .Main-header .sidebar {
   position: absolute;
-  font-size: 30px;
   right: 0;
 }
 
@@ -45,7 +42,7 @@
   left: 0;
   width: 200px;
   z-index: 1;
-  background-color: beige;
+  background-color: #B3E5BE;
 }
 
 .Main-mainbody .Main-interface .Main-notice {
@@ -62,9 +59,9 @@
   align-items: center;
 }
 
-.Main-mainbody .Main-interface .Main-notice .textLink {
-  color: inherit;
-  text-decoration: inherit;
+.Main-mainbody .Main-interface .Main-notice:hover {
+  color: var(--bs-link-hover-color);
+  cursor: pointer;
 }
 
 .Main-mainbody .Main-interface .Main-calendar {
@@ -81,6 +78,11 @@
   align-items: center;
 }
 
+.Main-mainbody .Main-interface .Main-calendar:hover {
+  color: var(--bs-link-hover-color);
+  cursor: pointer;
+}
+
 .Main-mainbody .Main-interface .Main-mydocument {
   position: absolute;
   top: 19%;
@@ -93,6 +95,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.Main-mainbody .Main-interface .Main-mydocument:hover {
+  color: var(--bs-link-hover-color);
+  cursor: pointer;
 }
 
 .Main-mainbody .Main-interface .Main-myproject {
@@ -135,7 +142,7 @@
   width: calc(100% - 200px);
   display: flex;
   flex-wrap: wrap;
-  background-color: blanchedalmond;
+  background-color: #F5FFC9;
 }
 
 .Main-mainbody .Main-main .Main-projectname {
@@ -146,20 +153,18 @@
   padding: 0.5%;
   box-sizing: border-box;
   border: 1px solid red;
-  background-color: cornsilk;
+  background-color: #F5FFC9;
   border-radius: 5px;
   z-index: 1;
 }
 
 .Main-mainbody .Main-main .Main-progress {
   position: relative;
-  margin: 10px;
   padding: 10px;
-  top: 50px;
+  margin-top: 50px;
   width: calc(100vw - 200px);
   box-sizing: border-box;
   border: 1px solid red;
-  border-radius: 5vw;
 }
 
 .Main-mainbody .Main-main .Main-progress .content {
