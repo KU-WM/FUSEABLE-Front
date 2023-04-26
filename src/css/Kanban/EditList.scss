@@ -1,0 +1,77 @@
+.KanbanList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-wrap: wrap;
+  border: 1px solid red;
+
+  .kanbanListTitle {
+
+  }
+
+  .kanbanListDeadline {
+
+  }
+
+  .Edit_btn {
+    overflow: auto;
+    left: 10px;
+    width: 50px;
+    height: 25px;
+    box-sizing: border-box;
+    margin: 1px 5px;
+  }
+
+  .Delete_btn {
+    overflow: auto;
+    left: 10px;
+    width: 50px;
+    height: 25px;
+    box-sizing: border-box;
+    margin: 1px 5px;
+  }
+
+  ul li {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  #kanbanTitle { 
+    width: 200px;
+    height: 30px;
+    overflow: hidden;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  #kanbanContent {
+    width: 200px;
+    height: 30px;
+    overflow: hidden;
+    padding: 2px;
+    box-sizing: border-box;
+  }
+
+  #kanbanDeadline {
+    width: 200px;
+    height: 30px;
+    overflow: hidden;
+    padding: 2px;
+    box-sizing: border-box;
+  } 
+}
+
+.openedModal{
+  .Input_title{
+    width: 80%;
+  }
+
+  .Input_deadline{
+    width: 80%;
+  }
+
+  .Input_content{
+    width: 80%;
+    height: 300px;
+  }
+}

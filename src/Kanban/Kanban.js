@@ -2,11 +2,10 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { kanbanListState } from "../recoil";
-import AddList from "./AddList";
 import EditList from "./EditList";
 import KanbanList from "./KanbanList";
-import './Kanban.css';
-import { useCallback, useEffect, useState } from "react";
+import '../css/Kanban/Kanban.css';
+import { useEffect } from "react";
 import axios from "axios";
 
 

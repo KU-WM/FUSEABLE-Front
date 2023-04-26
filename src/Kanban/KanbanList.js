@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import AddList from "./AddList";
-import './KanbanList.css';
+import '../css/Kanban/KanbanList.scss';
 
 
 export default function KanbanList({title, children}) {

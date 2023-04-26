@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Main.css';
+import '../css/Pages/Main.scss';
 import Logo from '../images/Logo.png';
 import Kanban from '../Kanban/Kanban';
 import NoticeBanner from '../Notice/NoticeBanner';
-import "../css/SideBar.css"
+import "../css/Pages/SideBar.css"
 import { useEffect } from 'react';
 import axios from 'axios';
 import { userInProjectState } from '../recoil';
@@ -223,7 +223,6 @@ function Main () {
               </div>
               <div className='Main-calendar' onClick={switchToCalendar}>
                 일정
-                {/* <Link className='textLink' to="/main/calendar">일정</Link> */}
               </div>
               <div className='Main-mydocument' onClick={switchToMyDocument}>
                 내가 작성한 문서

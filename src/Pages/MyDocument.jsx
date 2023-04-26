@@ -1,29 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import '../css/MyDocument.css';
-import Logo from '../images/Logo.png';
+import '../css/Pages/MyDocument.css';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { myDocumentState, userInProjectState } from '../recoil';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useState } from 'react';
-import NoticeBanner from '../Notice/NoticeBanner';
 import MyDocumentList from './MyDocumentList';
 
 
 function MyDocument () {
   const mydocument = useRecoilValue(myDocumentState)
   const [mydocumentSet, setmydocumentSet] = useRecoilState(myDocumentState);
-  const [selectedDate, seleteDate] = useState(new Date());
-  const [crewsOpen, setcrewsOpen] = useState(false);
-  const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
-  
+
   const userCode = window.localStorage.getItem("userCode");
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
-
-
-  const [SideBarOpen, setSideBarOpen] = useState(false);
-
 
   useEffect(() => {(async() => {
     {try {

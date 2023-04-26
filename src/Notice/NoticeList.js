@@ -1,11 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { noticeListState } from "../recoil";
 import EditNotice from "./EditNotice";
-import "./NoticeSet.css";
+import "../css/Pages/NoticeSet.css";
 
 
 function NoticeList () {
@@ -14,8 +13,6 @@ function NoticeList () {
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
   const userCode = window.localStorage.getItem("userCode");
   const [selectedDate, seleteDate] = useState(new Date());
-
-  const navigate = useNavigate();
 
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
 
@@ -97,9 +94,6 @@ function NoticeList () {
     catch(e) {
       console.log(e);
     }
-
-    navigate('/main/noticeredirect');
-
   };
 
 

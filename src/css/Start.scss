@@ -1,0 +1,54 @@
+/* TOP SIDE */
+.Start-header {
+  position: relative;
+  height: 100px;
+  background-color: bisque;
+  display: flex;
+  font-size: 16px;
+  border: .5px solid royalblue;
+  border-radius: 5px;
+  box-sizing: border-box;
+  z-index: 1;
+
+  .logo {
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+  
+    img {
+      width: 220px;
+      height: 70px;
+      margin: 15px 0;
+    }
+  }
+
+  .kakaoProfileImg {
+    position: absolute;
+    right: 0;
+    border-radius: 100px;
+    border: 0.5px solid red;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
+/* MAIN SIDE */
+.Start-mainbody {
+  position: relative;
+
+  .userNickname {
+    border: .5px solid royalblue;
+    border-radius: 5px;
+    margin: 3px 0 3px;
+    box-sizing: border-box;
+  }
+
+  // .Start-addBtn {
+  // }
+}
+
+.Start-projectList {
+  position: relative;
+}

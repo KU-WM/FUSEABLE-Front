@@ -123,13 +123,21 @@ function EditProjectList({item}) {
     navigate('/main');
   }
 
+  const changeState = () => {
+    var bookmarkState = document.getElementById('bookmark');
+
+   
+  }
 
   return (
     <>
       <React.Fragment>
-        <div onClick={projectSelect}>{item.title}</div>
-        <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
-        <button className="Edit_btn" onClick={openModal}>수정</button>
+        <div>
+          <input type="checkbox" className="Bookmark" id="bookmark" onClick={changeState}></input>
+          <div onClick={projectSelect}>{item.title}</div>
+          <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
+          <button className="Edit_btn" onClick={openModal}>수정</button>
+        </div>
       </React.Fragment>
     </>
   )

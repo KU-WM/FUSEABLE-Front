@@ -9,11 +9,6 @@ import Logout from './Pages/Logout';
 import Start from './Pages/Start';
 import Main from './Pages/Main';
 import Kanban from './Kanban/Kanban';
-import Notice from './Pages/Notice';
-import MyDocument from './Pages/MyDocument';
-import CalendarDisplay from './Pages/Calendar';
-import KanbanRedirect from './Kanban/KanbanRedirect';
-import NoticeRedirect from './Pages/NoticeRedirect';
 
 
 const App = () => {
@@ -26,12 +21,7 @@ const App = () => {
         <Route path='/start' element={<Start />}></Route>
         <Route path='/main' element={<Main />}></Route>
         <Route path='/kanban' element={<Kanban />}></Route>
-        <Route path='/main/notice' element={<Notice />}></Route>
-        <Route path='/main/mydocument' element={<MyDocument />}></Route>
-        <Route path='/main/calendar' element={<CalendarDisplay />}></Route>
-        <Route path='/main/kanbanredirect' element={<KanbanRedirect />}></Route>
-        <Route path='/main/noticeredirect' element={<NoticeRedirect />}></Route>
-      </Routes>
+       </Routes>
     </BrowserRouter>
   )
 }

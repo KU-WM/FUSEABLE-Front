@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Login.css';
+import '../css/Pages/Login.css';
 import Logo from '../images/Logo.png';
 
 

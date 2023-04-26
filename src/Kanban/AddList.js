@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { kanbanListState } from "../recoil";
-import './AddList.css'
+import '../css/Kanban/AddList.css'
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
@@ -161,9 +161,6 @@ function AddList({title}) {
     catch(e) {
       console.log(e);
     }
-
-    navigate("/main/kanbanredirect");
-
   };
 
 

@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useRecoilState } from "recoil";
 import { kanbanListState } from "../recoil";
-import './EditList.css';
+import '../css/Kanban/EditList.scss';
 import ReactDatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -160,7 +160,6 @@ function EditList({item}) {
     catch (e) {
       console.log(e);
     }
-    navigate("/main/kanbanredirect");
   };
 
   const moveHandler = async(dragIndex, hoverIndex) => {
@@ -370,8 +369,6 @@ function EditList({item}) {
     catch(e) {
       console.log(e);
     }
-    navigate("/main/kanbanredirect");
-
   };
 
   const deleteItem = async() =>{

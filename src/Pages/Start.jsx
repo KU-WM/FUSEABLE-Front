@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Start.css';
+import '../css/Start.scss';
 import { projectListState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
@@ -7,7 +7,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
-import { useNavigate } from 'react-router-dom';
 
 
 function Start () {
@@ -15,7 +14,7 @@ function Start () {
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
 
-
+  window.localStorage.setItem("switchCode", 0);
   // console.log("START PAGE");
   const getId = () => {
     let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;

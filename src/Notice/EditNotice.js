@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { noticeListState } from "../recoil";
-import "./NoticeSet.css";
+import "../css/Pages/NoticeSet.css";
 
 
 function EditNotice ({item}) {

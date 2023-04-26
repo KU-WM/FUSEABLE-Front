@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/Login.css';
+import '../css/Pages/Login.css';
 
 
 function Logout () {
