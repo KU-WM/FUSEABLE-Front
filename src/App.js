@@ -5,6 +5,7 @@ import './App.scss'
 import { BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from './Pages/Login';
 import Redirect from './Pages/Redirect';
+import GoogleRedirect from './Pages/GoogleRedirect';
 import Logout from './Pages/Logout';
 import Start from './Pages/Start';
 import Main from './Pages/Main';
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path='/' exact element={<Login />}></Route>
         <Route path='/redirect' element={<Redirect />}></Route>
+        <Route path='/googleredirect' element={<GoogleRedirect />}></Route>
         <Route path='/logout' element={<Logout />}></Route>
         <Route path='/start' element={<Start />}></Route>
         <Route path='/main' element={<Main />}></Route>

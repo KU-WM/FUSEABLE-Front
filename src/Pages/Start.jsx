@@ -41,7 +41,7 @@ function Start () {
     try {
       const res = await axios({
         method: 'post',
-        url: `http://localhost:8080/api/${userCode}`,
+        url: `http://localhost:8080/api/project/create/${userCode}`,
         data: 
           {
             title,
@@ -107,7 +107,7 @@ function Start () {
       )
       .then((response) => 
       {
-        // console.log("Response : ", response.data.projects);
+        console.log("Response : ", response.data.projects);
         setProjectList(clearData(projectList));
         if (response.data.projects) 
         {(response.data.projects).map((data) => {
@@ -116,6 +116,7 @@ function Start () {
           {
             id: data.projectId,
             title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
+            bookmarkState: data.bookmark,
           },
         ])
       })
@@ -138,9 +139,18 @@ function Start () {
   };
 
   const dataHandler = () => {
-    return projectList
-    .map((item) => <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>);
-  }
+    const bookmarkedProjects = projectList.filter((data) => data.bookmarkState === true);
+    const unbookmarkedProjects = projectList.filter((data) => data.bookmarkState === false);
+  
+    return [
+      ...bookmarkedProjects.map((item) => (
+        <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
+      )),
+      ...unbookmarkedProjects.map((item) => (
+        <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
+      )),
+    ];
+  };
 
   const clearData = (arr) => {
     return [...arr.slice(0,0)]

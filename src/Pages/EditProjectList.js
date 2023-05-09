@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { projectListState } from "../recoil";
+import BookmarkTrue from '../images/bookmarkT.png';
+import BookmarkFalse from '../images/bookmarkF.png';
 
 
 function EditProjectList({item}) {
@@ -123,17 +125,30 @@ function EditProjectList({item}) {
     navigate('/main');
   }
 
-  const changeState = () => {
-    var bookmarkState = document.getElementById('bookmark');
-
-   
+  const changeState = async () => {
+    try {
+      const res = await axios
+      .get(
+        `http://localhost:8080/api/project/bookmark/${userCode}/${item.id}`,
+      )
+      .then((response) => console.log(response))
+    }
+    catch(e) {
+      console.log(e);
+    }
+    
+    window.location.reload();
   }
 
   return (
     <>
       <React.Fragment>
         <div>
-          <input type="checkbox" className="Bookmark" id="bookmark" onClick={changeState}></input>
+          <img 
+            className="bookmark_img" 
+            src={item.bookmarkState ? BookmarkTrue : BookmarkFalse} 
+            onClick={changeState}
+            style={{width: "15px", height: "15px"}}></img>
           <div onClick={projectSelect}>{item.title}</div>
           <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
           <button className="Edit_btn" onClick={openModal}>수정</button>
