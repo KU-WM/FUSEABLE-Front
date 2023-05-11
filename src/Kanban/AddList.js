@@ -5,7 +5,6 @@ import { kanbanListState } from "../recoil";
 import '../css/Kanban/AddList.css'
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
 
 
 var countNew = 1;
@@ -14,11 +13,11 @@ function AddList({title}) {
   const [KanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, seleteDate] = useState(new Date());
+  const [imgBase64, setImgBase64] = useState([]);
+  const [imgFile, setImgFile] = useState(null);
 
   const userCode = window.localStorage.getItem("userCode");
   const selectedProjectId = window.localStorage.getItem("selectedProjectId");
-
-  const navigate = useNavigate();
 
   var tempTitle = countNew == 1 ? "" :  window.localStorage.getItem("tempNewTitle")
   var tempContent = countNew == 1 ? "" :  window.localStorage.getItem("tempNewContent")
@@ -87,6 +86,10 @@ function AddList({title}) {
                   />
                 </li>
                 <li>
+                  <input type="file" id="FileUpload" onChange={fileUpload} multiple>
+                  </input>
+                </li>
+                <li>
                   <textarea
                     id="inputNewContent"
                     className="Input_content"
@@ -123,6 +126,32 @@ function AddList({title}) {
     setModalOpen(false);
   };
 
+  const fileUpload = () => {
+    const uploadFiles = document.getElementById("FileUpload").files
+    for(var i = 0; i < (uploadFiles).length; i++) {
+      console.log(uploadFiles[i]);
+    }
+
+    setImgFile(uploadFiles);
+    setImgBase64([]);
+
+    for(let i = 0; i < uploadFiles.length; i++) {
+      if (uploadFiles[i]) {
+        let reader = new FileReader();
+        reader.readAsDataURL(uploadFiles[i]);
+        reader.onloadend = () => {
+          const base64 = reader.result;
+          // console.log("Base64 : ", base64);
+
+          if(base64) {
+            let base64Sub = base64.toString();
+            setImgBase64(imgBase64 => [...imgBase64, [uploadFiles[i].name ,base64Sub]]);
+          }
+        }
+      }
+    }
+  }
+
   const addItem = async(textTitle, textContent, textDeadline) => {
     setKanbanList((oldKanbanList) => [
       ...oldKanbanList,
@@ -132,6 +161,7 @@ function AddList({title}) {
         title: textTitle,
         content: textContent,
         deadline: textDeadline,
+        files: imgBase64,
       },
     ]);
 
@@ -144,6 +174,7 @@ function AddList({title}) {
       title: textTitle,
       content: textContent,
       endAt: deadline,
+      files: imgBase64,
     };
 
     console.log("data : ", data);

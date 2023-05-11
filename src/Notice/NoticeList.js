@@ -87,12 +87,9 @@ function NoticeList () {
           startAt: startAt,
         }
       )
-      .then((response) => {
-        console.log(response);
-      })
     }
     catch(e) {
-      console.log(e);
+      console.log("ERROR : ", e);
     }
   };
 
