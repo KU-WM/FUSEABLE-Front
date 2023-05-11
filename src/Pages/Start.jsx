@@ -51,6 +51,7 @@ function Start () {
       .then((response) => {
         console.log("response", response)
         console.log("response data title", response.data.title);
+        window.location.reload();
       })
     }
     catch(e) {
