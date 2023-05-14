@@ -1,30 +1,56 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Pages/Main.scss';
 import Logo from '../images/Logo.png';
-import Kanban from '../Kanban/Kanban';
+import { kanbanListState } from "../recoil";
 import NoticeBanner from '../Notice/NoticeBanner';
 import "../css/Pages/SideBar.css"
 import { useEffect } from 'react';
 import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
-import MyCalendar from './CalendarTest';
-import NoticeList from '../Notice/NoticeList';
-import MyDocument from './MyDocument'
-import AddListPage from '../Kanban/AddListPage'
+import ReactDatePicker from "react-datepicker";
 
 
-function Main () {
+var countNew = 1;
+
+function EditListPage ({title}) {
+  const [KanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [modalOpen, setModalOpen] = useState(false);
   const [crewsOpen, setcrewsOpen] = useState(false);
   const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
+  const [selectedDate, seleteDate] = useState(new Date());
+  const [imgBase64, setImgBase64] = useState([]);
+  const [imgFile, setImgFile] = useState(null);
   
+  const userCode = sessionStorage.getItem("userCode");
   const selectedProjectTitle = sessionStorage.getItem("selectedProjectTitle");
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
+  var tempTitle = countNew == 1 ? "" :  sessionStorage.getItem("tempNewTitle")
+  var tempContent = countNew == 1 ? "" :  sessionStorage.getItem("tempNewContent")
+
   var switchCode = sessionStorage.getItem("switchCode") ? sessionStorage.getItem("switchCode") : 0;
+  const navigate = useNavigate();
+
+  countNew = 1;
+
+  const getId = () => {
+    let id = KanbanList.length > 0 ? (KanbanList.length - 1) : 0;
+    return id;
+  }
+  
+  const setDate = (date) => {
+    tempTitle = document.getElementById('inputNewTitle').value;
+    tempContent = document.getElementById('inputNewContent').value;
+
+    sessionStorage.setItem("tempNewTitle", tempTitle)
+    sessionStorage.setItem("tempNewContent", tempContent)
+
+    countNew++;
+    seleteDate(date);
+  }
 
   useEffect(() => {(async() => {
     {try {
@@ -54,6 +80,82 @@ function Main () {
   },[])
 
   console.log("Crews : ", userInproject);
+
+  const Add = () => {
+    var textTitle = document.getElementById('inputNewTitle').value;
+    var textContent = document.getElementById('inputNewContent').value;
+    var textDeadline = document.getElementById('inputDeadline').value;
+
+    addItem(textTitle, textContent, textDeadline);
+  }
+
+  const fileUpload = () => {
+    const uploadFiles = document.getElementById("FileUpload").files
+    for(var i = 0; i < (uploadFiles).length; i++) {
+      console.log(uploadFiles[i]);
+    }
+
+    setImgFile(uploadFiles);
+    setImgBase64([]);
+
+    for(let i = 0; i < uploadFiles.length; i++) {
+      if (uploadFiles[i]) {
+        let reader = new FileReader();
+        reader.readAsDataURL(uploadFiles[i]);
+        reader.onloadend = () => {
+          const base64 = reader.result;
+          // console.log("Base64 : ", base64);
+
+          if(base64) {
+            let base64Sub = base64.toString();
+            setImgBase64(imgBase64 => [...imgBase64, [uploadFiles[i].name ,base64Sub]]);
+          }
+        }
+      }
+    }
+  }
+
+  const addItem = async(textTitle, textContent, textDeadline) => {
+    setKanbanList((oldKanbanList) => [
+      ...oldKanbanList,
+      {
+        id: getId(),
+        progress: title,
+        title: textTitle,
+        content: textContent,
+        deadline: textDeadline,
+        files: imgBase64,
+      },
+    ]);
+
+
+    const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
+
+    const data = {
+      arrayId: (getId() - 1),
+      step: title,
+      title: textTitle,
+      content: textContent,
+      endAt: deadline,
+      files: imgBase64,
+    };
+
+    console.log("data : ", data);
+
+    try {
+      const res = await axios
+      .post(
+        `http://localhost:8080/api/project/main/${userCode}/${selectedProjectId}`,
+        data,
+      )
+      .then((response) => {
+        console.log(response)
+      })
+    }
+    catch(e) {
+      console.log(e);
+    }
+  };
 
   const clearData = (arr) => {
     return [...arr.slice(0,0)]
@@ -125,9 +227,6 @@ function Main () {
             <main>
               {userDataHandler()}
             </main>
-            <footer>
-              
-            </footer>
           </section>
         ) : null}
       </div>
@@ -143,60 +242,80 @@ function Main () {
   };
 
   const datahandler = () => {
-    if(switchCode == 0) {
-      console.log("Kanban Loading");
-      return (
-        <Kanban />
-      )
-    }
-    else if(switchCode == 1) {
-      console.log("Switchcode1 Loading");
-      return (
-        <NoticeList />
-      )
-    }
-    else if(switchCode == 2) {
-      console.log("Switchcode2 Loading");
-      return (
-        <MyCalendar className="calendar"></MyCalendar>
-      )
-    }
-    else if(switchCode == 3) {
-      console.log("Switchcode3 Loading");
-      return (
-        <MyDocument />
-      )
-    }
-    else {
-      console.log("Loading Error from Main Select!\n\n");
-    }
+    return (
+      <div className='note'>
+        <div className='note-content'>
+        <ul>
+                <li>
+                  <input
+                    id="inputNewTitle"
+                    className="Input_title"
+                    type="text"
+                    placeholder='Title'
+                    defaultValue={tempTitle || ''}
+                  />
+                </li>
+                <li>
+                  <ReactDatePicker 
+                    selected={selectedDate}
+                    onChange={date => setDate(date)}
+                    id="inputDeadline"
+                    type="text"
+                    className="Input_deadline"
+                  />
+                </li>
+                <li>
+                  <input type="file" id="FileUpload" onChange={fileUpload} multiple>
+                  </input>
+                </li>
+                <li>
+                  <textarea
+                    id="inputNewContent"
+                    className="Input_content"
+                    type="text"
+                    placeholder='Content'
+                    defaultValue={tempContent || ''}
+                  />
+                </li>
+                <li>
+                  <input type='button'
+                    className="Add"
+                    defaultValue='생성'
+                    onClick={Add}
+                  />
+                </li>
+              </ul>
+        </div>
+        <div className='note-comment'>
+          
+        </div>  
+      </div>
+    )
   }
 
-  const switchToKanban = () => {
+  const goToKanban = () => {
     console.log("SwitchCode : ", switchCode);
     sessionStorage.setItem("switchCode", 0);
-    window.location.reload();
+    navigate('/main')
   }
 
-  const switchToNotice = () => {
+  const goToNotice = () => {
     console.log("SwitchCode : ", switchCode);
     sessionStorage.setItem("switchCode", 1);
-    window.location.reload();
+    navigate('/main')
   }
 
-  const switchToCalendar = () => {
+  const goToCalendar = () => {
     console.log("SwitchCode : ", switchCode);
     sessionStorage.setItem("switchCode", 2);
-    window.location.reload();
+    navigate('/main')
   }
 
-  const switchToMyDocument = () => {
+  const goToMyDocument = () => {
     console.log("SwitchCode : ", switchCode);
     sessionStorage.setItem("switchCode", 3);
-    window.location.reload();
+    navigate('/main')
   }
-
-
 
   return (
     <React.Fragment>
@@ -204,7 +323,7 @@ function Main () {
         <div className='Temp'>
           <div className='Main-header'>
             <div className='logo'>
-              <img src={Logo} alt="Logo" className='logo' onClick={switchToKanban}/>
+              <img src={Logo} alt="Logo" className='logo' onClick={goToKanban}/>
             </div>
             <div className='crewmate'>
               <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
@@ -219,13 +338,13 @@ function Main () {
           </div>
           <div className='Main-mainbody'>
             <div className='Main-interface'>
-              <div className='Main-notice' onClick={switchToNotice}>
+              <div className='Main-notice' onClick={goToNotice}>
                 공지사항
               </div>
-              <div className='Main-calendar' onClick={switchToCalendar}>
+              <div className='Main-calendar' onClick={goToCalendar}>
                 일정
               </div>
-              <div className='Main-mydocument' onClick={switchToMyDocument}>
+              <div className='Main-mydocument' onClick={goToMyDocument}>
                 내가 작성한 문서
               </div>
               <div className='Main-myproject'>
@@ -236,7 +355,7 @@ function Main () {
               </div>
             </div>
             <div className={switchCode == 3 ? 'Main-Mydocument' : 'Main-main'}>
-              <div className='Main-projectname' onClick={switchToKanban}>
+              <div className='Main-projectname' onClick={goToKanban}>
                 {selectedProjectTitle}
               </div>
               <div className="Main-progress">
@@ -251,4 +370,4 @@ function Main () {
 }
 
 
-export default Main;
+export default EditListPage;

@@ -12,7 +12,7 @@ function EditProjectList({item}) {
   const [modalOpen, setModalOpen] = useState(false);
   const index = projectList.findIndex((listItem) => listItem === item);
 
-  const userCode = window.localStorage.getItem("userCode");
+  const userCode = sessionStorage.getItem("userCode");
 
 
   const navigate = useNavigate();
@@ -119,8 +119,8 @@ function EditProjectList({item}) {
 
   const projectSelect = () => {
     
-    window.localStorage.setItem("selectedProjectId",item.id);
-    window.localStorage.setItem("selectedProjectTitle",item.title);
+    sessionStorage.setItem("selectedProjectId",item.id);
+    sessionStorage.setItem("selectedProjectTitle",item.title);
 
     navigate('/main');
   }

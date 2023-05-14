@@ -12,8 +12,8 @@ import axios from "axios";
 function Kanban() {
   const kanbanList = useRecoilValue(kanbanListState)
   const [kanbanListSet, setKanbanListSet] = useRecoilState(kanbanListState);
-  const userCode = window.localStorage.getItem("userCode");
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const userCode = sessionStorage.getItem("userCode");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   useEffect(() => {(async() => {
     {try {
@@ -57,7 +57,7 @@ function Kanban() {
     {id: 4, progress: 'DONE'},
   ];
 
-  const projectId = Number(window.localStorage.getItem("selectedProjectId"))
+  const projectId = Number(sessionStorage.getItem("selectedProjectId"))
   // console.log("ProjectId : ", projectId);
   
   const dataHandler = (progress) => {

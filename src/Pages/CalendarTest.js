@@ -15,8 +15,8 @@ import { useEffect } from "react";
 const MyCalendar = () => {
   const kanbanList = useRecoilValue(kanbanListState)
   const [kanbanListSet, setKanbanListSet] = useRecoilState(kanbanListState);
-  const userCode = window.localStorage.getItem("userCode");
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const userCode = sessionStorage.getItem("userCode");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   useEffect(() => {(async() => {
     {try {

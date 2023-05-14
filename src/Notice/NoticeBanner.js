@@ -19,7 +19,7 @@ function NoticeBanner() {
   const noticeListSet = useRecoilValue(noticeListState);
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
   
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
 
   useEffect(() => {(async() => {

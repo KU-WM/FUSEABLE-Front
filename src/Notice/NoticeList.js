@@ -11,10 +11,10 @@ function NoticeList () {
   const [modalOpen, setModalOpen] = useState(false);
   const noticeListSet = useRecoilValue(noticeListState);
   const [noticeList, setNoticeList] = useRecoilState(noticeListState);
-  const userCode = window.localStorage.getItem("userCode");
+  const userCode = sessionStorage.getItem("userCode");
   const [selectedDate, seleteDate] = useState(new Date());
 
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   const getId = () => {
     let id = noticeList.length > 0 ? noticeList[noticeList.length - 1].id + 1 : 1;

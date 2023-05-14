@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
+import '../css/Kanban/AddList.css'
 
 
 function Start () {
@@ -14,7 +15,7 @@ function Start () {
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
 
-  window.localStorage.setItem("switchCode", 0);
+  sessionStorage.setItem("switchCode", 0);
   // console.log("START PAGE");
   const getId = () => {
     let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;
@@ -34,7 +35,7 @@ function Start () {
     ]);
 
     closeModal();
-    const userCode = window.localStorage.getItem("userCode");
+    const userCode = sessionStorage.getItem("userCode");
 
     console.log("title", title);
 
@@ -101,31 +102,32 @@ function Start () {
   useEffect(() => {(async() => {
     {
       try {
-      const userCode = Number(window.localStorage.getItem("userCode"));
-      const res = await axios
-      .get(
-        `http://localhost:8080/api/project/${userCode}`
-      )
-      .then((response) => 
-      {
-        console.log("Response : ", response.data.projects);
-        setProjectList(clearData(projectList));
-        if (response.data.projects) 
-        {(response.data.projects).map((data) => {
-        return setProjectList((oldprojectList) => [
-          ...oldprojectList,
-          {
-            id: data.projectId,
-            title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
-            bookmarkState: data.bookmark,
-          },
-        ])
-      })
-      }
+        const userCode = Number(sessionStorage.getItem("userCode"));
+        console.log("userCode : ", userCode);
+        const res = await axios
+        .get(
+          `http://localhost:8080/api/project/${userCode}`
+        )
+        .then((response) => 
+        {
+          console.log("Response : ", response.data.projects);
+          setProjectList(clearData(projectList));
+          if (response.data.projects) 
+            {(response.data.projects).map((data) => {
+              return setProjectList((oldprojectList) => [
+                ...oldprojectList,
+                {
+                  id: data.projectId,
+                  title: (data.title[0] == '{') ? data.title.slice(10,data.title.length - 2) : data.title,
+                  bookmarkState: data.bookmark,
+                },
+              ])
+          })
+        }
       })
     }
     catch (e) {
-      console.error(e);
+      console.error("Error from useEffect", e);
     }
   }
     })();
@@ -157,8 +159,8 @@ function Start () {
     return [...arr.slice(0,0)]
   }
 
-  const kakaoNickname = window.localStorage.getItem("kakaoNickname");
-  const kakaoProfileImg = window.localStorage.getItem("kakaoProfileImg");
+  const kakaoNickname = sessionStorage.getItem("kakaoNickname");
+  const kakaoProfileImg = sessionStorage.getItem("kakaoProfileImg");
 
   // console.log("kakaoProfileImg : ", kakaoProfileImg);
   // console.log("Logo : ", Logo);
@@ -174,7 +176,7 @@ function Start () {
           <img className='kakaoProfileImg' src={kakaoProfileImg.slice(1,kakaoProfileImg.length - 1)} alt="kakaoProfileImg" ></img>
         </div>
         <div className='Start-mainbody'>
-          <div className='userNickname'>
+          <div className='userNickname'>   
             <strong>{kakaoNickname.slice(1,kakaoNickname.length - 1)}</strong>
             <span> 유저님 환영합니다</span>
           </div>

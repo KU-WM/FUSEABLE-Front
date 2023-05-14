@@ -14,7 +14,7 @@ function CalendarDisplay () {
   const [crewsOpen, setcrewsOpen] = useState(false);
   const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
 
-  const selectedProjectTitle = window.localStorage.getItem("selectedProjectTitle");
+  const selectedProjectTitle = sessionStorage.getItem("selectedProjectTitle");
 
   const Crews = (props) => {
     const { open, close } = props;

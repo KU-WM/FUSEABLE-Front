@@ -12,8 +12,8 @@ function MyDocument () {
   const mydocument = useRecoilValue(myDocumentState)
   const [mydocumentSet, setmydocumentSet] = useRecoilState(myDocumentState);
 
-  const userCode = window.localStorage.getItem("userCode");
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const userCode = sessionStorage.getItem("userCode");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   useEffect(() => {(async() => {
     {try {

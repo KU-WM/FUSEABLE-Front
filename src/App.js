@@ -9,7 +9,8 @@ import GoogleRedirect from './Pages/GoogleRedirect';
 import Logout from './Pages/Logout';
 import Start from './Pages/Start';
 import Main from './Pages/Main';
-import Kanban from './Kanban/Kanban';
+import AddListPage from './Kanban/AddListPage'
+import EditListPage from './Kanban/EditListPage'
 
 
 const App = () => {
@@ -22,7 +23,8 @@ const App = () => {
         <Route path='/logout' element={<Logout />}></Route>
         <Route path='/start' element={<Start />}></Route>
         <Route path='/main' element={<Main />}></Route>
-        <Route path='/kanban' element={<Kanban />}></Route>
+        <Route path='/addlistpage' element={<AddListPage />}></Route>    
+        <Route path='/editlistpage' element={<EditListPage />}></Route>      
        </Routes>
     </BrowserRouter>
   )

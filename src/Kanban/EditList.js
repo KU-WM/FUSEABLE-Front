@@ -19,8 +19,8 @@ function EditList({item}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, seleteDate] = useState(new Date(item.deadline));
 
-  var tempTitle = count == 1 ? item.title : window.localStorage.getItem("tempTitle");
-  var tempContent = count == 1 ? item.content : window.localStorage.getItem("tempContent");
+  var tempTitle = count == 1 ? item.title : sessionStorage.getItem("tempTitle");
+  var tempContent = count == 1 ? item.content : sessionStorage.getItem("tempContent");
 
   count = 1;
 
@@ -28,14 +28,14 @@ function EditList({item}) {
     tempTitle = document.getElementById('editTitle').value;
     tempContent = document.getElementById('editContent').value;
 
-    window.localStorage.setItem("tempTitle", tempTitle)
-    window.localStorage.setItem("tempContent", tempContent)
+    sessionStorage.setItem("tempTitle", tempTitle)
+    sessionStorage.setItem("tempContent", tempContent)
 
-    count ++
+    count ++;
     seleteDate(date);
   }
 
-  const selectedProjectId = window.localStorage.getItem("selectedProjectId");
+  const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   const navigate = useNavigate();
   
@@ -363,7 +363,7 @@ function EditList({item}) {
         }
       )
       .then ((response) => 
-        console.log("Delete Response : ", response)
+        console.log("Edit Response : ", response)
       )
     }
     catch(e) {
@@ -393,11 +393,11 @@ function EditList({item}) {
 
   return (
     <React.Fragment>
-      <div className="KanbanList" ref={ref} style={{opacity: isDragging? '0.3' : '1'}} >
-          <div className="kanbanListTitle" onClick={openModal}>
+      <div className="KanbanList" ref={ref} onClick={openModal} style={{opacity: isDragging? '0.3' : '1'}} >
+          <div className="kanbanListTitle">
             {item.title}
           </div>    
-          <div className="kanbanListDeadline" onClick={openModal}>
+          <div className="kanbanListDeadline">
             {item.deadline}          
           </div>
           <br></br>
