@@ -24,7 +24,7 @@ function Main () {
   const selectedProjectTitle = sessionStorage.getItem("selectedProjectTitle");
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
-  var switchCode = sessionStorage.getItem("switchCode") ? sessionStorage.getItem("switchCode") : 0;
+  var Main_switchCode = sessionStorage.getItem("Main_switchCode") ? sessionStorage.getItem("Main_switchCode") : 0;
 
   useEffect(() => {(async() => {
     {try {
@@ -143,26 +143,26 @@ function Main () {
   };
 
   const datahandler = () => {
-    if(switchCode == 0) {
+    if(Main_switchCode == 0) {
       console.log("Kanban Loading");
       return (
         <Kanban />
       )
     }
-    else if(switchCode == 1) {
-      console.log("Switchcode1 Loading");
+    else if(Main_switchCode == 1) {
+      console.log("Main_Switchcode1 Loading");
       return (
         <NoticeList />
       )
     }
-    else if(switchCode == 2) {
-      console.log("Switchcode2 Loading");
+    else if(Main_switchCode == 2) {
+      console.log("Main_Switchcode2 Loading");
       return (
         <MyCalendar className="calendar"></MyCalendar>
       )
     }
-    else if(switchCode == 3) {
-      console.log("Switchcode3 Loading");
+    else if(Main_switchCode == 3) {
+      console.log("Main_Switchcode3 Loading");
       return (
         <MyDocument />
       )
@@ -173,26 +173,26 @@ function Main () {
   }
 
   const switchToKanban = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 0);
+    console.log("Main_SwitchCode : ", Main_switchCode);
+    sessionStorage.setItem("Main_switchCode", 0);
     window.location.reload();
   }
 
   const switchToNotice = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 1);
+    console.log("Main_SwitchCode : ", Main_switchCode);
+    sessionStorage.setItem("Main_switchCode", 1);
     window.location.reload();
   }
 
   const switchToCalendar = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 2);
+    console.log("Main_SwitchCode : ", Main_switchCode);
+    sessionStorage.setItem("Main_switchCode", 2);
     window.location.reload();
   }
 
   const switchToMyDocument = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 3);
+    console.log("Main_SwitchCode : ", Main_switchCode);
+    sessionStorage.setItem("Main_switchCode", 3);
     window.location.reload();
   }
 
@@ -235,7 +235,7 @@ function Main () {
                 <NoticeBanner className='NoticeBanner' />
               </div>
             </div>
-            <div className={switchCode == 3 ? 'Main-Mydocument' : 'Main-main'}>
+            <div className={Main_switchCode == 3 ? 'Main-Mydocument' : 'Main-main'}>
               <div className='Main-projectname' onClick={switchToKanban}>
                 {selectedProjectTitle}
               </div>

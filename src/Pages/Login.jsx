@@ -5,6 +5,8 @@ import GoogleLoginImg from '../images/GoogleLoginImg.png'
 
 
 function Login () {
+  sessionStorage.setItem("Start_switchCode", 0);
+
   return (
     <div className="container">
       <header className="Login-header">

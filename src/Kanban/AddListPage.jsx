@@ -109,7 +109,6 @@ function AddListPage () {
           // console.log("Base64 : ", base64);
 
           if(base64) {
-            console.log("on For");
             let base64Sub = base64.toString();
             setImgBase64((imgBase64) => [
               ...imgBase64, 
@@ -128,15 +127,20 @@ function AddListPage () {
 
   const addItem = async(textTitle, textContent, textDeadline) => {
     console.log("Base64 : ", imgBase64);
+
     const formData = new FormData();
-    for (let i = 0; i < imgBase64.length; i++) {
-      const file = imgBase64[i];
-      console.log("File on Form : ", file);
-      formData.append("fileUrl", file.fileUrl);
+
+    const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
+
+    // formData.append("arrayId", (getId() - 1));
+    // formData.append("step", title);
+    // formData.append("title", textTitle);
+    // formData.append("content", textContent);
+    // formData.append("endAt", deadline);
+
+    for(let i = 0; i < imgBase64.length; i++) {
+      formData.append("files", imgBase64[i])
     }
-
-    console.log("Form : ", formData);
-
     setKanbanList((oldKanbanList) => [
       ...oldKanbanList,
       {
@@ -149,25 +153,18 @@ function AddListPage () {
       },
     ]);
 
-
-    const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
-
-    const data = {
-      arrayId: (getId() - 1),
-      step: title,
-      title: textTitle,
-      content: textContent,
-      endAt: deadline,
-      files: formData,
-    };
-
-    console.log("data : ", data);
-
     try {
       const res = await axios
       .post(
         `http://localhost:8080/api/project/main/${userCode}/${selectedProjectId}`,
-        data,
+        {
+          arrayId: getId(),
+          step: title,
+          title: textTitle,
+          content: textContent,
+          endAt: textDeadline,
+          file: formData,
+        },
       )
       .then((response) => {
         console.log(response)

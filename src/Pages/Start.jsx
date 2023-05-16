@@ -15,8 +15,9 @@ function Start () {
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
 
-  sessionStorage.setItem("switchCode", 0);
-  // console.log("START PAGE");
+  sessionStorage.setItem("Main_switchCode", 0);
+  var Start_switchCode = sessionStorage.getItem("Start_switchCode") ? sessionStorage.getItem("Start_switchCode") : 0;
+
   const getId = () => {
     let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;
     return id;
@@ -142,17 +143,20 @@ function Start () {
   };
 
   const dataHandler = () => {
-    const bookmarkedProjects = projectList.filter((data) => data.bookmarkState === true);
-    const unbookmarkedProjects = projectList.filter((data) => data.bookmarkState === false);
+    
+    {
+      const bookmarkedProjects = projectList.filter((data) => data.bookmarkState === true);
+      const unbookmarkedProjects = projectList.filter((data) => data.bookmarkState === false);
   
-    return [
-      ...bookmarkedProjects.map((item) => (
-        <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
-      )),
-      ...unbookmarkedProjects.map((item) => (
-        <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
-      )),
-    ];
+      return [
+        ...bookmarkedProjects.map((item) => (
+          <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
+        )),
+        ...unbookmarkedProjects.map((item) => (
+          <EditProjectList className='textLink' key={item.id} item={item}></EditProjectList>
+        )),
+      ];
+    }
   };
 
   const clearData = (arr) => {
@@ -181,6 +185,8 @@ function Start () {
             <span> 유저님 환영합니다</span>
           </div>
           <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
+          <span>      </span>
+          <button className="btn btn-primary Start-addBtn" onClick={openModal}>시간표 생성</button>
         </div>
         <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>  
         <div className='Start-projectList'>
