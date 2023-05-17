@@ -163,12 +163,8 @@ function Start () {
     return [...arr.slice(0,0)]
   }
 
-  const kakaoNickname = sessionStorage.getItem("kakaoNickname");
-  const kakaoProfileImg = sessionStorage.getItem("kakaoProfileImg");
-
-  // console.log("kakaoProfileImg : ", kakaoProfileImg);
-  // console.log("Logo : ", Logo);
-
+  const Nickname = sessionStorage.getItem("Nickname");
+  const ProfileImg = sessionStorage.getItem("ProfileImg");
 
   return (
     <React.Fragment>
@@ -177,11 +173,11 @@ function Start () {
           <div className='logo'>
             <img src={Logo} alt="logo" />
           </div>
-          <img className='kakaoProfileImg' src={kakaoProfileImg.slice(1,kakaoProfileImg.length - 1)} alt="kakaoProfileImg" ></img>
+          <img className='ProfileImg' src={ProfileImg.slice(1,ProfileImg.length - 1)} alt="ProfileImg" ></img>
         </div>
         <div className='Start-mainbody'>
           <div className='userNickname'>   
-            <strong>{kakaoNickname.slice(1,kakaoNickname.length - 1)}</strong>
+            <strong>{Nickname.slice(1,Nickname.length - 1)}</strong>
             <span> 유저님 환영합니다</span>
           </div>
           <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>

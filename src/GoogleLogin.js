@@ -63,12 +63,14 @@ const GoogleLogin = () => {
           // 위에서 백엔드가 토큰을 잘받고 처리해서 유저정보를 다시 넘겨준다면, 그 응답을 처리한다.
           // data 라는 변수에 유저 정보를 저장하고, setItem을 사용해 로컬에 다시 저장한다.
           .then((data) => {
-
+            // sessionStorage.setItem("Email", JSON.stringify(data.data.kakaoEmail));
+            // sessionStorage.setItem("Id", JSON.stringify(data.data.kakaoId));
+            // sessionStorage.setItem("Nickname", JSON.stringify(data.data.kakaoNickname));
+            // sessionStorage.setItem("ProfileImg", JSON.stringify(data.data.kakaoProfileImg));
+            // sessionStorage.setItem("userCode", JSON.stringify(data.data.userCode));
+            // sessionStorage.setItem("userRole", JSON.stringify(data.data.userRole));
 
             console.log("DATA", data);
-            // console.log("userCode", data.data.userCode);
-            // console.log("kakaoNickname", data.data.kakaoNickname);
-            // console.log("kakaoProfileImg", data.data.kakaoProfileImg);
 
             
             // 만약, 유저정보를 잘 불러왔다면 navigate를 사용해 프론트엔드에서 설정한 마이페이지 경로를 설정해서 이동시킨다.
