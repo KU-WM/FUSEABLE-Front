@@ -11,6 +11,7 @@ import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import ReactDatePicker from "react-datepicker";
+import { type } from '@testing-library/user-event/dist/type';
 
 
 var countNew = 1;
@@ -100,47 +101,61 @@ function AddListPage () {
     setImgFile(uploadFiles);
     setImgBase64([]);
 
-    for(let i = 0; i < uploadFiles.length; i++) {
+    for (let i = 0; i < uploadFiles.length; i++) {
       if (uploadFiles[i]) {
-        let reader = new FileReader();
-        reader.readAsDataURL(uploadFiles[i]);
-        reader.onloadend = () => {
-          const base64 = reader.result;
-          // console.log("Base64 : ", base64);
-
-          if(base64) {
-            let base64Sub = base64.toString();
-            setImgBase64((imgBase64) => [
-              ...imgBase64, 
-              {
-                fileName: uploadFiles[i].name, 
-                fileUrl: base64Sub,
-              },
-            ]);
-          }
-
-        }
+        setImgBase64((past) => [
+          ...past,
+          uploadFiles[i]
+        ])
       }
     }
 
+    // for(let i = 0; i < uploadFiles.length; i++) {
+    //   if (uploadFiles[i]) {
+    //     let reader = new FileReader();
+    //     reader.readAsDataURL(uploadFiles[i]);
+    //     reader.onloadend = () => {
+    //       const base64 = reader.result;
+    //       console.log("Base64 : ", base64);
+
+    //       if(base64) {
+    //         let base64Sub = base64;
+    //         setImgBase64((imgBase) => [
+    //           ...imgBase, 
+    //           base64Sub,
+    //         ]);
+    //       }
+
+    //     }
+    //   }
+    // }
   }
 
   const addItem = async(textTitle, textContent, textDeadline) => {
+    const uploadFiles = document.getElementById("FileUpload").files
     console.log("Base64 : ", imgBase64);
 
     const formData = new FormData();
 
     const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
 
-    // formData.append("arrayId", (getId() - 1));
-    // formData.append("step", title);
-    // formData.append("title", textTitle);
-    // formData.append("content", textContent);
-    // formData.append("endAt", deadline);
+    const data = {
+      arrayId: (getId() - 1),
+      step: title,
+      title: textTitle,
+      content: textContent,
+      endAt: deadline,
+    }
+ 
+
+    formData.append("contents", new Blob([JSON.stringify(data)], {type: "application/json"}))
 
     for(let i = 0; i < imgBase64.length; i++) {
-      formData.append("files", imgBase64[i])
+      formData.append("file", imgBase64[i])
+      console.log("img64: ", imgBase64[i]);
     }
+    // formData.append("file", imgBase64)
+
     setKanbanList((oldKanbanList) => [
       ...oldKanbanList,
       {
@@ -149,7 +164,6 @@ function AddListPage () {
         title: textTitle,
         content: textContent,
         deadline: textDeadline,
-        files: formData,
       },
     ]);
 
@@ -157,14 +171,7 @@ function AddListPage () {
       const res = await axios
       .post(
         `http://localhost:8080/api/project/main/${userCode}/${selectedProjectId}`,
-        {
-          arrayId: getId(),
-          step: title,
-          title: textTitle,
-          content: textContent,
-          endAt: textDeadline,
-          file: formData,
-        },
+        formData,
       )
       .then((response) => {
         console.log(response)

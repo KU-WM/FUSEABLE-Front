@@ -18,11 +18,12 @@ const GoogleLogin = () => {
     ////////////////////////////////////////////////////////////
     (async () => {
       try {
+        console.log("TEST1");
         const res = await axios
           // 백엔드 주소 뒤에 인가코드 붙여서 GET 설정
           // 백엔드는 이 주소를 통해 뒤에 붙여져있는 인가코드를 전달 받게 된다.
           .get(
-            `http://localhost:8080/login/oauth2/code?code=${code}`
+            `http://localhost:8080/api/login/oauth2/token?code=${code}`
           )
           // 백엔드 쪽에서 보내준 응답 확인
           .then((response) => {
@@ -47,6 +48,7 @@ const GoogleLogin = () => {
       //               백엔드로 토큰 다시 넘기기
       ////////////////////////////////////////////////////////////
       try {
+        console.log("TEST2");
         const res = await axios
           // 이때, post가 아닌 get으로 접근한다.
           // 접근 주소는 백엔드에서 설정한 주소로 한다.
@@ -63,12 +65,12 @@ const GoogleLogin = () => {
           // 위에서 백엔드가 토큰을 잘받고 처리해서 유저정보를 다시 넘겨준다면, 그 응답을 처리한다.
           // data 라는 변수에 유저 정보를 저장하고, setItem을 사용해 로컬에 다시 저장한다.
           .then((data) => {
-            // sessionStorage.setItem("Email", JSON.stringify(data.data.kakaoEmail));
-            // sessionStorage.setItem("Id", JSON.stringify(data.data.kakaoId));
-            // sessionStorage.setItem("Nickname", JSON.stringify(data.data.kakaoNickname));
-            // sessionStorage.setItem("ProfileImg", JSON.stringify(data.data.kakaoProfileImg));
-            // sessionStorage.setItem("userCode", JSON.stringify(data.data.userCode));
-            // sessionStorage.setItem("userRole", JSON.stringify(data.data.userRole));
+            sessionStorage.setItem("Email", JSON.stringify(data.data.accountEmail));
+            sessionStorage.setItem("Id", JSON.stringify(data.data.accountId));
+            sessionStorage.setItem("Nickname", JSON.stringify(data.data.accountNickname));
+            sessionStorage.setItem("ProfileImg", JSON.stringify(data.data.profileImg));
+            sessionStorage.setItem("userCode", JSON.stringify(data.data.userCode));
+            sessionStorage.setItem("userRole", JSON.stringify(data.data.userRole));
 
             console.log("DATA", data);
 

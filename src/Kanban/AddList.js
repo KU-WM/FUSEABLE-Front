@@ -7,7 +7,7 @@ function AddList({title}) {
   const navigate = useNavigate();
 
   const CreateNote = () => {
-    sessionStorage.setItem("Progress", title);
+    sessionStorage.setItem("tempProgress", title);
     navigate('../addlistpage');
   }
 

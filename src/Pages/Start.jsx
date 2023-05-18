@@ -173,7 +173,7 @@ function Start () {
           <div className='logo'>
             <img src={Logo} alt="logo" />
           </div>
-          <img className='ProfileImg' src={ProfileImg.slice(1,ProfileImg.length - 1)} alt="ProfileImg" ></img>
+          <img className='ProfileImg' src={ProfileImg.slice(1,ProfileImg.length - 1)} alt="ProfileImg" referrerPolicy="no-referrer"></img>
         </div>
         <div className='Start-mainbody'>
           <div className='userNickname'>   

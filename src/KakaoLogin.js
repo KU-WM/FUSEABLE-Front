@@ -61,10 +61,10 @@ const KakaoLogin = () => {
           // 위에서 백엔드가 토큰을 잘받고 처리해서 유저정보를 다시 넘겨준다면, 그 응답을 처리한다.
           // data 라는 변수에 유저 정보를 저장하고, setItem을 사용해 로컬에 다시 저장한다.
           .then((data) => {
-            sessionStorage.setItem("Email", JSON.stringify(data.data.kakaoEmail));
-            sessionStorage.setItem("Id", JSON.stringify(data.data.kakaoId));
-            sessionStorage.setItem("Nickname", JSON.stringify(data.data.kakaoNickname));
-            sessionStorage.setItem("ProfileImg", JSON.stringify(data.data.kakaoProfileImg));
+            sessionStorage.setItem("Email", JSON.stringify(data.data.accountEmail));
+            sessionStorage.setItem("Id", JSON.stringify(data.data.accountId));
+            sessionStorage.setItem("Nickname", JSON.stringify(data.data.accountNickname));
+            sessionStorage.setItem("ProfileImg", JSON.stringify(data.data.profileImg));
             sessionStorage.setItem("userCode", JSON.stringify(data.data.userCode));
             sessionStorage.setItem("userRole", JSON.stringify(data.data.userRole));
 
