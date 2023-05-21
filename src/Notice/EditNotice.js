@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { noticeListState } from "../recoil";
 import "../css/Pages/NoticeSet.css";
+import BookmarkTrue from '../images/bookmarkT.png';
+import BookmarkFalse from '../images/bookmarkF.png';
 
 
 function EditNotice ({item}) {
@@ -166,17 +168,18 @@ function EditNotice ({item}) {
   return (
     <React.Fragment>
       <Modal open={modalOpen} close={closeModal} header="Notice"></Modal>
-      <div> 
-      </div>
-      <span onClick={openModal}>
-        <div className="noticeContainer">
+        <div className="noticeContainer" onClick={openModal}>
+          <div className="Notice_bookmark_img">
+            <img 
+               
+              src={item.bookmark ? BookmarkTrue : BookmarkFalse} 
+              style={{width: "15px", height: "15px"}}></img>
+          </div>
           <div className="NoticeIndex">{index + 1}</div>
           <div className="NoticeTitle">{item.title}</div>
           <div className="user">{item.user}</div>  
           <div className="startAt">{item.startAt}</div>  
-        </div>      
-      </span>
-      
+        </div>
     </React.Fragment>
   )
 }

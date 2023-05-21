@@ -58,11 +58,11 @@ function MyDocument () {
 
   return (
     <React.Fragment>
-          <div className="myDocument">
-            <div>Document List</div>
-            <span>순서</span><span className='myDocumentTitle'>제목</span>
-            {dataHandler()}    
-          </div>
+      <div className="myDocument">
+        <div>Document List</div>
+        <span>순서</span><span className='myDocumentTitle'>제목</span>
+        {dataHandler()}    
+      </div>
     </React.Fragment>
   )
 }

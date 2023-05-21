@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import React from "react";
 import 'swiper/css'
@@ -16,8 +16,7 @@ import '../css/swiper.css'
 
 
 function NoticeBanner() {
-  const noticeListSet = useRecoilValue(noticeListState);
-  const [noticeList, setNoticeList] = useRecoilState(noticeListState);
+  const [bookmarkNoticeList, setBookmarkNoticeList] = useState([]);
   
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
@@ -26,24 +25,25 @@ function NoticeBanner() {
     {try {
       const res = await axios
       .get(
-        `http://localhost:8080/api/articles/list/${selectedProjectId}`
+        `http://localhost:8080/api/articles/list/bookmark/${selectedProjectId}`
       )
       .then((response) => 
       {
         console.log("EFFECT : ", response);
-        setNoticeList(clearData(noticeList));
+        setBookmarkNoticeList(clearData(bookmarkNoticeList));
         (response.data).map((data) => {
-          return setNoticeList((oldNoticeList) => [
+          return setBookmarkNoticeList((oldNoticeList) => [
             ...oldNoticeList,
             {
               id: data.id,
               title: data.title,
               content: data.content,
+              bookmark: data.bookmark,
             },
           ])
         })
         // console.log("Response: ", response.data.note);
-        console.log("Data : ", noticeListSet);
+        console.log("Data : ", bookmarkNoticeList);
       })
     }
     catch (e) {
@@ -68,7 +68,7 @@ function NoticeBanner() {
       onSwiper={(swiper) => console.log(swiper)}
       // onSlideChange={() => console.log('slide change')}
     >
-      {noticeListSet.map((slide) => (<SwiperSlide key={slide.id}>{slide.title}</SwiperSlide>))}
+      {bookmarkNoticeList.map((slide) => (<SwiperSlide key={slide.id}>{slide.title}</SwiperSlide>))}
     </Swiper>
   )
 }

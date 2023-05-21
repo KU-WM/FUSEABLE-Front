@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { kanbanListState } from "../recoil";
 import '../css/Kanban/EditList.scss';
 import ReactDatePicker from "react-datepicker";
+import { useEffect } from 'react';
 
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -14,114 +15,11 @@ var count = 1;
 
 function EditList({item}) {
   const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
-  const index = kanbanList.findIndex((listItem) => listItem === item);
   const ref = useRef();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDate, seleteDate] = useState(new Date(item.deadline));
-
-  var tempTitle = count == 1 ? item.title : sessionStorage.getItem("tempTitle");
-  var tempContent = count == 1 ? item.content : sessionStorage.getItem("tempContent");
-
-  count = 1;
-
-  const setDate = (date) => {
-    tempTitle = document.getElementById('editTitle').value;
-    tempContent = document.getElementById('editContent').value;
-
-    sessionStorage.setItem("tempTitle", tempTitle)
-    sessionStorage.setItem("tempContent", tempContent)
-
-    count ++;
-    seleteDate(date);
-  }
 
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
 
   const navigate = useNavigate();
-  
-  
-  const Edit = () => {
-    var textTitle = document.getElementById('editTitle').value;
-    var textContent = document.getElementById('editContent').value;
-    var textDeadline = document.getElementById('editDeadline').value;
-
-    editItem(textTitle, textContent, textDeadline);
-
-    closeModal();
-  }
-
-  const Modal = useCallback((props) => {
-    const { open, close, header } = props;
-  
-    return (
-      <div className={open ? 'openedModal' : 'modal'}>
-        {open ? (
-          <section>
-            <div>
-              {header}
-              <button className="close" onClick={close}>
-                &times;
-              </button>
-            </div>
-            <main>
-              {props.children}
-              <ul>
-                <li>
-                  <input
-                    id="editTitle"
-                    className="Input_title"
-                    type="text"
-                    defaultValue={tempTitle || ''}
-                    placeholder='Title'
-                  />
-                </li>
-                <li>
-                  <ReactDatePicker 
-                    selected={selectedDate}
-                    onChange={date => setDate(date)}
-                    id="editDeadline"
-                    type="text"
-                    className="Input_deadline"
-                  />
-                </li>
-                <li>
-                  <textarea
-                    id="editContent"
-                    className="Input_content"
-                    type="text"
-                    defaultValue={tempContent || ''}
-                    placeholder='Content'
-                  />
-                </li>
-                <li>
-                  <input type='button'
-                    className="Edit"
-                    defaultValue='수정'
-                    onClick={Edit}
-                  />
-                </li>
-                <button className="Delete_btn" onClick={deleteItem}>삭제</button>
-              </ul>
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
-          </section>
-        ) : null}
-      </div>
-    )
-  },[selectedDate])
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
 
   const changeProcess = async(Selecteditem, changeProgress) => {
     const changeIndex = kanbanList.findIndex((data) => data.id == Selecteditem.id);
@@ -129,8 +27,8 @@ function EditList({item}) {
     console.log("Selected : ", Selecteditem, "\nchangeProcess : ", changeProgress, "\nChangeIndex : ", changeIndex);
     console.log("Send : ", {
       newStep: changeProgress,
-      arrayId: Selecteditem.id,
-      newArrayId: Selecteditem.id,
+      arrayId: Selecteditem.arrayId,
+      newArrayId: Selecteditem.arrayId,
     }
   );
 
@@ -149,8 +47,8 @@ function EditList({item}) {
         `http://localhost:8080/api/project/main/move/${selectedProjectId}`,
         {
           newStep: changeProgress,
-          arrayId: Selecteditem.id,
-          newArrayId: Selecteditem.id,
+          arrayId: Selecteditem.arrayId,
+          newArrayId: Selecteditem.arrayId,
         }
       )
       .then((response) => {
@@ -335,84 +233,31 @@ function EditList({item}) {
     }),
   )
 
-
   dragRef(ref);
   // dragRef(dropUp(ref));
   // dragRef(dropDown(ref));
 
-  const editItem = async(title, content, deadline) => {
-    const newList = replaceItemAtIndex(kanbanList, index, {
-      ...item,
-      title: title,
-      content: content,
-      deadline: deadline,
-    });
-
-    setKanbanList(newList);
-    const endAt = (deadline.slice(6,10) + "-" + deadline.slice(0,2) + "-" + deadline.slice(3,5));
-    console.log(endAt);
-
-    try {
-      const res = await axios
-      .post (
-        `http://localhost:8080/api/project/main/update/${selectedProjectId}/${index}`,
-        {
-          title: title,
-          content: content,
-          endAt: endAt,
-        }
-      )
-      .then ((response) => 
-        console.log("Edit Response : ", response)
-      )
-    }
-    catch(e) {
-      console.log(e);
-    }
-  };
-
-  const deleteItem = async() =>{
-    const newList = removeItemAtIndex(kanbanList, index);
-
-    try {
-      const res = await axios
-      .get (
-        `http://localhost:8080/api/project/main/delete/${selectedProjectId}/${item.id}`
-      )
-      .then ((response) => 
-        console.log("Delete Response : ", response)
-      )
-    }
-    catch(e) {
-      console.log(e);
-    }
-
-    setKanbanList(newList);
-
-  };
+  const editNote = () => {
+    sessionStorage.setItem("selectedNote", JSON.stringify(item))
+    sessionStorage.setItem("selectedNoteId", item.id);
+    sessionStorage.setItem("selectedArrayId", item.arrayId);
+    
+    navigate('/main/editlistpage');
+  }
 
   return (
     <React.Fragment>
-      <div className="KanbanList" ref={ref} onClick={openModal} style={{opacity: isDragging? '0.3' : '1'}} >
-          <div className="kanbanListTitle">
-            {item.title}
-          </div>    
-          <div className="kanbanListDeadline">
-            {item.deadline}          
-          </div>
-          <br></br>
+      <div className="KanbanList" ref={ref} onClick={editNote} style={{opacity: isDragging? '0.3' : '1'}} >
+        <div className="kanbanListTitle">
+          {item.title}
+        </div>    
+        <div className="kanbanListDeadline">
+          {item.deadline}          
+        </div>
+        <br></br>
       </div>
-      <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
     </React.Fragment>
   );
-}
-
-function replaceItemAtIndex(arr, index, newValue) {
-  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
-}
-
-function removeItemAtIndex(arr, index) {
-  return [...arr.slice(0, index), ...arr.slice(index + 1)];
 }
 
 export default EditList;

@@ -39,7 +39,8 @@ function NoticeList () {
               title: data.title,
               content: data.content,
               startAt: data.startAt,
-              user: data.user.kakaoNickname
+              user: data.user.accountNickname,
+              bookmark: data.bookmark,
             },
           ])
         })
@@ -173,10 +174,9 @@ function NoticeList () {
   return (
     <React.Fragment>
       <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
-      <div>
-        <button className="NoticeAddBtn" onClick={openModal}>등록</button>
-      </div>
+      <button className="NoticeAddBtn" onClick={openModal}>등록</button>
       <div className="noticeContainer">
+        <div className="NoticeBookmark">북마크</div>
         <div className="NoticeIndex">게시 ID</div>
         <div className="NoticeTitle">제목</div>
         <div className="user">작성자</div>

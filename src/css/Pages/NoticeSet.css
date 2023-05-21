@@ -6,7 +6,7 @@
   display: flex;
 }
 
-.NoticeIndex {
+.NoticeBookmark {
   flex: 1;
   position: relative;
   order: 1;
@@ -14,26 +14,42 @@
   flex-grow: 3;
 }
 
-.NoticeTitle {
+.Notice_bookmark_img {
+  flex: 1;
+  position: relative;
+  order: 1;
+  text-align: center;
+  flex-grow: 3;
+}
+
+.NoticeIndex {
   flex: 2;
   position: relative;
   order: 2;
   text-align: center;
-  flex-grow: 20;
+  flex-grow: 3;
 }
 
-.user {
+.NoticeTitle {
   flex: 3;
   position: relative;
   order: 3;
+  text-align: center;
+  flex-grow: 18;
+}
+
+.user {
+  flex: 4;
+  position: relative;
+  order: 4;
   text-align: center;
   flex-grow: 3;
 }
 
 .startAt {
-  flex: 4;
+  flex: 5;
   position: relative;
-  order: 4;
+  order: 5;
   text-align: center;
   flex-grow: 10;
 }

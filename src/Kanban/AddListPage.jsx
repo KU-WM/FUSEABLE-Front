@@ -24,6 +24,8 @@ function AddListPage () {
   const [selectedDate, seleteDate] = useState(new Date());
   const [imgBase64, setImgBase64] = useState([]);
   const [imgFile, setImgFile] = useState(null);
+  const [getInviteCode, setGetInviteCode] = useState(false);
+  const [InviteCode, setInviteCode] = useState();
   
   const userCode = sessionStorage.getItem("userCode");
   const title = sessionStorage.getItem("tempProgress");
@@ -40,7 +42,8 @@ function AddListPage () {
   countNew = 1;
 
   const getId = () => {
-    let id = KanbanList.length > 0 ? (KanbanList.length - 1) : 0;
+    console.log("GetId: ", KanbanList.slice(-1)[0]);
+    let id = KanbanList.length > 0 ? KanbanList.slice(-1)[0].id : 1;
     return id;
   }
   
@@ -92,69 +95,38 @@ function AddListPage () {
     addItem(textTitle, textContent, textDeadline);
   }
 
-  const fileUpload = () => {
-    const uploadFiles = document.getElementById("FileUpload").files
-    for(var i = 0; i < (uploadFiles).length; i++) {
-      console.log(uploadFiles[i]);
+  const fileUpload = (e) => {
+
+    const file = e.target.files;
+
+    for(var i = 0; i < (file).length; i++) {
+      console.log("test:", file[i]);
     }
 
-    setImgFile(uploadFiles);
-    setImgBase64([]);
-
-    for (let i = 0; i < uploadFiles.length; i++) {
-      if (uploadFiles[i]) {
-        setImgBase64((past) => [
-          ...past,
-          uploadFiles[i]
-        ])
-      }
-    }
-
-    // for(let i = 0; i < uploadFiles.length; i++) {
-    //   if (uploadFiles[i]) {
-    //     let reader = new FileReader();
-    //     reader.readAsDataURL(uploadFiles[i]);
-    //     reader.onloadend = () => {
-    //       const base64 = reader.result;
-    //       console.log("Base64 : ", base64);
-
-    //       if(base64) {
-    //         let base64Sub = base64;
-    //         setImgBase64((imgBase) => [
-    //           ...imgBase, 
-    //           base64Sub,
-    //         ]);
-    //       }
-
-    //     }
-    //   }
-    // }
+    setImgFile(file)
   }
 
   const addItem = async(textTitle, textContent, textDeadline) => {
-    const uploadFiles = document.getElementById("FileUpload").files
-    console.log("Base64 : ", imgBase64);
-
     const formData = new FormData();
 
     const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
 
     const data = {
-      arrayId: (getId() - 1),
+      arrayId: getId(),
       step: title,
       title: textTitle,
       content: textContent,
       endAt: deadline,
     }
- 
+
+    console.log("axios data :", data); 
 
     formData.append("contents", new Blob([JSON.stringify(data)], {type: "application/json"}))
 
-    for(let i = 0; i < imgBase64.length; i++) {
-      formData.append("file", imgBase64[i])
-      console.log("img64: ", imgBase64[i]);
+    if(imgFile)
+    {
+      Object.values(imgFile).forEach((imgFile) => formData.append("file", imgFile))
     }
-    // formData.append("file", imgBase64)
 
     setKanbanList((oldKanbanList) => [
       ...oldKanbanList,
@@ -175,6 +147,7 @@ function AddListPage () {
       )
       .then((response) => {
         console.log(response)
+        navigate('/main')
       })
     }
     catch(e) {
@@ -184,6 +157,36 @@ function AddListPage () {
 
   const clearData = (arr) => {
     return [...arr.slice(0,0)]
+  }
+
+  const GetInviteCode = (props) => {
+    const { open, close, header } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              {header}
+            </div>
+            <main>
+              {props.children}
+                  <input
+                    id='GetInviteCode'
+                    className="Get_InviteCode"
+                    value={InviteCode}
+                    readOnly
+                  />
+            </main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    )
   }
 
   const Modal = (props) => {
@@ -201,28 +204,54 @@ function AddListPage () {
             <main>
               <ul>
                 <li>
-                  인원 초대
+                  <button className='btn btn-primary' onClick={goToScheduleAll}>Schedule</button>
                 </li>
                 <li>
-                  기능 추가 대기 2
+                  <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
                 </li>
                 <li>
-                  기능 추가 대기 3
-                </li>
-                <li>
-                  기능 추가 대기 4
+                 <button className="btn btn-primary Start-addBtn" onClick={openGetInviteCode}>초대 코드 발급</button>
                 </li>
               </ul>
             </main>
             <footer>
               
             </footer>
-              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
+              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Kakao Logout</a>
+              <button onClick={onLogout} id="Google-logout-btn">Google Logout</button>
           </section>
         ) : null}
       </div>
     )
   }
+
+  const onLogout = () => {
+    // google.accounts.id.disableAutoSelect();
+  };
+
+  const openGetInviteCode = async() => {
+    try {
+      const res = await axios
+      .get(
+        `http://localhost:8080/api/project/invite/${userCode}/${selectedProjectId}`
+      )
+      .then((response) => {
+          console.log("InviteCode: ", response);
+          setInviteCode(response.data.inviteCode);
+        }
+      )
+    }
+    catch(e) {
+      console.log(e);
+    }
+
+    closeModal();
+    setGetInviteCode(true);
+  };
+
+  const closeGetInviteCode = () => {
+    setGetInviteCode(false);
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -290,14 +319,8 @@ function AddListPage () {
                   />
                 </li>
                 <li>
-                  <form 
-                      name='file'
-                      encType='multipart/form-data'
-                      onSubmit={Add}
-                      >
-                    <input type="file" id="FileUpload" onChange={fileUpload} multiple>
-                    </input>
-                  </form>
+                  <input type="file" name='file' id="FileUpload" onChange={fileUpload} multiple>
+                  </input>
                 </li>
                 <li>
                   <textarea
@@ -325,26 +348,27 @@ function AddListPage () {
   }
 
   const goToKanban = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 0);
+    sessionStorage.setItem("Main_switchCode", 0);
     navigate('/main')
   }
 
   const goToNotice = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 1);
+    sessionStorage.setItem("Main_switchCode", 1);
     navigate('/main')
   }
 
   const goToCalendar = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 2);
+    sessionStorage.setItem("Main_switchCode", 2);
     navigate('/main')
   }
 
   const goToMyDocument = () => {
-    console.log("SwitchCode : ", switchCode);
-    sessionStorage.setItem("switchCode", 3);
+    sessionStorage.setItem("Main_switchCode", 3);
+    navigate('/main')
+  }
+
+  const goToScheduleAll = () => {
+    sessionStorage.setItem("Main_switchCode", 4);
     navigate('/main')
   }
 
@@ -358,13 +382,14 @@ function AddListPage () {
             </div>
             <div className='crewmate'>
               <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
-            </div>
+              </div>
             <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
             <div className='sidebarBtn'>
               <button className='btn btn-primary sidebar' onClick={openModal}>
                 Side
               </button>
-              <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
+              <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>          
+              <GetInviteCode open={getInviteCode} close={closeGetInviteCode} header="초대코드"></GetInviteCode>  
             </div>
           </div>
           <div className='Main-mainbody'>

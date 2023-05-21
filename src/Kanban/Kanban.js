@@ -23,12 +23,14 @@ function Kanban() {
       )
       .then((response) => 
       {
+        console.log("KANBAN: ", response);
         setKanbanListSet(clearData(kanbanListSet));
         (response.data.note).map((data) => {
           return setKanbanListSet((oldKanbanList) => [
             ...oldKanbanList,
             {
-              id: data.arrayId,
+              id: data.noteId,
+              arrayId: data.arrayId,
               title: data.title,
               content: data.content,
               deadline:  data.endAt,

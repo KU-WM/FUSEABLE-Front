@@ -8,15 +8,22 @@ import { useEffect } from 'react';
 import Logo from '../images/Logo.png';
 import EditProjectList from './EditProjectList';
 import '../css/Kanban/AddList.css'
+import { useNavigate } from 'react-router-dom';
 
 
 function Start () {
   
   const [projectList, setProjectList] = useRecoilState(projectListState);
   const [modalOpen, setModalOpen] = useState(false);
+  const [openInviteCode, setOpenInviteCode] = useState(false);
+
+  const Nickname = sessionStorage.getItem("Nickname");
+  const ProfileImg = sessionStorage.getItem("ProfileImg");
+  const userCode = sessionStorage.getItem("userCode");
+
+  const navigate = useNavigate();
 
   sessionStorage.setItem("Main_switchCode", 0);
-  var Start_switchCode = sessionStorage.getItem("Start_switchCode") ? sessionStorage.getItem("Start_switchCode") : 0;
 
   const getId = () => {
     let id = projectList.length > 0 ? projectList[projectList.length - 1].id + 1 : 1;
@@ -36,9 +43,8 @@ function Start () {
     ]);
 
     closeModal();
-    const userCode = sessionStorage.getItem("userCode");
 
-    console.log("title", title);
+    // console.log("title", title);
 
     try {
       const res = await axios({
@@ -100,6 +106,66 @@ function Start () {
     )
   }
 
+  const InviteCode = (props) => {
+    const { open, close, header } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              {header}
+              <button className="close" onClick={closeInviteCode}>
+                &times;
+              </button>
+            </div>
+            <main>
+              {props.children}
+                  <input
+                    id='InputInviteCode'
+                    className="Input_InviteCode"
+                    placeholder='초대코드'
+                  />
+                  <input type='button'
+                    className="invite"
+                    defaultValue='초대코드 입력'
+                    onClick={sendInviteCode}
+                  />
+            </main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    )
+  }
+
+  const sendInviteCode = async() => {
+    var InviteCode = document.getElementById('InputInviteCode').value;
+
+    closeInviteCode();
+
+    try {
+      const res = await axios
+      .post(
+        `http://localhost:8080/api/project/invite/${userCode}`,
+        {
+          inviteCode: InviteCode,
+        }
+      )
+      .then((response) => {
+        console.log("response", response)
+        window.location.reload();
+      })
+    }
+    catch(e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {(async() => {
     {
       try {
@@ -142,6 +208,14 @@ function Start () {
     setModalOpen(false);
   };
 
+  const getInviteCode = () => {
+    setOpenInviteCode(true);
+  };
+
+  const closeInviteCode = () => {
+    setOpenInviteCode(false);
+  };
+
   const dataHandler = () => {
     
     {
@@ -163,8 +237,9 @@ function Start () {
     return [...arr.slice(0,0)]
   }
 
-  const Nickname = sessionStorage.getItem("Nickname");
-  const ProfileImg = sessionStorage.getItem("ProfileImg");
+  const editSchedule = () => {
+    navigate('/start/schedule')
+  }
 
   return (
     <React.Fragment>
@@ -182,9 +257,12 @@ function Start () {
           </div>
           <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
           <span>      </span>
-          <button className="btn btn-primary Start-addBtn" onClick={openModal}>시간표 생성</button>
+          <button className="btn btn-primary Start-addBtn" onClick={editSchedule}>시간표 생성</button>
+          <span> </span>
+          <button className="btn btn-primary Start-addBtn" onClick={getInviteCode}>초대 코드</button>
         </div>
-        <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>  
+        <Modal open={modalOpen} close={closeModal} header="프로젝트 생성"></Modal>  
+        <InviteCode open={openInviteCode} close={closeInviteCode} header="초대코드 입력"></InviteCode>  
         <div className='Start-projectList'>
           {dataHandler()}
         </div>

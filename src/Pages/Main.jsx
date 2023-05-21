@@ -14,15 +14,19 @@ import MyCalendar from './CalendarTest';
 import NoticeList from '../Notice/NoticeList';
 import MyDocument from './MyDocument'
 import AddListPage from '../Kanban/AddListPage'
+import ScheduleAll from './ScheduleAll';
 
 
 function Main () {
   const [modalOpen, setModalOpen] = useState(false);
   const [crewsOpen, setcrewsOpen] = useState(false);
   const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
+  const [getInviteCode, setGetInviteCode] = useState(false);
+  const [InviteCode, setInviteCode] = useState();
   
   const selectedProjectTitle = sessionStorage.getItem("selectedProjectTitle");
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
+  const userCode = sessionStorage.getItem("userCode");
 
   var Main_switchCode = sessionStorage.getItem("Main_switchCode") ? sessionStorage.getItem("Main_switchCode") : 0;
 
@@ -53,7 +57,24 @@ function Main () {
     })();
   },[])
 
-  console.log("Crews : ", userInproject);
+  useEffect(() => {(async() => {
+    {try {
+      const res = await axios
+      .get(
+        `http://localhost:8080/api/project/note/alarmNote/${selectedProjectId}`
+      )
+      .then((response) => 
+      {
+        console.log("AlarmNote: ", response);
+      })
+    }
+    catch (e) {
+      console.error(e);
+    }}
+    })();
+  },[])
+
+  // console.log("Crews : ", userInproject);
 
   const clearData = (arr) => {
     return [...arr.slice(0,0)]
@@ -74,28 +95,30 @@ function Main () {
             <main>
               <ul>
                 <li>
-                  인원 초대
+                  <button className='btn btn-primary' onClick={switchToScheduleAll}>Schedule</button>
                 </li>
                 <li>
-                  기능 추가 대기 2
+                  <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
                 </li>
                 <li>
-                  기능 추가 대기 3
-                </li>
-                <li>
-                  기능 추가 대기 4
+                 <button className="btn btn-primary Start-addBtn" onClick={openGetInviteCode}>초대 코드 발급</button>
                 </li>
               </ul>
             </main>
             <footer>
               
             </footer>
-              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Logout</a>
+              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Kakao Logout</a>
+              <button onClick={onLogout} id="Google-logout-btn">Google Logout</button>
           </section>
         ) : null}
       </div>
     )
   }
+
+  const onLogout = () => {
+    // google.accounts.id.disableAutoSelect();
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -103,6 +126,60 @@ function Main () {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const GetInviteCode = (props) => {
+    const { open, close, header } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              {header}
+            </div>
+            <main>
+              {props.children}
+                  <input
+                    id='GetInviteCode'
+                    className="Get_InviteCode"
+                    value={InviteCode}
+                    readOnly
+                  />
+            </main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    )
+  }
+
+  const openGetInviteCode = async() => {
+    try {
+      const res = await axios
+      .get(
+        `http://localhost:8080/api/project/invite/${userCode}/${selectedProjectId}`
+      )
+      .then((response) => {
+          console.log("InviteCode: ", response);
+          setInviteCode(response.data.inviteCode);
+        }
+      )
+    }
+    catch(e) {
+      console.log(e);
+    }
+
+    closeModal();
+    setGetInviteCode(true);
+  };
+
+  const closeGetInviteCode = () => {
+    setGetInviteCode(false);
   };
 
   const Crews = (props) => {
@@ -135,6 +212,7 @@ function Main () {
   }
 
   const openCrews = () => {
+    closeModal();
     setcrewsOpen(true);
   };
 
@@ -144,27 +222,33 @@ function Main () {
 
   const datahandler = () => {
     if(Main_switchCode == 0) {
-      console.log("Kanban Loading");
+      // console.log("Kanban Loading");
       return (
         <Kanban />
       )
     }
     else if(Main_switchCode == 1) {
-      console.log("Main_Switchcode1 Loading");
+      // console.log("Main_Switchcode1 Loading");
       return (
         <NoticeList />
       )
     }
     else if(Main_switchCode == 2) {
-      console.log("Main_Switchcode2 Loading");
+      // console.log("Main_Switchcode2 Loading");
       return (
         <MyCalendar className="calendar"></MyCalendar>
       )
     }
     else if(Main_switchCode == 3) {
-      console.log("Main_Switchcode3 Loading");
+      // console.log("Main_Switchcode3 Loading");
       return (
         <MyDocument />
+      )
+    }
+    else if(Main_switchCode == 4) {
+      console.log("Main_Switchcode3 Loading");
+      return (
+        <ScheduleAll />
       )
     }
     else {
@@ -173,30 +257,34 @@ function Main () {
   }
 
   const switchToKanban = () => {
-    console.log("Main_SwitchCode : ", Main_switchCode);
+    // console.log("Main_SwitchCode : ", Main_switchCode);
     sessionStorage.setItem("Main_switchCode", 0);
     window.location.reload();
   }
 
   const switchToNotice = () => {
-    console.log("Main_SwitchCode : ", Main_switchCode);
+    // console.log("Main_SwitchCode : ", Main_switchCode);
     sessionStorage.setItem("Main_switchCode", 1);
     window.location.reload();
   }
 
   const switchToCalendar = () => {
-    console.log("Main_SwitchCode : ", Main_switchCode);
+    // console.log("Main_SwitchCode : ", Main_switchCode);
     sessionStorage.setItem("Main_switchCode", 2);
     window.location.reload();
   }
 
   const switchToMyDocument = () => {
-    console.log("Main_SwitchCode : ", Main_switchCode);
+    // console.log("Main_SwitchCode : ", Main_switchCode);
     sessionStorage.setItem("Main_switchCode", 3);
     window.location.reload();
   }
 
-
+  const switchToScheduleAll = () => {
+    // console.log("Main_SwitchCode : ", Main_switchCode);
+    sessionStorage.setItem("Main_switchCode", 4);
+    window.location.reload();
+  }
 
   return (
     <React.Fragment>
@@ -206,15 +294,13 @@ function Main () {
             <div className='logo'>
               <img src={Logo} alt="Logo" className='logo' onClick={switchToKanban}/>
             </div>
-            <div className='crewmate'>
-              <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
-            </div>
             <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
             <div className='sidebarBtn'>
               <button className='btn btn-primary sidebar' onClick={openModal}>
                 Side
               </button>
-              <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
+              <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>          
+              <GetInviteCode open={getInviteCode} close={closeGetInviteCode} header="초대코드"></GetInviteCode>  
             </div>
           </div>
           <div className='Main-mainbody'>

@@ -118,7 +118,6 @@ function EditProjectList({item}) {
   };
 
   const projectSelect = () => {
-    
     sessionStorage.setItem("selectedProjectId",item.id);
     sessionStorage.setItem("selectedProjectTitle",item.title);
 
