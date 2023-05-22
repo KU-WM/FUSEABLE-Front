@@ -11,7 +11,9 @@ import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import ReactDatePicker from "react-datepicker";
-import { type } from '@testing-library/user-event/dist/type';
+import Copy from '../images/copy.png';
+import OnAlarm from '../images/onAlarm.png';
+import OffAlarm from '../images/offAlarm.png';
 
 
 var countNew = 1;
@@ -26,6 +28,8 @@ function AddListPage () {
   const [imgFile, setImgFile] = useState(null);
   const [getInviteCode, setGetInviteCode] = useState(false);
   const [InviteCode, setInviteCode] = useState();
+  const [alarmNote, setAlarmNote] = useState([]);
+  const [openAlarm, setOpenAlarm] = useState(false);
   
   const userCode = sessionStorage.getItem("userCode");
   const title = sessionStorage.getItem("tempProgress");
@@ -106,6 +110,37 @@ function AddListPage () {
     setImgFile(file)
   }
 
+  const Alarm = (props) => {
+    const { open, close } = props;
+  
+    return (
+      <div className={open ? 'openedModal' : 'modal'}>
+        {open ? (
+          <section>
+            <div>
+              {props.header}
+            </div>
+            <main>
+              {alarmDataHandler()}
+            </main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>              
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    )
+  }
+
+  const alarmDataHandler = () => {
+    console.log("Note: ", alarmNote);
+    return alarmNote.map((data) => {
+      return <div key={data.noteId}>{data.title}</div>
+    })
+  }
+
   const addItem = async(textTitle, textContent, textDeadline) => {
     const formData = new FormData();
 
@@ -171,12 +206,23 @@ function AddListPage () {
             </div>
             <main>
               {props.children}
-                  <input
-                    id='GetInviteCode'
-                    className="Get_InviteCode"
-                    value={InviteCode}
-                    readOnly
-                  />
+              <input
+                id='GetInviteCode'
+                className="Get_InviteCode"
+                value={InviteCode}
+                readOnly
+              />                
+              <img src={Copy} 
+                alt="Copy" 
+                className='copy' 
+                onClick={copyData}
+                style={
+                  {
+                    "width" : "20px",
+                    "height" : "20px"
+                  }
+                }
+              />
             </main>
             <footer>
               <button className="close" onClick={close}>
@@ -287,7 +333,22 @@ function AddListPage () {
     )
   }
 
+  const copyData = () => {
+    const inviteCodeToCopy = document.getElementById("GetInviteCode").value;
+    console.log(inviteCodeToCopy);
+
+    try {
+      navigator.clipboard.writeText(inviteCodeToCopy);
+      alert("복사되었습니다")
+    }
+    catch (e) {
+      alert("복사 에러");
+      console.log(e);
+    }
+  }
+
   const openCrews = () => {
+    closeModal();
     setcrewsOpen(true);
   };
 
@@ -371,6 +432,39 @@ function AddListPage () {
     sessionStorage.setItem("Main_switchCode", 4);
     navigate('/main')
   }
+  
+  const getOpenAlarm = () => {
+    setOpenAlarm(true);
+  }
+  
+  const getCloseAlarm = () => {
+    setOpenAlarm(false);
+  }
+
+  useEffect(() => {(async() => {
+    {try {
+      const res = await axios
+      .get(
+        `http://localhost:8080/api/project/note/alarmNote/${selectedProjectId}`
+      )
+      .then((response) => 
+      {
+        console.log("AlarmNote: ", response.data);
+        (response.data)
+        .filter((data) => data.step !== "DONE")
+        .map((data) => {
+          return setAlarmNote((oldAlarmNote) => [
+            ...oldAlarmNote,
+            data
+          ])
+        })
+      })
+    }
+    catch (e) {
+      console.error(e);
+    }}
+    })();
+  },[])
 
   return (
     <React.Fragment>
@@ -380,9 +474,13 @@ function AddListPage () {
             <div className='logo'>
               <img src={Logo} alt="Logo" className='logo' onClick={goToKanban}/>
             </div>
-            <div className='crewmate'>
-              <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
-              </div>
+            <img 
+              src={alarmNote.length ? OnAlarm : OffAlarm} 
+              style={{"width" : "20px", "height" : "20px"}}
+              className='alarmNote'
+              onClick={getOpenAlarm}
+              ></img>
+            <Alarm open={openAlarm} close={getCloseAlarm} header="마감 임박!"></Alarm>
             <Crews open={crewsOpen} close={closeCrews} header="참여 인원"></Crews>
             <div className='sidebarBtn'>
               <button className='btn btn-primary sidebar' onClick={openModal}>

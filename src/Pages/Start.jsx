@@ -255,11 +255,13 @@ function Start () {
             <strong>{Nickname.slice(1,Nickname.length - 1)}</strong>
             <span> 유저님 환영합니다</span>
           </div>
-          <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
-          <span>      </span>
-          <button className="btn btn-primary Start-addBtn" onClick={editSchedule}>시간표 생성</button>
-          <span> </span>
-          <button className="btn btn-primary Start-addBtn" onClick={getInviteCode}>초대 코드</button>
+          <div className='StartBtn'>
+            <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
+            <span>  </span>
+            <button className="btn btn-primary Start-schedule" onClick={editSchedule}>시간표 생성</button>
+            <span> </span>
+            <button className="btn btn-primary Start-inviteCode" onClick={getInviteCode}>초대 코드</button>
+          </div>
         </div>
         <Modal open={modalOpen} close={closeModal} header="프로젝트 생성"></Modal>  
         <InviteCode open={openInviteCode} close={closeInviteCode} header="초대코드 입력"></InviteCode>  

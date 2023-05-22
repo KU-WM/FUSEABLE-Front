@@ -42,13 +42,34 @@
     border: .5px solid royalblue;
     border-radius: 5px;
     margin: 3px 0 3px;
-    box-sizing: border-box;
   }
 
-  // .Start-addBtn {
-  // }
+  .StartBtn {
+    display: flex;
+    flex-direction: row-reverse;
+
+    .btn {
+      margin: 0 3px;
+    }
+  }
 }
 
 .Start-projectList {
   position: relative;
+
+  .projectList {
+    display: flex;
+
+    img {
+      margin: 3px;
+    }
+
+    div {
+      margin-left: 10px;
+    }
+
+    button {
+      margin-left: 30px;
+    }
+  }
 }

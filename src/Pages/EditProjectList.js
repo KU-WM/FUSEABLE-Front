@@ -142,7 +142,7 @@ function EditProjectList({item}) {
   return (
     <>
       <React.Fragment>
-        <div>
+        <div className="projectList">
           <img 
             className="bookmark_img" 
             src={item.bookmarkState ? BookmarkTrue : BookmarkFalse} 
