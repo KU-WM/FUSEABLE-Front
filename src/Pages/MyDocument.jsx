@@ -1,5 +1,4 @@
 import React from 'react';
-import '../css/Pages/MyDocument.css';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { myDocumentState, userInProjectState } from '../recoil';

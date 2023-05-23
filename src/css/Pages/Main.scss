@@ -5,6 +5,10 @@
   }
 }
 
+.textLink {
+  color: inherit;
+  text-decoration: inherit;
+}
 
 /* HEADER */
 .Main-header {
@@ -175,19 +179,6 @@
     flex-wrap: wrap;
     background-color: #F5FFC9;
   
-    .Main-projectname {
-      position: absolute;
-      width: 100%;
-      height: 50px;
-      font-size: 30px;
-      padding: 0.5%;
-      box-sizing: border-box;
-      border: 1px solid red;
-      background-color: #F5FFC9;
-      border-radius: 5px;
-      z-index: 1;
-    }
-
     .Main-progress {
       position: relative;
       padding: 10px;
@@ -211,5 +202,52 @@
         }
       }
     } 
+  }
+
+  .Main-Mydocument {
+    position: relative;
+    border: 1px solid green;
+    border-radius: 5px;
+    width: calc(100% - 200px);
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #F5FFC9;
+
+    .Main-progress {
+
+      .myDocument {
+        position: relative;
+        margin: 10px 20px;
+        padding: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 400px;
+        /* border: 1px solid red; */
+        border-radius: 5px;
+        font-size: 20px;
+      }
+
+      .myDocumentList {
+        border-bottom: 1px solid red;
+        margin: 10px;
+      }
+      
+      .myDocumentTitle {
+        margin: 0 50px;
+      }
+    }
+  }
+
+  .Main-projectname {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+    padding: 0.5%;
+    box-sizing: border-box;
+    border: 1px solid red;
+    background-color: #F5FFC9;
+    border-radius: 5px;
+    z-index: 1;
   }
 }

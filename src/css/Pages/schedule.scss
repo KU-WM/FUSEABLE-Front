@@ -1,0 +1,15 @@
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+
+  .setSchedule {
+    margin-left: 10px;
+    
+  }
+}
+
+th, tr {
+  padding: 10px;
+  text-align: center;
+}

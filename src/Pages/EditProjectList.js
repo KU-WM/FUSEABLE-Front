@@ -148,7 +148,7 @@ function EditProjectList({item}) {
             src={item.bookmarkState ? BookmarkTrue : BookmarkFalse} 
             onClick={changeState}
             style={{width: "15px", height: "15px"}}></img>
-          <div onClick={projectSelect}>{item.title}</div>
+          <div className="ptojectTitle" onClick={projectSelect}>{item.title}</div>
           <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
           <button className="Edit_btn" onClick={openModal}>수정</button>
         </div>

@@ -73,11 +73,13 @@ const MyDocumentList = ({order, item}) => {
   
   return (
     <React.Fragment key={item.id}>
-      <Modal open={modalOpen} close={closeModal} header="My Document" item={item}></Modal> 
-      <span className='myDocumentList'>{order}. </span>
-      <span className='myDocumentList' onClick={openModal} >
-        {item.title}
-      </span>
+      <div>
+        <Modal open={modalOpen} close={closeModal} header="My Document" item={item}></Modal> 
+        <span className='myDocumentList'>{order}. </span>
+        <span className='myDocumentList' onClick={openModal} >
+          {item.title}
+        </span>
+      </div>
   </React.Fragment>
   )
   

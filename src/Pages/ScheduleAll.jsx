@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
-import './schedule.scss'
+import '../css/Pages/schedule.scss'
 import { useEffect } from 'react';
 import axios from 'axios';
 

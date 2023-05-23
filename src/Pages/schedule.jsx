@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
-import './schedule.scss'
+import '../css/Pages/schedule.scss'
 import { useEffect } from 'react';
 import axios from 'axios';
 import Logo from '../images/Logo.png';
@@ -188,69 +187,71 @@ function Schedule() {
             <strong>{Nickname.slice(1,Nickname.length - 1)}</strong>
             <span> 유저님 환영합니다</span>
           </div>
-          <button onClick={sendSchedule}>Setting</button>
+          <div className="buttonContainer">
+            <button onClick={sendSchedule} className="setSchedule">Setting</button>
+          </div>
           <table className="table table-bordered">
             <tbody>
-              <tr>
+              <tr className="onDays" >
                 {Days.map((data) => (
                   <th scope="row" key={data.id}>{data.day}</th>
                 ))}
               </tr>
-              <tr>
-                <th scope="col">09:00 ~ 10:30</th>
+              <tr className="onDays" >
+                <th scope="col" style={{"width": "23%"}}>09:00 ~ 10:30</th>
                 {Times[0].map((data) => (
-                  <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
+                  <td style={{"width": "11%"}} key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">10:30 ~ 12:00</th>
                 {Times[1].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">12:00 ~ 13:30</th>
                 {Times[2].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">13:30 ~ 15:00</th>
                 {Times[3].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">15:00 ~ 16:30</th>
                 {Times[4].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">16:30 ~ 18:00</th>
                 {Times[5].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">18:00 ~ 19:30</th>
                 {Times[6].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">19:30 ~ 21:00</th>
                 {Times[7].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">21:00 ~ 22:30</th>
                 {Times[8].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
                 ))}
               </tr>
-              <tr>
+              <tr className="onDays">
                 <th scope="col">22:30 ~ 00:00</th>
                 {Times[9].map((data) => (
                   <td key={data.id} className={scheduleTime[data.id] ? "bg-primary" : "bg-default"} onClick={() => change(data.id)}>{data.time}</td>
