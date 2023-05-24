@@ -2,12 +2,15 @@
   margin: 3px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   position: relative;
   flex-wrap: wrap;
   border: 1px solid red;
+  flex: 1;
 
   .kanbanListTitle {
     padding: 3px;
+    max-width: 200px;
     min-width: 100px;
     min-height: 24px;
     white-space: nowrap;
@@ -22,6 +25,5 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
   }
 }

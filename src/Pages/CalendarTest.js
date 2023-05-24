@@ -62,7 +62,7 @@ const MyCalendar = () => {
     <div className="calendar-wrapper">
       <FullCalendar 
         plugins={[ dayGridPlugin ]} 
-        aspectRatio={1.8}
+        aspectRatio={2.2}
         events={data}
           />
     </div>
