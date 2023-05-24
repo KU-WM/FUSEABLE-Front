@@ -37,7 +37,6 @@ function ScheduleAll() {
   console.log("schedule: ", scheduleTime);
 
   const Days = [
-    {id: 0, day: "Day"},
     {id: 1, day: "Mon"},
     {id: 2, day: "Thu"},
     {id: 3, day: "Wen"},
@@ -146,8 +145,9 @@ function ScheduleAll() {
           <table className="table table-bordered">
             <tbody>
               <tr>
+                <th scope="row">Day</th>
                 {Days.map((data) => (
-                  <th scope="row" key={data.id}>{data.day}</th>
+                  <th scope="row" className="days" key={data.id}>{data.day}</th>
                 ))}
               </tr>
               <tr>

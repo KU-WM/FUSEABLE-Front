@@ -48,7 +48,7 @@ function EditNotice ({item}) {
 
     closeModal();
 
-    navigate('/main/notice');
+    window.location.reload();
   };
 
   const deleteItem = async() =>{
@@ -71,7 +71,7 @@ function EditNotice ({item}) {
 
     closeModal();
     
-    navigate('/main/notice');
+    window.location.reload();
   };
 
   const Modal = (props) => {
@@ -102,7 +102,7 @@ function EditNotice ({item}) {
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    disabled="disabled"
+                    readOnly
                     id="editDeadline"
                     type="text"
                     className="Input_deadline"
@@ -171,7 +171,6 @@ function EditNotice ({item}) {
         <div className="noticeContainer" onClick={openModal}>
           <div className="Notice_bookmark_img">
             <img 
-               
               src={item.bookmark ? BookmarkTrue : BookmarkFalse} 
               style={{width: "15px", height: "15px"}}></img>
           </div>

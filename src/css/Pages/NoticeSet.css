@@ -31,10 +31,10 @@
 }
 
 .NoticeTitle {
+  margin-left: 20px;
   flex: 3;
   position: relative;
   order: 3;
-  text-align: center;
   flex-grow: 18;
 }
 

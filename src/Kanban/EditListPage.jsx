@@ -11,7 +11,7 @@ import axios from 'axios';
 import { userInProjectState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import ReactDatePicker from "react-datepicker";
-import './EditListPage.scss';
+import '../css/Kanban/EditListPage.scss';
 import Copy from '../images/copy.png';
 import OnAlarm from '../images/onAlarm.png';
 import OffAlarm from '../images/offAlarm.png';
@@ -291,8 +291,9 @@ function EditListPage () {
     return (
       <div className='note_edit'>
         <div className='note-content'>
-          <ul>
+          <ul className='editNoteContent'>
             <li>
+              <span>제목</span>
               <input
                 id="editTitle"
                 className="Input_title"
@@ -302,6 +303,7 @@ function EditListPage () {
               />
             </li>
             <li>
+              <span>마감기한</span>
               <ReactDatePicker 
                 selected={selectedDate}
                 onChange={date => setDate(date)}
@@ -314,10 +316,12 @@ function EditListPage () {
               {fileLoading()}
             </li>
             <li>
+              <span>첨부파일</span>
               <input type="file" name='file' id="FileUpload" onChange={fileUpload} multiple>
               </input>
             </li>
             <li>
+              <span>내용</span>
               <textarea
                 id="editContent"
                 className="Input_content"
@@ -391,9 +395,9 @@ function EditListPage () {
 
   const commentHandler = () => {
     return commentList.map((data) => {
-      return <div key={data.commentId + 1000}>
-          <span key={data.commentId + 1300}>{data.comment}</span>
-          <button key={data.commentId + 1600} onClick={() => deleteComment(data.commentId)}>X</button>
+      return <div key={data.commentId + 1000} className='commentContainer'>
+          <span key={data.commentId + 1300} className='commentContent'>{data.comment}</span>
+          <button key={data.commentId + 1600} className='commentDelBtn' onClick={() => deleteComment(data.commentId)}>X</button>
         </div>
     })
   }

@@ -13,3 +13,11 @@ th, tr {
   padding: 10px;
   text-align: center;
 }
+
+th:not(.days) {
+  width: 20%;
+}
+
+td {
+  width: 10%;
+}

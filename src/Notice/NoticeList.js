@@ -72,6 +72,7 @@ function NoticeList () {
         title: title,
         content: content,
         startAt: startAt,
+        bookmark: true,
       },
     ]);
     closeModal();
@@ -92,6 +93,8 @@ function NoticeList () {
     catch(e) {
       console.log("ERROR : ", e);
     }
+
+    window.location.reload();
   };
 
 
@@ -123,7 +126,7 @@ function NoticeList () {
                 <li>
                   <ReactDatePicker 
                     selected={selectedDate}
-                    disabled="disabled"
+                    readOnly
                     id="InputNoticeStartAt"
                     type="text"
                     className="Input_deadline"
@@ -167,8 +170,15 @@ function NoticeList () {
 
 
   const dataHandler = () => {
-    return noticeListSet
-    .map((item) => <EditNotice key={item.id} item={item}></EditNotice> );
+    const bookmarkedNoticeList = noticeListSet.filter((data) => data.bookmark == true);
+    const notBookmarkedNoticeList = noticeListSet.filter((data) => data.bookmark == false);
+
+    return [
+      bookmarkedNoticeList
+      .map((item) => <EditNotice key={item.id} item={item}></EditNotice>),
+      notBookmarkedNoticeList
+      .map((item) => <EditNotice key={item.id} item={item}></EditNotice>)
+    ]
   }
 
   return (
