@@ -158,7 +158,7 @@ function EditListPage () {
     try {
       const res = await axios
       .get (
-        `http://localhost:8080/api/project/main/delete/${selectedProjectId}/${selectedArrayId}`
+        `http://localhost:8080/api/project/main/delete/${userId}/${selectedProjectId}/${selectedArrayId}`
       )
       .then ((response) => 
         console.log("Delete Response : ", response)
