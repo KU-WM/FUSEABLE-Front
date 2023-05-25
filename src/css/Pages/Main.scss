@@ -17,7 +17,7 @@
   border: 1px solid red;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #B3E5BE;
+  background-color: #3b6ba5;
   z-index: 2;
 
   .logo {
@@ -86,7 +86,7 @@
     left: 0;
     width: 200px;
     z-index: 1;
-    background-color: #B3E5BE;
+    background-color: #6B99C3;
 
     .Main-notice {
       position: absolute;
@@ -97,6 +97,7 @@
       padding: 1%;
       box-sizing: border-box;
       border: 1px solid red;
+      border-radius: 15px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,6 +114,7 @@
       padding: 1%;
       box-sizing: border-box;
       border: 1px solid red;
+      border-radius: 15px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -124,6 +126,7 @@
       position: absolute;
       top: 19%;
       left: 5%;
+      border-radius: 15px;
       width: 90%;
       height: 8%;
       padding: 1%;
@@ -143,6 +146,7 @@
       width: 90%;
       height: 8%;
       padding: 1%;
+      border-radius: 15px;
       box-sizing: border-box;
       border: 1px solid red;
       display: flex;
@@ -177,7 +181,7 @@
     width: calc(100% - 200px);
     display: flex;
     flex-wrap: wrap;
-    background-color: #F5FFC9;
+    background-color: #E4E5EA;
   
     .Main-progress {
       position: relative;
@@ -246,7 +250,7 @@
     padding: 0.5%;
     box-sizing: border-box;
     border: 1px solid red;
-    background-color: #F5FFC9;
+    background-color: #E4E5EA;
     border-radius: 5px;
     z-index: 1;
   }

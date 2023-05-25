@@ -1,14 +1,15 @@
 .kanbanListWrap {
   position: relative;
-  max-width: 30vw;
+  width: 25%;
+  min-width: 220px;
 
  .kanbanTitle {
-    width: 17vw;
+    min-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 20px;
-    margin: 10px;
+    margin: 1vw;
     padding: 5px 0;
     font-size: 20px;
   }

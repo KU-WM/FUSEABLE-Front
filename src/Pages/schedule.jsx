@@ -69,7 +69,6 @@ function Schedule() {
   }
 
   const Days = [
-    {id: 0, day: "Day"},
     {id: 1, day: "Mon"},
     {id: 2, day: "Thu"},
     {id: 3, day: "Wen"},
@@ -193,8 +192,9 @@ function Schedule() {
           <table className="table table-bordered">
             <tbody>
               <tr className="onDays" >
+                <th scope="row">Day</th>
                 {Days.map((data) => (
-                  <th scope="row" key={data.id}>{data.day}</th>
+                  <th scope="row" className="days" key={data.id}>{data.day}</th>
                 ))}
               </tr>
               <tr className="onDays" >

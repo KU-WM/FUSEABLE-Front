@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/Pages/Login.css';
-import Logo from '../images/Logo.png';
+import Logo from '../images/LogoWW.png';
 import GoogleLoginImg from '../images/GoogleLoginImg.png'
 
 

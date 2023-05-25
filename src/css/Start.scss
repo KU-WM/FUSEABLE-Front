@@ -2,7 +2,7 @@
 .Start-header {
   position: relative;
   height: 100px;
-  background-color: bisque;
+  background-color: #16354D;
   display: flex;
   font-size: 16px;
   border: .5px solid royalblue;
@@ -79,4 +79,14 @@
       box-sizing: content-box;
     }
   }
+}
+
+.openedStartModal {
+  position: fixed;
+  left: 220px;
+  top: 170px;
+  width: 600px;
+  height: 50px;
+  background-color: lightsalmon;
+  z-index: 10;
 }

@@ -44,8 +44,6 @@ function Start () {
 
     closeModal();
 
-    // console.log("title", title);
-
     try {
       const res = await axios({
         method: 'post',
@@ -66,14 +64,13 @@ function Start () {
       console.log(e);
     }
 
-    // console.log("REDIRECT START PAGE");
   };
 
   const Modal = (props) => {
     const { open, close, header } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
+      <div className={open ? 'openedStartModal' : 'startModal'}>
         {open ? (
           <section>
             <div>
@@ -256,11 +253,11 @@ function Start () {
             <span> 유저님 환영합니다</span>
           </div>
           <div className='StartBtn'>
-            <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
+            <button className="btn btn-primary Start-inviteCode" onClick={getInviteCode}>초대 코드</button>
             <span>  </span>
             <button className="btn btn-primary Start-schedule" onClick={editSchedule}>시간표 생성</button>
             <span> </span>
-            <button className="btn btn-primary Start-inviteCode" onClick={getInviteCode}>초대 코드</button>
+            <button className="btn btn-primary Start-addBtn" onClick={openModal}>프로젝트 생성</button>
           </div>
         </div>
         <Modal open={modalOpen} close={closeModal} header="프로젝트 생성"></Modal>  
