@@ -9,17 +9,19 @@ import "../css/Pages/SideBar.css"
 import { useEffect } from 'react';
 import axios from 'axios';
 import { userInProjectState } from '../recoil';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from "recoil";
+import { noticeListState } from "../recoil";
 import ReactDatePicker from "react-datepicker";
 import Copy from '../images/copy.png';
 import OnAlarm from '../images/onAlarm.png';
 import OffAlarm from '../images/offAlarm.png';
-import '../css/Kanban/AddListPage.scss'
+import '../css/Kanban/AddListPage.scss';
+import '../css/Pages/NoticePage.scss';
 
 
 var countNew = 1;
 
-function AddListPage () {
+function AddNoticePage () {
   const [KanbanList, setKanbanList] = useRecoilState(kanbanListState);
   const [modalOpen, setModalOpen] = useState(false);
   const [crewsOpen, setcrewsOpen] = useState(false);
@@ -31,6 +33,9 @@ function AddListPage () {
   const [InviteCode, setInviteCode] = useState();
   const [alarmNote, setAlarmNote] = useState([]);
   const [openAlarm, setOpenAlarm] = useState(false);
+  const [noticeList, setNoticeList] = useRecoilState(noticeListState);
+  const noticeListSet = useRecoilValue(noticeListState);
+  
   
   const userCode = sessionStorage.getItem("userCode");
   const title = sessionStorage.getItem("tempProgress");
@@ -92,14 +97,6 @@ function AddListPage () {
 
   console.log("Crews : ", userInproject);
 
-  const Add = () => {
-    var textTitle = document.getElementById('inputNewTitle').value;
-    var textContent = document.getElementById('inputNewContent').value;
-    var textDeadline = document.getElementById('inputDeadline').value;
-
-    addItem(textTitle, textContent, textDeadline);
-  }
-
   const fileUpload = (e) => {
 
     const file = e.target.files;
@@ -145,53 +142,50 @@ function AddListPage () {
     })
   }
 
-  const addItem = async(textTitle, textContent, textDeadline) => {
-    const formData = new FormData();
+  const addItem = async() => {
+    var title = document.getElementById('addTitle').value;
+    var content = document.getElementById('addContent').value;
+    var deadline = document.getElementById('addDeadline').value;
 
-    const deadline = (textDeadline.slice(6,10) + "-" + textDeadline.slice(0,2) + "-" + textDeadline.slice(3,5))
+    const startAt = (deadline.slice(6,10) + "-" + deadline.slice(0,2) + "-" + deadline.slice(3,5))
 
-    const data = {
-      arrayId: getId(),
-      step: title,
-      title: textTitle,
-      content: textContent,
-      endAt: deadline,
-    }
-
-    console.log("axios data :", data); 
-
-    formData.append("contents", new Blob([JSON.stringify(data)], {type: "application/json"}))
-
-    if(imgFile)
-    {
-      Object.values(imgFile).forEach((imgFile) => formData.append("file", imgFile))
-    }
-
-    setKanbanList((oldKanbanList) => [
-      ...oldKanbanList,
+    console.log("INPUT : ", title, content);
+    setNoticeList((oldNoticeList) => [
+      ...oldNoticeList,
       {
         id: getId(),
-        progress: title,
-        title: textTitle,
-        content: textContent,
-        deadline: textDeadline,
+        title: title,
+        content: content,
+        startAt: startAt,
+        bookmark: true,
       },
     ]);
+    closeModal();
+
+    console.log("NOTICE : ", noticeListSet);
 
     try {
       const res = await axios
       .post(
-        `http://localhost:8080/api/project/main/${userCode}/${selectedProjectId}`,
-        formData,
+        `http://localhost:8080/api/articles/${userCode}/${selectedProjectId}`,
+        {
+          title: title,
+          content: content,
+          startAt: startAt,
+        }
       )
       .then((response) => {
-        console.log(response)
-        navigate('/main')
+        console.log("Add Notice", response);
       })
+
+      navigate("/main");
+      window.location.reload();
     }
     catch(e) {
-      console.log(e);
+      console.log("ERROR : ", e);
     }
+
+    window.location.reload();
   };
 
   const clearData = (arr) => {
@@ -370,52 +364,50 @@ function AddListPage () {
 
   const datahandler = () => {
     return (
-      <div className='note-content'>
+      <section className='notice_page'>
         <ul>
           <li>
             <span>제목</span>
             <input
-              id="inputNewTitle"
+              id="addTitle"
               className="Input_title"
               type="text"
-              placeholder='Title'
               defaultValue={tempTitle || ''}
+              placeholder='Title'
             />
           </li>
           <li>
-            <span>마감기한</span>
+            <span>등록일자</span>
             <ReactDatePicker 
               selected={selectedDate}
               onChange={date => setDate(date)}
-              id="inputDeadline"
+              id="addDeadline"
               type="text"
               className="Input_deadline"
+              readOnly={true}
             />
-          </li>
-          <li>
-            <span>첨부파일</span>
-            <input type="file" name='file' id="FileUpload" onChange={fileUpload} multiple>
-            </input>
           </li>
           <li>
             <span>내용</span>
             <textarea
-              id="inputNewContent"
+              id="addContent"
               className="Input_content"
               type="text"
-              placeholder='Content'
               defaultValue={tempContent || ''}
+              placeholder='Content'
             />
           </li>
-          <li>
+          <li className='button'>
             <input type='button'
               className="Add"
-              defaultValue='생성'
-              onClick={Add}
+              defaultValue='등록'
+              onClick={addItem}
             />
+            <input type='button' defaultValue="close" className="close" onClick={goToNotice}>
+            </input>
           </li>
         </ul>
-      </div>
+      </section>
     )
   }
 
@@ -535,4 +527,4 @@ function AddListPage () {
 }
 
 
-export default AddListPage;
+export default AddNoticePage;

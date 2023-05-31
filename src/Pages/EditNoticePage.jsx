@@ -15,79 +15,41 @@ import '../css/Kanban/EditListPage.scss';
 import Copy from '../images/copy.png';
 import OnAlarm from '../images/onAlarm.png';
 import OffAlarm from '../images/offAlarm.png';
+import { noticeListState } from "../recoil";
+import '../css/Pages/NoticePage.scss';
 
 
 var countNew = 1;
 
-function EditListPage () {
-  const [kanbanList, setKanbanList] = useRecoilState(kanbanListState);
+function EditNoticePage () {
   const [modalOpen, setModalOpen] = useState(false);
   const [crewsOpen, setcrewsOpen] = useState(false);
   const [openAlarm, setOpenAlarm] = useState(false);
   const [userInproject, setUserInProject] = useRecoilState(userInProjectState);
   const [selectedDate, seleteDate] = useState(new Date());
-  const [imgFile, setImgFile] = useState(null);
-  const [loadingFile, setLoadingFile] = useState([]);
-  const [commentList, setCommentList] = useState([]);
   const [getInviteCode, setGetInviteCode] = useState(false);
   const [InviteCode, setInviteCode] = useState();
   const [alarmNote, setAlarmNote] = useState([]);
+  const [noticeList, setNoticeList] = useRecoilState(noticeListState);
+
 
   const userId = sessionStorage.getItem("userCode");
   const selectedProjectId = sessionStorage.getItem("selectedProjectId");
   const selectedNoteId = sessionStorage.getItem("selectedNoteId");
   const selectedArrayId = sessionStorage.getItem("selectedArrayId");  
-  const selectedNoteString = sessionStorage.getItem("selectedNote");
-  const selectedNote = JSON.parse(selectedNoteString);
-  var tempTitle = countNew == 1 ? selectedNote.title : sessionStorage.getItem("tempTitle");
-  var tempContent = countNew == 1 ? selectedNote.content : sessionStorage.getItem("tempContent");
+  const selectedNoticeString = sessionStorage.getItem("selectedNotice");
+  const selectedNotice = JSON.parse(selectedNoticeString);
+  var tempTitle = countNew == 1 ? selectedNotice.title : sessionStorage.getItem("tempTitle");
+  var tempContent = countNew == 1 ? selectedNotice.content : sessionStorage.getItem("tempContent");
   const selectedProjectTitle = sessionStorage.getItem("selectedProjectTitle");
   var switchCode = sessionStorage.getItem("switchCode") ? sessionStorage.getItem("switchCode") : 0;
   
-  const index = kanbanList.findIndex((listItem) => listItem.id === selectedNote.id);
-  console.log("selectedNote: ", selectedNoteId);
+  console.log(noticeList);
+  console.log(selectedNotice);
+  const index = noticeList.findIndex((listItem) => listItem === selectedNotice);
+  console.log("Index: ", index);
 
   const navigate = useNavigate();
-
-  const Edit = () => {
-    var textTitle = document.getElementById('editTitle').value;
-    var textContent = document.getElementById('editContent').value;
-    var textDeadline = document.getElementById('editDeadline').value;
-
-    editItem(textTitle, textContent, textDeadline);
-  }
-
-  useEffect(() => {(async() => {
-    {try {
-      const res = await axios
-      .get(
-        `http://localhost:8080/api/project/main/read/${userId}/${selectedProjectId}/${selectedNoteId}`
-      )
-      .then((response) => 
-      {
-        console.log("FILE DATA response: ", response);
-
-        (response.data.files).map((data) => {
-          return setLoadingFile((oldLoadingFile) => [
-            ...oldLoadingFile,
-            {
-              fileId: data.fileId,
-              fileName: data.fileName,
-              fileRandomName: data.fileRandomName,
-              fileUrl: data.fileUrl,
-            }
-          ])
-        })
-
-        setCommentList(response.data.comments)
-
-      })
-    }
-    catch (e) {
-      console.error(e);
-    }}
-    })();
-  },[])
 
   const setDate = (date) => {
     tempTitle = document.getElementById('editTitle').value;
@@ -155,67 +117,58 @@ function EditListPage () {
   }
 
   const deleteItem = async() =>{
-    const newList = removeItemAtIndex(kanbanList, index);
+    const newList = removeItemAtIndex(noticeList, index);
+
+    setNoticeList(newList);
 
     try {
       const res = await axios
-      .get (
-        `http://localhost:8080/api/project/main/delete/${userId}/${selectedProjectId}/${selectedArrayId}`
+      .delete(
+        `http://localhost:8080/api/articles/${selectedNotice.id}`,
       )
-      .then ((response) => 
-        console.log("Delete Response : ", response)
-      )
-    }
-    catch(e) {
-      console.log(e);
-    }
-    navigate("/main")
-
-    setKanbanList(newList);
-
-  };
-
-  const editItem = async(title, content, deadline) => {
-    const formData = new FormData();
-    
-    const newList = replaceItemAtIndex(kanbanList, index, {
-      ...selectedNote,
-      title: title,
-      content: content,
-      deadline: deadline,
-    });
-
-    setKanbanList(newList);
-    const endAt = (deadline.slice(6,10) + "-" + deadline.slice(0,2) + "-" + deadline.slice(3,5));
-
-    const data = {
-      title: title,
-      content: content,
-      endAt: endAt, 
-    }
-
-    formData.append("contents", new Blob([JSON.stringify(data)], {type: "application/json"}))
-
-    if(imgFile)
-    {
-      Object.values(imgFile).forEach((imgFile) => formData.append("file", imgFile))
-    }
-
-    try {
-      const res = await axios
-      .post (
-        `http://localhost:8080/api/project/main/update/${userId}/${selectedProjectId}/${selectedNoteId}`,
-        formData,
-      )
-      .then ((response) => 
-        console.log("Edit Response : ", response)
-      )
+      .then((response) => {
+        console.log(response);
+      })
     }
     catch(e) {
       console.log(e);
     }
     
     navigate('/main')
+    window.location.reload();
+  };
+
+  const editItem = async() => {
+    var textTitle = document.getElementById('editTitle').value;
+    var textContent = document.getElementById('editContent').value;
+
+    const newList = replaceItemAtIndex(noticeList, index, {
+      ...selectedNotice,
+      title: textTitle,
+      content: textContent,
+    });
+
+
+    try {
+      const res = await axios
+      .put(
+        `http://localhost:8080/api/articles/${selectedNotice.id}`,
+        {
+          title: textTitle,
+          content: textContent,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+
+      navigate("/main");
+      window.location.reload();
+    }
+    catch(e) {
+      console.log(e);
+    }
+
   };
 
   const Crews = (props) => {
@@ -256,209 +209,52 @@ function EditListPage () {
     setcrewsOpen(false);
   };
 
-  const fileLoading = () => {
-    // console.log("fileList: " ,loadingFile);
-    console.log("Kanban Loading: ", kanbanList);
-    return loadingFile.map((data) => {
-      return (
-        <div key={data.fileId + 100} className='fileData'>
-          <div className='filename'
-          key={data.fileId + 400}
-          onClick={() => downloadFile(data)}
-          >
-            {data.fileName}
-          </div>
-          <button key={data.fileId + 700} onClick={() => deleteFile(data.fileId)}>X</button>
-        </div>
-      )
-    })
-  }
-
-  const deleteFile = async(fileId) => {
-
-    try {
-      const res = await axios
-      .get (
-        `http://localhost:8080/api/project/main/mynote/${userId}/${selectedNoteId}/${fileId}`
-      )
-      .then ((response) => 
-        console.log("Edit Response : ", response)
-      )
-    }
-    catch(e) {
-      console.log(e);
-    }
-
-    window.location.reload();
-  }
-
   const datahandler = () => {
     return (
-      <div className='note_edit'>
-        <div className='note-content'>
-          <ul className='editNoteContent'>
-            <li>
-              <span>제목</span>
-              <input
-                id="editTitle"
-                className="Input_title"
-                type="text"
-                defaultValue={tempTitle || ''}
-                placeholder='Title'
-              />
-            </li>
-            <li>
-              <span>마감기한</span>
-              <ReactDatePicker 
-                selected={selectedDate}
-                onChange={date => setDate(date)}
-                id="editDeadline"
-                type="text"
-                className="Input_deadline"
-              />
-            </li>
-            <li>
-              <span>첨부파일</span>
-              <div className='fileControl'>
-                {fileLoading()}
-                <input type="file" name='file' id="FileUpload" className='fileUpload' onChange={fileUpload} multiple>
-                </input>
-              </div>
-            </li>
-            <li>
-              <span>내용</span>
-              <textarea
-                id="editContent"
-                className="Input_content"
-                type="text"
-                defaultValue={tempContent || ''}
-                placeholder='Content'
-              />
-            </li>
-            <li>
-              <input type='button'
-                className="Edit"
-                defaultValue='수정'
-                onClick={Edit}
-              />
-              <input type='button' defaultValue="삭제" className="Delete_btn" onClick={deleteItem}></input>
-            </li>            
-          </ul>
-        </div>
-        <div className='note-comment'>
-          <div className='commentList'>
-            {commentHandler()}
-          </div>
-          {console.log("Comment: ", commentList)}
-          <input
-            id="addComment"
-            className="Input_content"
-            type="text"
-            defaultValue={''}
-            placeholder='Content'
-            onKeyDown={(e) =>{
-            if (e.key === 'Enter') {
-              {addComment()}
-            }}}
-          />
-          <button className="AddComment_btn" onClick={addComment}>입력</button>
-        </div>  
+      <div className='notice_page'>
+        <ul className='editNoteContent'>
+          <li>
+            <span>제목</span>
+            <input
+              id="editTitle"
+              className="Input_title"
+              type="text"
+              defaultValue={tempTitle || ''}
+              placeholder='Title'
+            />
+          </li>
+          <li>
+            <span>등록일자</span>
+            <ReactDatePicker 
+              selected={selectedDate}
+              onChange={date => setDate(date)}
+              id="editDeadline"
+              type="text"
+              className="Input_deadline"
+              readOnly={true}
+            />
+          </li>
+          <li>
+            <span>내용</span>
+            <textarea
+              id="editContent"
+              className="Input_content"
+              type="text"
+              defaultValue={tempContent || ''}
+              placeholder='Content'
+            />
+          </li>
+          <li>
+            <input type='button'
+              className="Edit"
+              defaultValue='수정'
+              onClick={editItem}
+            />
+            <input type='button' defaultValue="삭제" className="Delete_btn" onClick={deleteItem} />
+          </li>
+        </ul>
       </div>
     )
-  }
-
-  const addComment = async() => {
-    var comment = document.getElementById('addComment').value;
-
-    if (!comment) {
-      console.log("Comment is Null");
-    }
-
-    else {
-      const data = 
-      {
-        content: comment,
-        writerId: userId,
-      }
-
-      console.log("Comment Send Data: ", data);
-
-      try {
-        const res = await axios
-        .post(
-          `http://localhost:8080/api/comments/${selectedNoteId}`,
-          data
-        )
-        .then((response) => {
-          console.log("Comment Response: ", response);
-          window.location.reload();
-        })
-      }
-      catch (e) {
-        console.log(e);
-      }
-    }
-  }
-
-  const commentHandler = () => {
-    return commentList.map((data) => {
-      return <div key={data.commentId + 1000} className='commentContainer'>
-          <span key={data.commentId + 1300} className='commentContent'>{data.comment}</span>
-          <button key={data.commentId + 1600} className='commentDelBtn' onClick={() => deleteComment(data.commentId)}>X</button>
-        </div>
-    })
-  }
-
-  const deleteComment = async(commentId) => {
-    try {
-      const res = await axios
-      .delete(
-        `http://localhost:8080/api/comments/${userId}/${commentId}`
-      )
-      .then((response) => {
-        console.log("Delete Comment: ", response);
-        window.location.reload();
-      })
-    }
-    catch(e) {
-
-    }
-  }
-    
-  const downloadFile = async(downloadFileData) => {
-    const fileName = downloadFileData.fileName;
-    const fileRandomName = downloadFileData.fileRandomName;
-    const fileUrl = downloadFileData.fileUrl;
-
-    const data =         
-    {
-      fileName: fileName,
-      fileRandomName: fileRandomName,
-      fileUrl: fileUrl,
-    }
-
-    console.log("File data Send: ", data);
-
-    try {
-      const res = await axios
-      .post(
-        `http://localhost:8080/api/project/main/note/download`,
-        data,
-        {responseType: 'blob'}
-      )
-      .then((response) => {
-        console.log("File Response: ", new Blob([response.data]));
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-      })
-    }
-    catch (e) {
-      console.log(e);
-    }
   }
 
   const goToKanban = () => {
@@ -484,12 +280,6 @@ function EditListPage () {
   const goToScheduleAll = () => {
     sessionStorage.setItem("Main_switchCode", 4);
     navigate('/main')
-  }
-
-  const fileUpload = (e) => {
-    const file = e.target.files;
-
-    setImgFile(file)
   }
 
   const clearData = (arr) => {
@@ -704,4 +494,4 @@ function removeItemAtIndex(arr, index) {
 }
 
 
-export default EditListPage;
+export default EditNoticePage;

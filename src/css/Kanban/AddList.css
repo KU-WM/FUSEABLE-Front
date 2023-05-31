@@ -3,14 +3,7 @@
   height: 20px;
   position: relative;
   left: calc(50% - 15px);
-}
-
-.openedModal {
-  position: fixed;
-  left: 220px;
-  top: 170px;
-  width: 80%;
-  height: 70%;
-  background-color: lightsalmon;
-  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

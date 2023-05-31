@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Start.scss';
+import '../css/Pages/Start.scss';
 import { projectListState } from '../recoil';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
@@ -70,35 +70,34 @@ function Start () {
     const { open, close, header } = props;
   
     return (
-      <div className={open ? 'openedStartModal' : 'startModal'}>
-        {open ? (
-          <section>
-            <div>
-              {header}
-              <button className="close" onClick={close}>
-                &times;
-              </button>
-            </div>
-            <main>
-              {props.children}
-                  <input
-                    id='InputProjectName'
-                    className="Input_ProjectName"
-                    placeholder='Project Name'
-                  />
-                  <input type='button'
-                    className="Add"
-                    defaultValue='등록'
-                    onClick={addItem}
-                  />
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
-          </section>
-        ) : null}
+      <div className={open ? 'modalBackground' : 'closeModalBackground'}>
+        <div className={open ? 'openedStartModal' : 'startModal'}>
+          {open ? (
+            <section>
+              <div className='modalHeader'>
+                {header}
+              </div>
+              <main>
+                {props.children}
+                <input
+                  id='InputProjectName'
+                  className="Input_ProjectName"
+                  placeholder='Project Name'
+                />
+                <input type='button'
+                  className="Add"
+                  defaultValue='등록'
+                  onClick={addItem}
+                />
+              </main>
+              <footer>
+                <button className="close" onClick={close}>
+                  close
+                </button>
+              </footer>
+            </section>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -107,35 +106,34 @@ function Start () {
     const { open, close, header } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
-        {open ? (
-          <section>
-            <div>
-              {header}
-              <button className="close" onClick={closeInviteCode}>
-                &times;
-              </button>
-            </div>
-            <main>
-              {props.children}
-                  <input
-                    id='InputInviteCode'
-                    className="Input_InviteCode"
-                    placeholder='초대코드'
-                  />
-                  <input type='button'
-                    className="invite"
-                    defaultValue='초대코드 입력'
-                    onClick={sendInviteCode}
-                  />
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
-          </section>
-        ) : null}
+      <div className={open ? 'openedInviteCodeBackground' : 'closedInviteCodeBackground'}>
+        <div className={open ? 'openedInviteCode' : 'closedInviteCode'}>
+          {open ? (
+            <section>
+              <div className='modalHeader'>
+                {header}
+              </div>
+              <main>
+                {props.children}
+                    <input
+                      id='InputInviteCode'
+                      className="Input_InviteCode"
+                      placeholder='초대코드'
+                    />
+                    <input type='button'
+                      className="invite"
+                      defaultValue='초대코드 입력'
+                      onClick={sendInviteCode}
+                    />
+              </main>
+              <footer>
+                <button className="close" onClick={close}>
+                  close
+                </button>
+              </footer>
+            </section>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -240,7 +238,7 @@ function Start () {
 
   return (
     <React.Fragment>
-      <div className='container'>
+      <div className='pageSpace'>
         <div className='Start-header'>
           <div className='logo'>
             <img src={Logo} alt="logo" />

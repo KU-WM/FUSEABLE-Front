@@ -1,0 +1,74 @@
+.openedProjectTitleBack {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.openedProjectTitle {
+  position: fixed;
+  left: 25%;
+  top: 30%;
+  width: 50%;
+  min-width: 560px;
+  height: 110px;
+  background-color: white;
+  z-index: 1000;
+  border-radius: 20px;
+
+  .modalHeader {
+    padding-top: 3px;
+    padding-left: 10px;
+    font-weight: bold;
+    background-color: #6B99C3;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .Input_ProjectName {
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 80%;
+  }
+
+  .editProjectTitie {
+    margin-left: 10px;
+  }
+
+  .Delete {
+    margin-left: 10px;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 10px;
+
+    .close {
+      margin-top: 2px;
+      margin-right: 5%;
+    }
+  }
+}
+
+.projectList {
+
+  .bookmark_img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .projectTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  .Edit_btn {
+    margin-top: 3px;
+    min-width: 40px;
+  }
+}

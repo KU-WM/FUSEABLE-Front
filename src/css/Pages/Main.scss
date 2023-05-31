@@ -14,7 +14,7 @@
 .Main-header {
   position: relative;
   height: 100px;
-  border: 1px solid red;
+  border: 1px solid black;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: #3b6ba5;
@@ -36,32 +36,248 @@
     right: 100px;
   }
 
-  .sidebar {
-    position: absolute;
+  .openAlarmBack {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+  }
+  
+  .openAlarm {
+    position: fixed;
+    left: 25%;
+    top: 30%;
+    width: 50%;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 20px;
+  
+    .modalHeader {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+      font-weight: bold;
+      background-color: #6B99C3;
+      border-radius: 20px 20px 0 0;
+    }
+
+    button {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      margin-left: 70%;
+      border-radius: 5px;
+      width: 45px;
+      border: 0;
+      color: #FFFFFF;
+      background-color: #0D6EFD;
+    }
+  
+    .alarmTitle {
+      margin-left: 10px;
+      margin-top: 5px;
+      width: 85%;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    footer {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-top: 15px;
+    }
   }
 
-  .crew {
-    display: none;
-    position: fixed;
-    width: 100px;
-    top: 0;
-    right: 0;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.6);
+  .sidebarBtn{
+
+    .sidebar {
+      position: absolute;
+      right: 0;
+    }
+
+    .openedSideBar {
+      position: fixed;
+      width: 235px;
+      min-height: 300px;
+      right: 5%;
+      position: fixed;
+      z-index: 10;
+      border-radius: 15px;
+      background-color: #47608C;
+
+      .modalHeader {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        background-color: #356093;
+        border-radius: 15px 15px 0 0;
+
+        div {
+          margin-top: 5px;
+          margin-bottom: 5px;
+          margin-left: 10%;
+          font-weight: bold;
+          color: #FFFFFF;
+        }
+
+        button {
+          margin-top: 5px;
+          margin-bottom: 5px;
+          margin-left: 40%;
+          border-radius: 5px;
+          width: 45px;
+          border: 0;
+          color: #FFFFFF;
+          background-color: #0D6EFD;
+        }
+      }
+
+      main {
+
+        ul {
+          padding-left: 0;
+          display: flex;
+          flex-direction: column;
+
+          li {
+            width: 100%;
+            margin-top: 10px ;
+            margin-left: 10%;
+
+            button {
+              width: 80%;
+            }
+          }
+        }
+      }
+
+      footer {
+        margin-top: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+          margin-top: 5px;
+          margin-bottom: 5px;
+          width: 70%;
+          border-radius: 10px;
+          border: 0;
+          background-color: #0D6EFD;
+          color: #FFFFFF;
+        }
+
+        a {
+          text-decoration: none;
+          color: #FFFFFF;
+        }
+      }
+    }
   }
-  
+
   .openedCrew {
     position: fixed;
-    padding: 10px;
-    width: 250px;
-    height: 600px;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    background-color: aqua;
+    width: 20%;
+    min-width: 200px;
+    right: 5%;
+    position: fixed;
+    z-index: 10;
+    border-radius: 15px;
+    background-color: #47608C;
+
+    .modalHeader {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      background-color: #356093;
+      border-radius: 15px 15px 0 0;
+
+      div {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 10%;
+        font-weight: bold;
+        color: #FFFFFF;
+      }
+
+      button {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 40%;
+        border-radius: 5px;
+        width: 45px;
+        border: 0;
+        color: #FFFFFF;
+        background-color: #0D6EFD;
+      }
+    }
+
+    main {
+
+      .UserInProject {
+        margin: 10px 0;
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  .openGetInviteCodeBack {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
   }
   
+  .openGetInviteCode {
+    position: fixed;
+    left: 25%;
+    top: 30%;
+    width: 50%;
+    height: 115px;
+    background-color: white;
+    z-index: 1000;
+    border-radius: 20px;
+  
+    .modalHeader {
+      padding-top: 3px;
+      padding-left: 10px;
+      font-weight: bold;
+      background-color: #6B99C3;
+      border-radius: 20px 20px 0 0;
+    }
+  
+    .Get_InviteCode {
+      margin-left: 10px;
+      margin-top: 5px;
+      width: 80%;
+      max-width: calc(100% - 140px);
+    }
+  
+    .copy {
+      margin-left: 10px;
+    }
+  
+    footer {
+      display: flex;
+      flex-direction: row-reverse;
+      margin-top: 15px;
+  
+      .close {
+        margin-top: 2px;
+        margin-right: 5%;
+      }
+    }
+  }
+
   .UserInProject {
     text-align: center;
   }
@@ -70,7 +286,6 @@
     width: 110px;
     height: 110px;
     border-radius: 100px;
-    border: 1px solid red;
   }
 }
 
@@ -87,6 +302,9 @@
     width: 200px;
     z-index: 1;
     background-color: #6B99C3;
+    border-radius: 5px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
 
     .Main-notice {
       position: absolute;
@@ -96,7 +314,7 @@
       height: 8%;
       padding: 1%;
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
       border-radius: 15px;
       display: flex;
       justify-content: center;
@@ -113,7 +331,7 @@
       height: 8%;
       padding: 1%;
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
       border-radius: 15px;
       display: flex;
       justify-content: center;
@@ -131,7 +349,7 @@
       height: 8%;
       padding: 1%;
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -148,16 +366,11 @@
       padding: 1%;
       border-radius: 15px;
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-
-    // .textLink {
-    //   color: inherit;
-    //   text-decoration: inherit;
-    // }
 
     .Main-notice-banner {
       position: absolute;
@@ -167,7 +380,7 @@
       height: 100px;
       padding: 10px;
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
       text-align: center;
     }
   }
@@ -176,7 +389,6 @@
 
   .Main-main {
     position: relative;
-    border: 1px solid green;
     border-radius: 5px;
     width: calc(100% - 200px);
     display: flex;
@@ -189,7 +401,8 @@
       margin-top: 50px;
       width: calc(100vw - 200px);
       box-sizing: border-box;
-      border: 1px solid red;
+      border: 1px solid black;
+      border-radius: 5px;
 
       .content {
         overflow: auto;
@@ -201,7 +414,7 @@
         }
 
         .test1 {
-          border: 1px solid red;
+          border: 1px solid black;
           border-radius: 5px;
         }
       }
@@ -210,35 +423,52 @@
 
   .Main-Mydocument {
     position: relative;
-    border: 1px solid green;
+    border: 1px solid black;
     border-radius: 5px;
     width: calc(100% - 200px);
     display: flex;
     flex-wrap: wrap;
-    background-color: #F5FFC9;
+    background-color: #E4E5EA;
 
     .Main-progress {
+      width: 100%;
+      padding: 10px;
+      margin-top: 50px;
+      width: calc(100vw - 200px);
+      box-sizing: border-box;
+      border: 1px solid black;
+      border-radius: 5px;
 
       .myDocument {
-        position: relative;
-        margin: 10px 20px;
-        padding: 10px;
-        box-sizing: border-box;
         width: 100%;
-        height: 400px;
-        /* border: 1px solid red; */
         border-radius: 5px;
         font-size: 20px;
+
+        .order {
+          margin: 10px 20px 0;
+        }
+
+        .myDocumentTitle {
+          margin: 10px 60px 0;
+        }
       }
 
       .myDocumentList {
-        border-bottom: 1px solid red;
-        margin: 10px;
+        width: 90%;
+        border-bottom: 2px solid #000000;
+        margin: 10px 20px 0;
+        display: flex;
+
+        .myDocumentListOrder {
+          margin-left: 10px;
+          width: 70px;
+        }
+
+        .myDocumentTitle {
+          margin-left: 130px;
+        }
       }
       
-      .myDocumentTitle {
-        margin: 0 50px;
-      }
     }
   }
 
@@ -249,7 +479,7 @@
     font-size: 30px;
     padding: 0.5%;
     box-sizing: border-box;
-    border: 1px solid red;
+    border: 1px solid black;
     background-color: #E4E5EA;
     border-radius: 5px;
     z-index: 1;

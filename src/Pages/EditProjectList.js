@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { projectListState } from "../recoil";
 import BookmarkTrue from '../images/bookmarkT.png';
 import BookmarkFalse from '../images/bookmarkF.png';
+import '../css/Pages/EditProjectList.scss'
 
 
 function EditProjectList({item}) {
@@ -21,41 +22,40 @@ function EditProjectList({item}) {
     const { open, close, header } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
-        {open ? (
-          <section>
-            <div>
-              {header}
-              <button className="close" onClick={close}>
-                &times;
-              </button>
-            </div>
-            <main>
-              {props.children}
-                  <input
-                    id='editProjectTitie'
-                    className="Input_ProjectName"
-                    placeholder='Project Name'
-                    defaultValue={item.title}
-                  />
-                  <input type='button'
-                    className="editProjectTitie"
-                    defaultValue='수정'
-                    onClick={editItem}
-                  />
-                  <input type='button'
-                    className="Delete"
-                    defaultValue='삭제'
-                    onClick={deleteItem}
-                  />
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
-          </section>
-        ) : null}
+      <div className={open ? 'openedProjectTitleBack' : 'closedProjectTitleBack'}>
+        <div className={open ? 'openedProjectTitle' : 'closedProjectTitle'}>
+          {open ? (
+            <section>
+              <div className="modalHeader">
+                {header}
+              </div>
+              <main>
+                {props.children}
+                <input
+                  id='editProjectTitie'
+                  className="Input_ProjectName"
+                  placeholder='Project Name'
+                  defaultValue={item.title}
+                />
+                <input type='button'
+                  className="editProjectTitie"
+                  defaultValue='수정'
+                  onClick={editItem}
+                />
+                <input type='button'
+                  className="Delete"
+                  defaultValue='삭제'
+                  onClick={deleteItem}
+                />
+              </main>
+              <footer>
+                <button className="close" onClick={close}>
+                  close
+                </button>
+              </footer>
+            </section>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -140,23 +140,18 @@ function EditProjectList({item}) {
   }
 
   return (
-    <>
-      <React.Fragment>
-        <div className="projectList">
-          <img 
-            className="bookmark_img" 
-            src={item.bookmarkState ? BookmarkTrue : BookmarkFalse} 
-            onClick={changeState}
-            style={{width: "15px", height: "15px"}}></img>
-          <div className="ptojectTitle" onClick={projectSelect}>{item.title}</div>
-          <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
-          <button className="Edit_btn" onClick={openModal}>수정</button>
-        </div>
-      </React.Fragment>
-    </>
+    <React.Fragment>
+      <div className="projectList">
+        <img 
+          className="bookmark_img" 
+          src={item.bookmarkState ? BookmarkTrue : BookmarkFalse} 
+          onClick={changeState}></img>
+        <div className="projectTitle" onClick={projectSelect}>{item.title}</div>
+        <button className="Edit_btn" onClick={openModal}>수정</button>
+      </div>
+      <Modal open={modalOpen} close={closeModal} header="Modal heading"></Modal>
+    </React.Fragment>
   )
-
-
 }
 
 function replaceItemAtIndex(arr, index, newValue) {

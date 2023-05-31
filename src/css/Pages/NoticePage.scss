@@ -1,0 +1,58 @@
+.notice_page {
+  display:flex;
+  position: relative;
+
+  ul {
+    width: 90%;
+
+    li {
+      display: flex;
+      align-items: center;
+      
+      span {
+        display: block;
+        width: 80px;
+        text-align: center;
+        flex: 0 0 70px;
+      }
+
+      .Input_title {
+        min-width: 300px;
+        width: 100%;
+        min-height: 30px;
+        overflow: hidden;
+        padding: 2px;
+        box-sizing: border-box;
+      }
+
+      .Input_deadline {
+        min-width: 300px;
+        width: 100%;
+        min-height: 30px;
+        overflow: hidden;
+        padding: 2px;
+        box-sizing: border-box;
+      
+      }
+
+      .Input_content {
+        min-width: 300px;
+        width: 100%;
+        min-height: 300px;
+        overflow: hidden;
+        padding: 2px;
+        box-sizing: border-box;
+      }
+
+      .Add, .Edit {
+        margin-left: 90%;
+        margin-top: 10px;
+      }
+
+      .close,
+      .Delete_btn {
+        margin-top: 10px;
+      }
+    }
+  }
+}

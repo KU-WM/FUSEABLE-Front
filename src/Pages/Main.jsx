@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Pages/Main.scss';
 import Logo from '../images/Logo.png';
 import Kanban from '../Kanban/Kanban';
@@ -34,6 +34,7 @@ function Main () {
   const userCode = sessionStorage.getItem("userCode");
 
   var Main_switchCode = sessionStorage.getItem("Main_switchCode") ? sessionStorage.getItem("Main_switchCode") : 0;
+  const navigate = useNavigate();
 
   useEffect(() => {(async() => {
     {try {
@@ -91,22 +92,25 @@ function Main () {
     const { open, close } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
-        {open ? (
-          <section>
-            <div>
-              {props.header}
-            </div>
-            <main>
-              {alarmDataHandler()}
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>              
-            </footer>
-          </section>
-        ) : null}
+      <div className={open ? 'openAlarmBack' : 'closeAlarmBack'}>
+        <div className={open ? 'openAlarm' : 'closeAlarm'}>
+          {open ? (
+            <section>
+              <div className='modalHeader'>
+                {props.header}
+                <button className="close" onClick={close}>
+                  close
+                </button>      
+              </div>
+              <main>
+                {alarmDataHandler()}
+              </main>
+              <footer>
+        
+              </footer>
+            </section>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -114,7 +118,7 @@ function Main () {
   const alarmDataHandler = () => {
     console.log("Note: ", alarmNote);
     return alarmNote.map((data) => {
-      return <div key={data.noteId}>{data.title}</div>
+      return <div key={data.noteId} className='alarmTitle'>{data.endAt} || {data.title}</div>
     })
   }
 
@@ -128,10 +132,11 @@ function Main () {
     const { open, close } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
+      <div className={open ? 'openedSideBar' : 'closedSideBar'}>
         {open ? (
           <section>
-            <div>
+            <div className='modalHeader'>
+              <div>부가기능</div>
               <button className="close" onClick={close}>
                 close
               </button>
@@ -145,15 +150,16 @@ function Main () {
                   <button className='btn btn-primary showCrawmate' onClick={openCrews}>참여 인원</button>
                 </li>
                 <li>
-                 <button className="btn btn-primary Start-addBtn" onClick={openGetInviteCode}>초대 코드 발급</button>
+                  <button className="btn btn-primary Start-addBtn" onClick={openGetInviteCode}>초대 코드 발급</button>
                 </li>
               </ul>
             </main>
             <footer>
-              
-            </footer>
-              <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Kakao Logout</a>
+              <button>
+                <a href={process.env.REACT_APP_LogoutURL} id="logout-btn">Kakao Logout</a>
+              </button>
               <button onClick={onLogout} id="Google-logout-btn">Google Logout</button>
+            </footer>
           </section>
         ) : null}
       </div>
@@ -161,7 +167,8 @@ function Main () {
   }
 
   const onLogout = () => {
-    // google.accounts.id.disableAutoSelect();
+    window.sessionStorage.clear();
+    navigate("/");
   };
 
   const openModal = () => {
@@ -176,39 +183,41 @@ function Main () {
     const { open, close, header } = props;
   
     return (
-      <div className={open ? 'openedModal' : 'modal'}>
-        {open ? (
-          <section>
-            <div>
-              {header}
-            </div>
-            <main>
-              {props.children}
-              <input
-                id='GetInviteCode'
-                className="Get_InviteCode"
-                value={InviteCode}
-                readOnly
-              />
-              <img src={Copy} 
-                alt="Copy" 
-                className='copy' 
-                onClick={copyData}
-                style={
-                  {
-                    "width" : "20px",
-                    "height" : "20px"
+      <div className={open ? 'openGetInviteCodeBack' : 'closeGetInviteCode'}>
+        <div className={open ? 'openGetInviteCode' : 'closeGetInviteCode'}>
+          {open ? (
+            <section>
+              <div className='modalHeader'>
+                {header}
+              </div>
+              <main>
+                {props.children}
+                <input
+                  id='GetInviteCode'
+                  className="Get_InviteCode"
+                  value={InviteCode}
+                  readOnly
+                />
+                <img src={Copy} 
+                  alt="Copy" 
+                  className='copy' 
+                  onClick={copyData}
+                  style={
+                    {
+                      "width" : "20px",
+                      "height" : "20px"
+                    }
                   }
-                }
-              />
-            </main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
-          </section>
-        ) : null}
+                />
+              </main>
+              <footer>
+                <button className="close" onClick={close}>
+                  close
+                </button>
+              </footer>
+            </section>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -249,7 +258,10 @@ function Main () {
       <div className={open ? 'openedCrew' : 'crew'}>
         {open ? (
           <section>
-            <div>
+            <div className='modalHeader'>
+              <div>
+                참여 인원
+              </div>
               <button className="close" onClick={close}>
                 close
               </button>
@@ -257,9 +269,6 @@ function Main () {
             <main>
               {userDataHandler()}
             </main>
-            <footer>
-              
-            </footer>
           </section>
         ) : null}
       </div>
@@ -365,7 +374,7 @@ function Main () {
 
   return (
     <React.Fragment>
-      <div className='container'>
+      <div className='pageSpace'>
         <div className='Temp'>
           <div className='Main-header'>
             <div className='logo'>
@@ -419,6 +428,5 @@ function Main () {
     </React.Fragment>
   )
 }
-
 
 export default Main;

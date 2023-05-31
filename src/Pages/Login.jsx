@@ -8,7 +8,7 @@ function Login () {
   sessionStorage.setItem("Start_switchCode", 0);
 
   return (
-    <div className="container">
+    <div className="pageSpace">
       <header className="Login-header">
         <div>
           <img src={Logo} alt="Logo" className='Login-logo'/>

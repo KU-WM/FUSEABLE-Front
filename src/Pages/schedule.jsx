@@ -174,7 +174,7 @@ function Schedule() {
 
   return (
     <React.Fragment>
-      <div className='container'>
+      <div className='pageSpace'>
         <div className='Start-header'>
           <div className='logo'>
             <img src={Logo} alt="logo" />

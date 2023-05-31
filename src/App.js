@@ -12,6 +12,8 @@ import Main from './Pages/Main';
 import AddListPage from './Kanban/AddListPage'
 import EditListPage from './Kanban/EditListPage'
 import Schedule from './Pages/schedule';
+import AddNoticePage from './Pages/AddNoticePage'
+import EditNoticePage from './Pages/EditNoticePage';
 
 
 const App = () => {
@@ -27,6 +29,8 @@ const App = () => {
         <Route path='/main' element={<Main />}></Route>
         <Route path='/main/addlistpage' element={<AddListPage />}></Route>
         <Route path='/main/editlistpage' element={<EditListPage />}></Route>
+        <Route path='/main/addnoticepage' element={<AddNoticePage />}></Route>
+        <Route path='/main/editnoticepage' element={<EditNoticePage />}></Route>
        </Routes>
     </BrowserRouter>
   )
